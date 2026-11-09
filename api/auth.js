@@ -5,11 +5,28 @@ const email = v => clean(v, 160).toLowerCase();
 const validPassword = p => typeof p === 'string' && p.length >= 12;
 const LABS = ['CL6', 'CL7'];
 
+// Local preview only: DEV_AUTO_LOGIN=student or DEV_AUTO_LOGIN=admin signs you in automatically,
+// so you can look around without the login screen. Ignored on any Vercel deployment
+// (production or preview), so the live site always asks for a real login.
+const onVercel = Boolean(process.env.VERCEL) && process.env.VERCEL_ENV !== 'development';
+const devRole = ['student', 'admin'].includes(process.env.DEV_AUTO_LOGIN) && !onVercel ? process.env.DEV_AUTO_LOGIN : null;
+async function devUser() {
+  if (devRole === 'admin') return { id: 'admin', name: 'Preview Admin', email: 'preview-admin@localhost', role: 'admin', lab: null };
+  const mail = 'preview-student@localhost';
+  let user = await get(`user:email:${mail}`);
+  if (!user) {
+    user = { id: random(12), name: 'Preview Student', email: mail, role: 'student', lab: 'CL6', password: await passwordHash(random(16)), createdAt: new Date().toISOString() };
+    await set(`user:email:${mail}`, user); await set(`user:${user.id}`, user);
+  }
+  return user;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   try {
     if (req.method === 'GET') {
-      const user = await session(req);
+      let user = await session(req);
+      if (!user && devRole) { user = await devUser(); await createSession(res, user); }
       return res.status(200).json({ user: user ? publicUser(user) : null });
     }
     if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });

@@ -103,6 +103,9 @@ Install Node.js 20+ and the Vercel CLI (`npm i -g vercel`), then in this folder:
 `.env.example` to `.env` and fill it in, and run `vercel dev`. The site runs at http://localhost:3000.
 Without Supabase, `vercel dev` keeps accounts in memory until you stop it.
 
+To skip the login screen while you look around locally, add `DEV_AUTO_LOGIN=student` (the lab) or
+`DEV_AUTO_LOGIN=admin` (the dashboard) to `.env`. It is ignored on any Vercel deployment.
+
 Opening `index.html` through a plain static server (e.g. Live Server on `127.0.0.1:5500`) gives a clearly
 labeled **local preview**: you can click through the student lab and a sample dashboard, but nothing is
 saved and Hermes isn't used.

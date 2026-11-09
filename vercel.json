@@ -12,7 +12,7 @@
   },
   "rewrites": [
     {
-      "source": "/(meet-hermes|pick-a-mission|agent-card|playground|break-it|harden-it|real-agents|automations|telegram|takeaways|certificate|resources|policies)",
+      "source": "/(meet-hermes|install|where-things-live|profiles|soul|tools|safety|real-agents|memory-and-skills|automations|telegram|connect-apps|takeaways|certificate|resources|policies)",
       "destination": "/index.html"
     }
   ],

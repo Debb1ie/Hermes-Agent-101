@@ -3,7 +3,7 @@ import { loadClass } from './_class.js';
 import { hermesChat, friendly, httpStatus, AGENTS, UPSTREAM_TIMEOUT_MS } from './_hermes.js';
 
 const PRESETS = {
-  summary: 'Summarize how the class is doing right now: attendance, progress through the lab, and feedback so far.',
+  summary: 'Summarize how the class is doing right now: attendance, progress through the Hermes setup course, safety check results, and feedback so far.',
   help: 'Which students look stuck or behind, and what should a mentor check with each of them?',
   themes: 'What are the main themes in the written feedback? Quote a few short examples.',
   improve: 'Based on the ratings, pace, and comments, what should the speaker change for the next workshop?'
@@ -21,10 +21,10 @@ function digest({ users, feedback }, viewer) {
     students: users.length,
     byLab: count(users, u => u.lab),
     byCurrentStep: count(users, u => u.progress.step || 'Not started'),
-    byMission: count(users, u => u.progress.missionName || 'No mission yet'),
+    agentsBuilt: count(users, u => u.progress.missionName || 'Not yet'),
     feedbackSubmitted: users.filter(u => u.feedbackAt).length,
     studentList: users.slice(0, 120).map(u => ({
-      name: u.name, lab: u.lab, step: u.progress.step || 'Not started', mission: u.progress.missionName || '',
+      name: u.name, lab: u.lab, step: u.progress.step || 'Not started', agent: u.progress.missionName || '', safetyChecksPassed: u.progress.build?.safety ?? 0,
       sectionsDone: (u.progress.completed || []).length, minutesSinceLastActivity: minutesAgo(u.progress.updatedAt),
       feedbackDone: Boolean(u.feedbackAt)
     }))

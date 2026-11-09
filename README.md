@@ -1,8 +1,8 @@
 # Hermes Agent 101
 
-**Learn AI agents with Hermes.** A hands-on workshop app: students log in, learn how AI agents work,
-build an agent card, test it in a playground, break it, harden it, chat with real Hermes agents, see
-scheduled jobs, connect Telegram, and get a certificate.
+**Learn AI agents with Hermes.** A hands-on workshop app that teaches students to set up and run their
+own agent with Hermes: install it, make a profile, write a SOUL.md and test it live, choose tools, lock it
+down with real safety settings, schedule jobs, put it on Telegram, connect apps, and get a certificate.
 
 [Hermes Agent](https://github.com/NousResearch/hermes-agent) (the open-source agent framework by Nous
 Research) is both the AI engine and the subject of the workshop. No student ever needs an API key.
@@ -12,7 +12,7 @@ One page (`index.html`, vanilla JS) plus Vercel serverless functions in `api/`, 
 | File | What it does |
 |---|---|
 | `api/_hermes.js` | The **only** module that talks to Hermes: chat (waiting or streaming), health check, error mapping, 240 s timeout. |
-| `api/chat.js` | Playground **Live AI**. Sends the student's agent prompt + chat to the `h101-lab` profile. |
+| `api/chat.js` | **SOUL.md tester**. Sends the student's draft SOUL.md (as a system message) + chat to the `h101-lab` profile. |
 | `api/agents-chat.js` | **Real Hermes agents** (Atlas, Forge, Iris). Streams answers and live tool activity to the browser. |
 | `api/automations.js` | Latest output of Iris's scheduled jobs, from Hermes. Cached 60 s. |
 | `api/telegram.js` | A student saves the pairing code the Telegram bot sent them. |
@@ -24,19 +24,33 @@ One page (`index.html`, vanilla JS) plus Vercel serverless functions in `api/`, 
 | `api/health.js` | `{ ok, ai, db }`. `ai` is true when Hermes answers `GET ${HERMES_URL}/health` within 3 s. |
 | `scripts/create-admin.py` | Run locally once to create or update the super admin in Supabase. |
 
-The practice agent, simulated tools, certificates and progress run in the browser, so students never get
-stuck if Hermes is slow, busy, or offline: the playground falls back to the practice agent.
+The builders (SOUL.md, tools, safety, cron), certificates, and progress run in the browser, so students
+never get stuck if Hermes is slow, busy, or offline. Only the SOUL.md tester and the real agents need Hermes.
 
-## The lab, step by step
-1. **Meet Hermes** `/meet-hermes`: what an agent is, what Hermes adds (tools, memory, skills, scheduled jobs, messaging apps), an animated agent trace.
-2. **Pick a mission** `/pick-a-mission`: four missions, each with simulated tools and a hidden trap.
-3. **Agent card** `/agent-card`: the agent's spec and prompt, and how it maps to a Hermes profile (`SOUL.md`, toolsets, approvals).
-4. **Playground** `/playground`: practice agent (offline) or **Live AI, powered by Hermes**.
-5. **Break it** `/break-it` and 6. **Harden it** `/harden-it`: 7 attacks and fixes, plus how Hermes enforces each one for real.
-7. **Real Hermes agents** `/real-agents`: Atlas (researcher, web search), Forge (coder, can't run code), Iris (daily assistant).
-8. **Daily automations** `/automations`: cron jobs in plain English, and Iris's latest Morning Briefing (8:00), Midday Tip (12:00), Evening Wrap-up (18:00).
-9. **Hermes on Telegram** `/telegram`: open the bot (button + QR code made in the browser), send the pairing code, wait for a mentor.
-10. **Takeaways**, 11. **Certificate** (says *Hermes Agent 101*), plus **Resources** and **Policies**.
+## The course, step by step
+Students learn to set up and run Hermes themselves. Every step shows real screenshots of the commands
+(`img/terminal/`, captured from a real Hermes install) so anyone who falls behind can catch up.
+
+1. **Meet Hermes** `/meet-hermes`: what an agent is, what Hermes adds, and a live agent trace.
+2. **Install Hermes** `/install`: the install command for macOS, Linux/WSL2, Windows, or Android, then `hermes setup`, `hermes model`, `hermes doctor`, and a first chat. Includes a checklist.
+3. **Where things live** `/where-things-live`: a clickable tour of `~/.hermes` (`config.yaml`, `.env`, `SOUL.md`, `memories/`, `skills/`, `cron/`, `sessions/`, `logs/`, `profiles/`).
+4. **Profiles** `/profiles`: one agent per job. Students name their own profile and get the commands for it.
+5. **Write a SOUL.md** `/soul`: a builder (from an example or blank) that generates their SOUL.md, then **tests it live on Hermes** (`h101-lab`).
+6. **Choose tools** `/tools`: switch toolsets on and off (with risk levels) and get the `config.yaml` lines and `hermes tools` commands.
+7. **Make it safe** `/safety`: 7 real risks. Students pick the Hermes setting that stops each one (approvals, `deny`, allowlists/pairing, `max_turns`, secret redaction, `redact_pii`, least privilege) and get a hardened config.
+8. **Real Hermes agents** `/real-agents`: Atlas, Forge, and Iris, live and streaming, each with a "how it's set up" panel.
+9. **Memory & skills** `/memory-and-skills`: `MEMORY.md`, `USER.md`, `/new`, `hermes skills`, and an example `SKILL.md`.
+10. **Scheduled jobs** `/automations`: a cron builder (`hermes cron create …`) and Iris's latest real outputs.
+11. **Hermes on Telegram** `/telegram`: pair with Iris in class, plus how to set up their own bot at home.
+12. **Connect apps** `/connect-apps`: the API server, `API_SERVER_KEY`, a `curl` call, and how this website talks to Hermes.
+13. **Takeaways** `/takeaways`: a "copy my setup" bundle (profile commands, SOUL.md, settings, cron job).
+
+Then the **certificate** (needs: SOUL.md, tools, safety check passed, one real agent tried), **Resources**
+(Hermes docs by topic), and **Policies**. The dashboard's **Builds** tab shows each student's agent,
+profile name, tools, and safety score.
+
+To refresh the screenshots after a Hermes update, re-run the commands shown in each image on a Hermes
+install and replace the PNGs in `img/terminal/`. Never include keys, other profiles, or personal paths.
 
 ## 1. Connect Supabase (accounts, progress, feedback)
 Supabase is required on Vercel. Without it, sign-up returns "Storage is not configured."
@@ -71,7 +85,7 @@ All of them are server-only. None is ever sent to a browser. See [.env.example](
 | Variable | Needed | What it is |
 |---|---|---|
 | `HERMES_URL` | For AI | Hermes base URL, no trailing slash, e.g. `https://xxxx.trycloudflare.com` |
-| `HERMES_KEY_LAB` | For AI | Key for `h101-lab` (playground Live AI) |
+| `HERMES_KEY_LAB` | For AI | Key for `h101-lab` (SOUL.md tester) |
 | `HERMES_KEY_MENTOR` | For AI | Key for `h101-mentor` (dashboard assistant) |
 | `HERMES_KEY_RESEARCHER` | For AI | Key for `h101-researcher` (Atlas) |
 | `HERMES_KEY_CODER` | For AI | Key for `h101-coder` (Forge) |
@@ -90,8 +104,7 @@ Live AI parts show a friendly "Hermes isn't connected yet" message.
 ## 3. Deploy to Vercel
 1. Push this folder to GitHub and **Import** it at https://vercel.com/new (framework: Other, no build step).
 2. Add the environment variables above (Production and Preview), then deploy.
-3. Check `https://<your-site>/api/health`: `{"ok":true,"ai":true,"db":true}`. The playground should say
-   **Live AI, powered by Hermes**.
+3. Check `https://<your-site>/api/health`: `{"ok":true,"ai":true,"db":true}`. Then send a message in **Write a SOUL.md › Test it on Hermes**.
 4. Add `ALLOWED_ORIGIN` with your `https://….vercel.app` URL and redeploy.
 
 `vercel.json` gives `api/chat.js`, `api/agents-chat.js` and `api/insights.js` up to 300 seconds, because
@@ -113,9 +126,10 @@ saved and Hermes isn't used.
 ## 4. The admin / mentor dashboard
 Sign in with **Admin / mentor**. It refreshes itself every 10 seconds.
 
-- **Overview**: where students are, feedback completion, missions, ratings, confidence, and the
+- **Overview**: where students are, feedback completion, SOUL.md starting points, ratings, confidence, and the
   **dashboard assistant** (Hermes `h101-mentor`), which reads names, progress and survey answers, never emails.
-- **Students**, **Missions**, **Feedback** (with CSV download), **Mentors**: as in Agent Lab.
+- **Students**, **Feedback** (with CSV download), **Mentors**: as in Agent Lab.
+- **Builds**: each student's agent name, profile, toolsets, and safety-check score.
 - **Hermes** (admin only):
   - **Status**: online/offline and response time of `GET ${HERMES_URL}/health`, and which profile keys
     are set (never the keys themselves).
@@ -147,14 +161,13 @@ Content-Type: application/json
   `data: {"tool":"web_search","emoji":"🔍","label":"…","status":"running"|"completed"}`; only `running`
   is shown ("🔍 Searching the web: …").
 - A `system` message from the site is layered on top of the profile's own instructions. Only the
-  playground (`h101-lab`) sends one: the student's agent prompt. Real agents never get a client system message.
-- Errors: `401` bad key, `404` unknown profile, `429`/`503` busy. The site shows a friendly message, and
-  the playground falls back to the practice agent.
+  SOUL.md tester (`h101-lab`) sends one: the student's draft SOUL.md. Real agents never get a client system message.
+- Errors: `401` bad key, `404` unknown profile, `429`/`503` busy. The site shows a friendly message.
 - The site waits up to 240 s and cancels the upstream request if the student leaves or presses **Stop**.
 
 | Use | Profile | Website env var | Tools |
 |---|---|---|---|
-| Playground Live AI (follows the student's card) | `h101-lab` | `HERMES_KEY_LAB` | None. The tool loop is simulated in the browser. |
+| SOUL.md tester (acts as the student's SOUL.md) | `h101-lab` | `HERMES_KEY_LAB` | None |
 | Dashboard assistant | `h101-mentor` | `HERMES_KEY_MENTOR` | None |
 | Atlas, researcher: cited answers | `h101-researcher` | `HERMES_KEY_RESEARCHER` | Web search + extract |
 | Forge, coder: writes and explains code | `h101-coder` | `HERMES_KEY_CODER` | No terminal (it can't run code) |
@@ -194,7 +207,7 @@ on and awake during the workshop (`start.sh` runs `caffeinate`).
 - HttpOnly, SameSite=Lax session cookies (`Secure` everywhere except `vercel dev`); PBKDF2 password
   hashes; strict Content-Security-Policy and security headers (see `vercel.json`).
 - Real agents: only `user`/`assistant` messages are forwarded (client `system` messages are dropped), the
-  last 12 messages, 2,000 characters each, 15 messages per 10 minutes per student. Playground Live AI:
+  last 12 messages, 2,000 characters each, 15 messages per 10 minutes per student. SOUL.md tester:
   20 requests per minute per student.
 - Agent answers and automation output are rendered by a small Markdown renderer that escapes everything
   first and only allows `http(s)` links (opened with `rel="noopener noreferrer nofollow"`).

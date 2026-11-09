@@ -1,9 +1,8 @@
 import { requireSession, rateLimit, incr, today } from './_store.js';
 import { configured, hermesChat, friendly, httpStatus, AGENTS, UPSTREAM_TIMEOUT_MS } from './_hermes.js';
 
-// Playground Live AI. The student's agent prompt arrives as a `system` message, which Hermes layers
-// on top of the h101-lab profile's own instructions. That profile has no tools: the THOUGHT / ACTION /
-// OBSERVATION loop and the simulated tools run in the browser, exactly like the practice agent.
+// SOUL.md tester (step 5). The student's draft SOUL.md arrives as a `system` message, which Hermes
+// layers on top of the h101-lab profile's own instructions. That profile has no tools.
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
   const allowed = process.env.ALLOWED_ORIGIN?.replace(/\/+$/, '');

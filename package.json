@@ -1,0 +1,6 @@
+{
+  "name": "hermes-agent-101-lab",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}

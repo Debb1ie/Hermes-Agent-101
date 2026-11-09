@@ -1,0 +1,5 @@
+# Files the website does not need to serve publicly.
+scripts/
+supabase.sql
+.env.example
+README.md

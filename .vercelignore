@@ -3,3 +3,4 @@ scripts/
 supabase.sql
 .env.example
 README.md
+hermes-side/

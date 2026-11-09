@@ -3689,7 +3689,7 @@ privacy:
       const keep = [], hold = html => `\u0000${keep.push(html) - 1}\u0000`;
       const link = (u, label) => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer nofollow">${label}</a>`;
       let t = raw.replace(/`([^`\n]+)`/g, (_, c) => hold(`<code>${esc(c)}</code>`));
-      t = t.replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, u) => hold(link(u, esc(label))));
+      t = t.replace(/\[([^\[\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, u) => hold(link(u, esc(label))));
       t = t.replace(/https?:\/\/[^\s<>()\u0000]+[^\s<>().,;:!?'"*_\u0000]/g, u => hold(link(u, esc(u))));
       t = esc(t).replace(/\*\*([^*\n]+?)\*\*/g, '<b>$1</b>').replace(/__([^_\n]+?)__/g, '<b>$1</b>')
         .replace(/(^|[^*\w])\*(?![\s*])([^*\n]+?)\*(?!\w)/g, '$1<i>$2</i>').replace(/(^|[^\w])_(?![\s_])([^_\n]+?)_(?!\w)/g, '$1<i>$2</i>');

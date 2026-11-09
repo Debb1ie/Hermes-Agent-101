@@ -168,6 +168,24 @@ Hermes also needs to serve:
   bot, a mentor approves it on the dashboard, and the operator runs
   `hermes -p h101-assistant pairing approve telegram <CODE>`.
 
+### Running Hermes on your own computer: `hermes-side/`
+If Hermes runs on a Mac or PC (not a server), `hermes-side/` connects it to the website safely:
+
+```bash
+hermes-side/start.sh      # starts the edge on 127.0.0.1:8650 + a Cloudflare tunnel, prints HERMES_URL
+hermes-side/make-env.sh   # writes HERMES_URL and the 5 profile keys into .env (never committed)
+hermes-side/stop.sh       # stops the edge and tunnel; Hermes keeps running
+```
+
+`edge.mjs` is the only thing the tunnel exposes. It allows `GET /health`, `GET /h101/automations`
+(built from `h101-assistant`'s cron output, Bearer = its `API_SERVER_KEY`), and
+`POST /p/h101-*/v1/chat/completions` for the five workshop profiles. Every other route, including your
+other Hermes profiles, gets 404. It needs Node 18+ and `cloudflared` (`brew install cloudflared`).
+
+A quick tunnel's URL changes every time `start.sh` runs: update `HERMES_URL` in Vercel and redeploy.
+For a URL that never changes, use a named Cloudflare tunnel with your own domain. The computer must stay
+on and awake during the workshop (`start.sh` runs `caffeinate`).
+
 ## Security notes
 - Hermes keys, the Supabase key and admin credentials live only in Vercel environment variables.
 - HttpOnly, SameSite=Lax session cookies (`Secure` everywhere except `vercel dev`); PBKDF2 password

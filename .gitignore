@@ -2,3 +2,5 @@
 .env.*
 !.env.example
 .vercel
+hermes-side/run/
+hermes-side/logs/

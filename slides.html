@@ -4,182 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hermes Agent 101 Slides</title>
+<link rel="icon" href="img/brand/hermes-icon.svg" type="image/svg+xml">
 <meta name="description" content="Hermes Agent 101 in 30 minutes: what Hermes is, how to set it up in Hermes Desktop, how to make your own safe agent, and how the whole workshop system works. Real screenshots throughout.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
   // apply the saved theme before the page paints
   try{ var t = localStorage.getItem('hermes101-slides-theme'); if(t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }catch(e){}
 </script>
 <style>
+/* Nous Research palette: electric blue, white, near-black */
 :root{
-  --bg:#08080A; --surface:#141418; --surface-2:#1C1C21; --ink:#F2F2F3; --ink-2:#CDCFD6; --muted:#9A9DA6; --rule:#2A2B31;
-  --gold:#F5C451; --gold-ink:#F5C451; --violet:#8B7BFF; --violet-ink:#A99DFF; --red:#E06B67; --green:#5BC48A;
-  --on-gold:#0B0B0C; --grid:rgba(255,255,255,.035); --glow-a:rgba(245,196,81,.07); --glow-b:rgba(139,123,255,.08);
-  --shot-shadow:0 30px 60px -30px rgba(0,0,0,.9); --chrome:#0E0E11; --chrome-btn:#1C1C21; --code:#16161A;
-  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --sans:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",Consolas,monospace;
+  --bg:#05050B; --surface:#0E0E19; --surface-2:#161626; --panel:#0B0B1D; --ink:#F5F6FF; --ink-2:#C9CBDD; --muted:#8C8FA6; --rule:#24253B;
+  --blue:#0000F2; --blue-ink:#8F95FF; --on-blue:#FFFFFF; --grid:rgba(255,255,255,.028); --glow:rgba(0,0,242,.28);
+  --shot-shadow:0 22px 48px -26px rgba(0,0,0,.95); --chrome:#09091A; --chrome-btn:#141428; --code:#121224;
+  --display:"Inter Tight","Segoe UI",system-ui,sans-serif; --sans:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",Consolas,monospace;
   --tool-h:56px; color-scheme:dark;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
-    --bg:#FAF8F3; --surface:#FFFFFF; --surface-2:#F2EFE8; --ink:#16161A; --ink-2:#34353B; --muted:#5F616A; --rule:#E0DCD3;
-    --gold-ink:#8A5F00; --violet-ink:#5A48D6; --red:#B3322E; --green:#1E7A47; --grid:rgba(0,0,0,.04); --glow-a:rgba(245,196,81,.16); --glow-b:rgba(139,123,255,.12);
-    --shot-shadow:0 24px 50px -28px rgba(40,30,10,.45); --chrome:#F2EFE8; --chrome-btn:#FFFFFF; --code:#F4F2EE; color-scheme:light;
+    --bg:#FFFFFF; --surface:#F6F7FC; --surface-2:#EDEFF8; --panel:#EEF0FF; --ink:#05051A; --ink-2:#2B2D45; --muted:#5B5E78; --rule:#DEE0EE;
+    --blue-ink:#0000D6; --grid:rgba(0,0,60,.035); --glow:rgba(0,0,242,.09);
+    --shot-shadow:0 18px 40px -24px rgba(10,10,60,.45); --chrome:#F3F4FA; --chrome-btn:#FFFFFF; --code:#F1F2F9; color-scheme:light;
   }
 }
 :root[data-theme="light"]{
-  --bg:#FAF8F3; --surface:#FFFFFF; --surface-2:#F2EFE8; --ink:#16161A; --ink-2:#34353B; --muted:#5F616A; --rule:#E0DCD3;
-  --gold-ink:#8A5F00; --violet-ink:#5A48D6; --red:#B3322E; --green:#1E7A47; --grid:rgba(0,0,0,.04); --glow-a:rgba(245,196,81,.16); --glow-b:rgba(139,123,255,.12);
-  --shot-shadow:0 24px 50px -28px rgba(40,30,10,.45); --chrome:#F2EFE8; --chrome-btn:#FFFFFF; --code:#F4F2EE; color-scheme:light;
+  --bg:#FFFFFF; --surface:#F6F7FC; --surface-2:#EDEFF8; --panel:#EEF0FF; --ink:#05051A; --ink-2:#2B2D45; --muted:#5B5E78; --rule:#DEE0EE;
+  --blue-ink:#0000D6; --grid:rgba(0,0,60,.035); --glow:rgba(0,0,242,.09);
+  --shot-shadow:0 18px 40px -24px rgba(10,10,60,.45); --chrome:#F3F4FA; --chrome-btn:#FFFFFF; --code:#F1F2F9; color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
 [hidden]{display:none!important}
-a{color:var(--gold-ink)}
+a{color:var(--blue-ink)}
 code{font-family:var(--mono);font-size:.84em;background:var(--code);border:1px solid var(--rule);border-radius:6px;padding:1px 7px}
 button{font-family:var(--sans)}
 
 /* stage: every slide is 1600 x 900, scaled to fit, then zoomed */
-.viewport{position:fixed;left:0;right:0;top:0;bottom:calc(var(--tool-h));display:flex;overflow:hidden}
+.viewport{position:fixed;left:0;right:0;top:0;bottom:var(--tool-h);display:flex;overflow:hidden}
 .viewport.zoomed{overflow:auto}
 .sizer{margin:auto;position:relative;flex:none}
 .deck{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
-.slide{position:absolute;inset:0;padding:64px 90px 70px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s;overflow:hidden;
-  background:radial-gradient(1100px 700px at 100% 0%,var(--glow-a),transparent 60%),radial-gradient(900px 600px at 0% 100%,var(--glow-b),transparent 60%),var(--bg)}
+.slide{position:absolute;inset:0;padding:58px 80px 74px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s;overflow:hidden;
+  background:radial-gradient(1000px 640px at 100% 0%,var(--glow),transparent 62%),var(--bg)}
 .slide.on{opacity:1;visibility:visible;transition:opacity .3s ease}
-.slide::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 70% 30%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 30%,#000 10%,transparent 70%)}
+.slide::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:64px 64px}
 .slide > *{position:relative;z-index:1}
 
-/* type */
-.kicker{font-family:var(--mono);font-size:19px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 12px;display:flex;align-items:center;gap:12px}
-h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;line-height:1.05}
-h1{font-size:104px;font-weight:800}
-h2{font-size:56px;font-weight:800;margin-bottom:22px}
-h3{font-size:28px;font-weight:700;margin-bottom:8px}
-p,li{font-size:25px;line-height:1.45;margin:0}
-.lead{font-size:30px;color:var(--ink-2);max-width:1150px;line-height:1.4}
+/* header */
+.kicker{font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-ink);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.025em;line-height:1.02}
+h1{font-size:118px;font-weight:800}
+h2{font-size:54px;font-weight:800;margin:0 0 26px}
+h3{font-size:24px;font-weight:700;margin:0 0 6px}
+p,li{font-size:23px;line-height:1.42;margin:0}
 .muted{color:var(--muted)}
-.gold{color:var(--gold-ink)}
-b{font-weight:600}
-ul.clean{list-style:none;padding:0;margin:0;display:grid;gap:14px}
-ul.clean li{display:flex;gap:14px;align-items:flex-start;color:var(--ink-2)}
-ul.clean li b{color:var(--ink)}
-ul.clean li::before{content:"";flex:none;width:11px;height:11px;border-radius:50%;background:var(--gold);margin-top:13px}
-ol.num{list-style:none;padding:0;margin:0;display:grid;gap:12px;counter-reset:n}
-ol.num li{counter-increment:n;display:flex;gap:14px;align-items:flex-start;color:var(--ink-2)}
-ol.num li b{color:var(--ink)}
-ol.num li::before{content:counter(n);flex:none;width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--on-gold);font:700 18px/34px var(--sans);text-align:center;margin-top:1px}
+.chip{display:inline-block;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;border-radius:6px;padding:3px 9px;line-height:1.5;border:1px solid var(--rule);color:var(--ink-2);background:var(--surface)}
+.chip.live{background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* chips */
-.chip{display:inline-block;font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 12px;line-height:1.5}
-.chip.desk{background:var(--violet);color:#fff}
-.chip.term{background:var(--surface-2);color:var(--muted);border:1px solid var(--rule)}
-.chip.web{background:var(--gold);color:var(--on-gold)}
-.chip.proof{background:var(--green);color:#fff}
-
-/* layouts */
-.split{display:grid;grid-template-columns:520px minmax(0,1fr);gap:46px;flex:1;min-height:0;align-items:start}
-.split.wide{grid-template-columns:600px minmax(0,1fr)}
-.split.rev{grid-template-columns:minmax(0,1fr) 520px}
-.col{display:flex;flex-direction:column;gap:20px;min-width:0}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:30px;flex:1;min-height:0;align-items:start}
-.pair.l{grid-template-columns:1.25fr 1fr}
-.pair.r{grid-template-columns:1fr 1.25fr}
-.stack{display:flex;flex-direction:column;gap:16px;min-height:0}
-.cards{display:grid;gap:18px}
-.cards.c2{grid-template-columns:1fr 1fr}.cards.c3{grid-template-columns:repeat(3,1fr)}.cards.c4{grid-template-columns:repeat(4,1fr)}
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:20px;padding:20px 22px;min-width:0}
-.card .t{display:block;font-family:var(--display);font-weight:700;font-size:27px;margin-bottom:6px;color:var(--ink)}
-.card p{font-size:21px;color:var(--ink-2);line-height:1.4}
-.card .ic{font-size:30px;display:block;margin-bottom:8px}
-.card.hi{border-color:color-mix(in srgb,var(--gold) 60%,var(--rule))}
-.n{font-family:var(--mono);font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--violet-ink);display:block;margin-bottom:4px}
-
-/* screenshots */
-figure.shot{margin:0;display:flex;flex-direction:column;gap:9px;min-width:0;min-height:0}
-figure.shot img{display:block;width:auto;height:auto;max-width:100%;border-radius:14px;border:1px solid var(--rule);box-shadow:var(--shot-shadow);cursor:zoom-in;background:#0E0E10}
+/* the one layout: points on the left, pictures on the right */
+.body{display:grid;grid-template-columns:470px minmax(0,1fr);gap:44px;flex:1;min-height:0}
+.body.flip{grid-template-columns:minmax(0,1fr) 470px}
+.side{display:flex;flex-direction:column;gap:22px;min-height:0}
+ul.points{list-style:none;margin:0;padding:0;display:grid;gap:20px}
+ul.points li{position:relative;padding-left:30px;color:var(--ink-2);font-size:22px;line-height:1.42}
+ul.points li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;background:var(--blue);border-radius:2px}
+ul.points li b{color:var(--ink);font-weight:600}
+.try{margin-top:auto;background:#0000F2;color:#fff;border-radius:12px;padding:15px 20px}
+.try b{display:block;font:600 14px var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:4px}
+.try span{font:500 20px/1.45 var(--mono)}
+.try code{background:rgba(255,255,255,.16);border-color:transparent;color:#fff;font-size:1em;padding:0 5px}
+.media{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:24px;display:flex;gap:22px;align-items:center;justify-content:center;min-height:0;min-width:0;height:100%}
+.media.col{flex-direction:column}
+.media.col figure.shot{flex:0 1 auto}
+.media{justify-content:safe center}
+.media.col{align-items:center}
+figure.shot{margin:0;flex:1 1 0;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+figure.shot img{display:block;width:auto;height:auto;max-width:100%;max-height:var(--h,520px);object-fit:contain;border-radius:10px;border:1px solid var(--rule);box-shadow:var(--shot-shadow);cursor:zoom-in;background:#0E0E10}
 figure.shot img.white{background:#fff}
-figure.shot figcaption{font-size:18px;color:var(--muted);line-height:1.35}
-.h300 img{max-height:300px}.h470 img{max-height:470px}.h480 img{max-height:480px}.h490 img{max-height:490px}.h340 img{max-height:340px}.h380 img{max-height:380px}.h420 img{max-height:420px}.h460 img{max-height:460px}.h500 img{max-height:500px}.h540 img{max-height:540px}.h580 img{max-height:580px}
-
-/* plain-words explanation for students */
-.explain{background:#5A48D6;border-radius:12px;padding:16px 22px}
-.explain p{font-size:21px;line-height:1.45;color:#FFFFFF}
-.explain p b{color:#FFFFFF}
-.explain p b:first-child{display:block;font-size:17px;font-weight:700;margin-bottom:2px}
-.explain code{background:rgba(255,255,255,.18);border-color:transparent;color:#FFFFFF}
-.slide > .explain{margin-top:auto}
-
-/* loop + flow */
-.flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.flow span{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:10px 20px;font-weight:600;font-size:23px}
-.flow span.hi{border-color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 40%,transparent)}
-.flow i{font-style:normal;color:var(--gold-ink);font-size:26px}
-.arch{display:flex;align-items:stretch;gap:14px;margin:6px 0 26px}
-.arch .box{flex:1;background:var(--surface);border:1px solid var(--rule);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:6px}
-.arch .box b{font-family:var(--display);font-size:25px}
-.arch .box small{font-size:17px;color:var(--muted);line-height:1.4}
-.arch .box.hi{border-color:color-mix(in srgb,var(--gold) 65%,var(--rule))}
-.arch .box.v{border-color:color-mix(in srgb,var(--violet) 65%,var(--rule))}
-.arch .to{align-self:center;font-size:30px;color:var(--gold-ink)}
-.arch .tag{font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--violet-ink)}
-table.t{border-collapse:collapse;width:100%;font-size:21px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;overflow:hidden}
-table.t th,table.t td{text-align:left;padding:10px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
-table.t th{font-family:var(--display);color:var(--ink);background:var(--surface-2);font-size:20px}
+figure.shot figcaption{font-size:16px;color:var(--muted);text-align:center;line-height:1.35;max-width:100%}
+figure.shot figcaption .k{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--blue);color:#fff;font:700 13px var(--sans);margin-right:7px;vertical-align:1px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;min-width:0}
+.card .t{display:block;font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:6px;color:var(--ink);letter-spacing:-.01em}
+.card p{font-size:19px;color:var(--ink-2);line-height:1.42}
+.card .n{display:block;font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-ink);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.mono{font-family:var(--mono);font-size:19px;line-height:1.6;color:var(--ink);background:var(--code);border:1px solid var(--rule);border-radius:12px;padding:16px 20px;white-space:pre;width:100%}
+.mono .c{color:var(--muted)}
+table.t{border-collapse:collapse;width:100%;font-size:19px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+table.t th,table.t td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+table.t th{font-family:var(--display);color:var(--ink);background:var(--surface-2);font-size:18px}
 table.t tr:last-child td{border-bottom:0}
 table.t td b{color:var(--ink)}
-.cmd{font-family:var(--mono);font-size:22px;background:var(--code);border:1px solid var(--rule);border-radius:14px;padding:14px 18px;color:var(--ink);white-space:pre;overflow:hidden;line-height:1.55}
-.cmd .c{color:var(--muted)}
-.steps13{display:grid;grid-template-columns:1fr 1fr;gap:8px 26px}
-.steps13 li{font-size:20px}
-.steps13 li::before{width:28px;height:28px;font-size:15px;line-height:28px;margin-top:0}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
+.strip li{list-style:none}
+.wide{display:flex;flex-direction:column;flex:1;min-height:0}
 
-/* title */
-.title{justify-content:center}
-.title .mark{width:104px;height:104px;border-radius:28px;display:grid;place-items:center;margin-bottom:34px;background:linear-gradient(140deg,#FBDB8A,#F5C451 50%,#B48A22);color:#0B0B0C;box-shadow:0 20px 50px -20px rgba(245,196,81,.6)}
-.title .mark svg{width:64px;height:64px}
-.title h1 span{color:var(--gold-ink)}
-.title .who{margin-top:48px;font-size:25px;color:var(--muted)}
-.title .who b{color:var(--ink)}
-.parts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
-.parts .card{padding:24px}
-.parts .card .n{font-size:18px}
-.qr{background:#fff;border-radius:16px;padding:10px;width:210px;height:210px}
+/* loop diagram */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%}
+.loop div{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:22px 18px;text-align:left}
+.loop div b{display:block;font:600 13px var(--mono);letter-spacing:.12em;color:var(--blue-ink);margin-bottom:8px}
+.loop div span{display:block;font:700 26px var(--display);margin-bottom:6px}
+.loop div p{font-size:17px;color:var(--muted);line-height:1.4}
+.loop div.hi{background:#0000F2;border-color:#0000F2;color:#fff}
+.loop div.hi b,.loop div.hi p{color:rgba(255,255,255,.85)}
+.arch{display:flex;align-items:stretch;gap:12px;width:100%}
+.arch .box{flex:1;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:5px}
+.arch .box b{font-family:var(--display);font-size:23px}
+.arch .box small{font-size:16px;color:var(--muted);line-height:1.4}
+.arch .box.hi{background:#0000F2;border-color:#0000F2;color:#fff}
+.arch .box.hi small,.arch .box.hi .tag{color:rgba(255,255,255,.85)}
+.arch .to{align-self:center;font-size:26px;color:var(--blue-ink)}
+.arch .tag{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-ink)}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:n}
+ol.steps li{counter-increment:n;display:flex;gap:14px;align-items:flex-start;color:var(--ink-2);font-size:23px}
+ol.steps li b{color:var(--ink)}
+ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-radius:8px;background:#0000F2;color:#fff;font:700 17px/34px var(--sans);text-align:center}
+
+/* title + end: the blue of hermes-agent.nousresearch.com */
+.slide.blue{background:#0000F2;color:#fff;justify-content:center}
+.slide.blue::after{background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)}
+.slide.blue .kicker{color:rgba(255,255,255,.85)}
+.slide.blue .lead{font-size:30px;line-height:1.4;color:rgba(255,255,255,.9);max-width:1080px}
+.logo{width:132px;height:132px;display:block;margin-bottom:34px;border-radius:30px;box-shadow:0 24px 60px -24px rgba(0,0,0,.6)}
+.who{margin-top:46px;font-size:24px;color:rgba(255,255,255,.88)}
+.who b{color:#fff}
+.credit{position:absolute;left:80px;right:80px;bottom:40px;font-size:15px;color:rgba(255,255,255,.7)}
+.qr{background:#fff;border-radius:14px;padding:10px;width:196px;height:196px}
 .qr svg{width:100%;height:100%;display:block}
-.qrs{display:flex;gap:34px}
-.qrs figure{margin:0;display:grid;gap:8px;justify-items:center;font-size:19px;color:var(--muted);text-align:center}
-.foot{position:absolute;left:90px;right:90px;bottom:24px;display:flex;justify-content:space-between;font-size:16px;color:var(--muted);opacity:.75;z-index:2}
+.qrs{display:flex;gap:30px}
+.qrs figure{margin:0;display:grid;gap:8px;justify-items:center;font-size:18px;color:rgba(255,255,255,.88);text-align:center}
+.cmdline{font:500 24px var(--mono);background:rgba(255,255,255,.12);border-radius:12px;padding:14px 20px;margin:0 0 30px;color:#fff;width:max-content}
+.foot{position:absolute;left:80px;right:80px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);z-index:2}
+.foot span{display:flex;align-items:center;gap:10px}
+.foot img{width:22px;height:22px;border-radius:6px}
 .foot b{color:var(--ink-2);font-weight:600}
+.slide.blue .foot,.slide.blue .foot b{color:rgba(255,255,255,.75)}
 
 /* chrome: toolbar, edge arrows, overview, lightbox */
-.bar{position:fixed;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--violet));transition:width .3s ease;z-index:20}
+.bar{position:fixed;left:0;top:0;height:4px;background:#0000F2;transition:width .3s ease;z-index:20}
 .toolbar{position:fixed;left:0;right:0;bottom:0;height:var(--tool-h);display:flex;align-items:center;justify-content:center;gap:6px;background:var(--chrome);border-top:1px solid var(--rule);z-index:25;padding:0 10px}
 .toolbar .grp{display:flex;align-items:center;gap:4px;padding:0 8px;border-right:1px solid var(--rule)}
 .toolbar .grp:last-child{border-right:0}
 .tb{min-width:40px;height:38px;border-radius:10px;border:1px solid var(--rule);background:var(--chrome-btn);color:var(--ink);font:600 15px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;cursor:pointer}
-.tb:hover{border-color:var(--gold)}
-.tb:focus-visible,.edge:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.tb[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.tb:hover{border-color:#0000F2}
+.tb:focus-visible,.edge:focus-visible{outline:3px solid #0000F2;outline-offset:2px}
 .tb svg{width:18px;height:18px}
 .count{font:600 15px var(--mono);color:var(--ink-2);min-width:74px;text-align:center}
 .zl{font:600 14px var(--mono);color:var(--ink-2);min-width:54px;text-align:center}
-.edge{position:fixed;top:calc((100% - var(--tool-h)) / 2);transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:.55;transition:opacity .2s}
-.edge:hover{opacity:1;border-color:var(--gold)}
+.edge{position:fixed;top:calc((100% - var(--tool-h)) / 2);transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:.6;transition:opacity .2s}
+.edge:hover{opacity:1;border-color:#0000F2}
 .edge svg{width:26px;height:26px}
 .edge.prev{left:14px}.edge.next{right:14px}
 .edge:disabled{opacity:.15;cursor:default}
-.overlay{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--bg) 94%,transparent);overflow:auto;padding:40px 24px}
+.overlay{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--bg) 95%,transparent);overflow:auto;padding:40px 24px}
 .ov{max-width:1100px;margin:0 auto}
 .ov h2{font-size:34px;margin:0 0 6px}
 .ov .hint{color:var(--muted);margin:0 0 22px;font-size:16px}
-.ov h3{font-size:16px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin:22px 0 10px}
+.ov h3{font-size:14px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-ink);margin:22px 0 10px}
 .ov .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
 .ov button{text-align:left;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;color:var(--ink);font:500 16px var(--sans);cursor:pointer;display:flex;gap:10px}
-.ov button:hover,.ov button.cur{border-color:var(--gold)}
+.ov button:hover,.ov button.cur{border-color:#0000F2}
 .ov button span{font-family:var(--mono);color:var(--muted);min-width:1.8em}
 .ov .close{position:fixed;top:16px;right:20px}
-.lightbox{position:fixed;inset:0;z-index:60;background:rgba(5,5,7,.94);display:grid;place-items:center;cursor:zoom-out;padding:24px}
+.lightbox{position:fixed;inset:0;z-index:60;background:rgba(3,3,10,.94);display:grid;place-items:center;cursor:zoom-out;padding:24px}
 .lightbox img{max-width:100%;max-height:100%;border-radius:12px;background:#fff}
 .lightbox p{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:#BBB;font-size:14px;margin:0}
 @media (max-width:760px){
@@ -204,278 +195,403 @@ table.t td b{color:var(--ink)}
 <div class="bar" id="bar"></div>
 <div class="viewport" id="viewport"><div class="sizer" id="sizer"><div class="deck" id="deck">
 
-<!-- ================= TITLE ================= -->
-<section class="slide title" data-min="0.5" data-part="Start" data-title="Hermes Agent 101">
-  <div class="mark" aria-hidden="true">CADUCEUS</div>
+<section class="slide blue" data-min="0.5" data-part="Start" data-title="Hermes Agent 101">
+  <img class="logo" src="img/brand/hermes-icon.svg" alt="Hermes Agent logo by Nous Research">
   <p class="kicker">A hands-on workshop for students</p>
-  <h1>Hermes Agent <span>101</span></h1>
-  <p class="lead" style="margin-top:20px">Set up your own AI agent, make it safe, and put it to work. Every screenshot in this deck comes from Hermes itself.</p>
+  <h1>Hermes Agent 101</h1>
+  <p class="lead" style="margin-top:22px">Set up your own AI agent, make it safe, and put it to work. Every screenshot comes from Hermes itself.</p>
   <p class="who"><b>Precious Grace Deborah Manucom</b> · Workshop Lead</p>
+  <p class="credit">Hermes Agent and its logo are by Nous Research. This workshop is independent and not affiliated with Nous Research.</p>
 </section>
 
 <section class="slide" data-min="0.5" data-part="Start" data-title="Today’s map">
   <p class="kicker">Today’s map · 30 minutes</p>
   <h2>Four parts, one working agent</h2>
-  <div class="parts">
-    <div class="card"><span class="n">Part 1 · 3 min</span><span class="t">Meet Hermes</span><p>What an agent is, and what Hermes can do.</p></div>
-    <div class="card"><span class="n">Part 2 · 5 min</span><span class="t">Set it up</span><p>Install the app, connect a model, check it, say hi.</p></div>
-    <div class="card"><span class="n">Part 3 · 10 min</span><span class="t">Make your own agent</span><p>Profile, SOUL.md, tools, safety, memory, jobs, Telegram.</p></div>
-    <div class="card hi"><span class="n">Part 4 · 9 min</span><span class="t">Our Hermes</span><p>The agents behind the course, how it connects, proof, and a demo.</p></div>
+  <div class="grid4">
+    <div class="card"><span class="n">Part 1 · 3 min</span><span class="t">Meet Hermes</span><p>What makes an agent different, and what Hermes adds.</p></div>
+    <div class="card"><span class="n">Part 2 · 5 min</span><span class="t">Set it up</span><p>Install, connect a model, check it, first chat.</p></div>
+    <div class="card"><span class="n">Part 3 · 10 min</span><span class="t">Make your own agent</span><p>Profile, SOUL.md, tools, safety, memory, jobs, Telegram, apps.</p></div>
+    <div class="card"><span class="n">Part 4 · 9 min</span><span class="t">Our Hermes</span><p>The agents behind this course, proof they run, and a live demo.</p></div>
   </div>
-  <div class="explain" style="margin-top:34px"><p><b>How to use these slides</b>Click the arrow buttons on the sides or at the bottom (or use the arrow keys). Click any screenshot to see it bigger. Use + and − to zoom, the sun or moon button for light or dark mode, and the grid button to jump to any slide.</p></div>
+  <div class="try" style="margin-top:34px;max-width:1100px"><b>How to use these slides</b><span>Arrow buttons or arrow keys to move · click a screenshot to enlarge · + and − to zoom · sun or moon for light or dark · grid to jump</span></div>
 </section>
 
-<!-- ================= PART 1 ================= -->
 <section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="Chatbot vs. agent">
   <p class="kicker">Part 1 · Meet Hermes</p>
-  <h2>A chatbot talks. An agent <span class="gold">acts</span>.</h2>
-  <div class="cards c2">
-    <div class="card"><span class="n">Chatbot</span><span class="t">Answers</span><p>You ask, it replies from what it already knows. It can’t look things up, remember you, or do anything on its own.</p></div>
-    <div class="card hi"><span class="n">Agent</span><span class="t">Acts</span><p>It works toward a goal. It can search the web, read a file, run a job at 8 AM, or message you on Telegram. It does this with <b>tools</b>.</p></div>
+  <h2>A chatbot answers. An agent acts.</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Same model, different loop.</b> What makes it an agent is the loop around the model.</li>
+        <li><b>Every loop costs tokens.</b> A 5-step task can cost more than a long essay.</li>
+        <li><b>Mistakes become actions.</b> A wrong answer is text; a wrong tool call changes things.</li>
+      </ul>
+    </div>
+    <div class="media col">
+      <div class="loop">
+        <div><b>STEP 1</b><span>Think</span><p>What do I need to finish the goal?</p></div>
+        <div class="hi"><b>STEP 2</b><span>Act</span><p>Call a tool: search, read, run, send.</p></div>
+        <div><b>STEP 3</b><span>Look</span><p>Read the result. Good enough?</p></div>
+        <div><b>STEP 4</b><span>Answer</span><p>Or go back to step 1.</p></div>
+      </div>
+      <p class="muted" style="font-size:19px;text-align:center">This is why the rest of the workshop is about which tools an agent gets, and which settings stop it.</p>
+    </div>
   </div>
-  <h3 style="margin-top:30px">Every agent runs the same loop</h3>
-  <div class="flow"><span>1 · Think</span><i>→</i><span class="hi">2 · Act (use a tool)</span><i>→</i><span>3 · Look at the result</span><i>→</i><span>repeat</span><i>→</i><span>4 · Answer</span></div>
-  <div class="explain"><p><b>In plain words</b>An agent is a chatbot with hands. Because it can <i>do</i> things, we have to decide what it’s allowed to do. That’s what this workshop teaches.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="Meet Hermes">
   <p class="kicker">Part 1 · Meet Hermes</p>
-  <div class="split">
-    <div class="col">
-      <h2 style="margin:0">Hermes Agent</h2>
-      <ul class="clean">
-        <li><span>Made by <b>Nous Research</b>. Tagline: “The Agent That Grows With You”.</span></li>
-        <li><span><b>Free and open source</b>. You only pay for the AI model, and free ones exist.</span></li>
-        <li><span><b>Runs on your computer</b>. Chats, memory, and skills stay in one folder.</span></li>
-        <li><span><b>Any model</b>: Nous Portal, OpenRouter, OpenAI, Gemini, or a local one.</span></li>
+  <h2>Hermes Agent, by Nous Research</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Open source (MIT).</b> You can read exactly what it does with your data.</li>
+        <li><b>Model-agnostic.</b> Swap the brain without rebuilding the agent.</li>
+        <li><b>Local-first.</b> Chats, memory, and skills are plain files in <code>~/.hermes</code>.</li>
       </ul>
-      <div class="explain"><p><b>In plain words</b>Hermes is the program that turns an AI model into your own agent, on your own computer.</p></div>
+      <div class="try"><b>Try it</b><span>hermes-agent.nousresearch.com</span></div>
     </div>
-    <figure class="shot h540"><img src="img/hermes-official-site.jpg" alt="The official Hermes Agent website"><figcaption>hermes-agent.nousresearch.com · Screenshot © Nous Research</figcaption></figure>
+    <div class="media">
+      <figure class="shot"><img style="--h:500px" src="img/hermes-official-site.jpg" alt="The official Hermes Agent website"><figcaption>hermes-agent.nousresearch.com · © Nous Research</figcaption></figure>
+    </div>
   </div>
 </section>
 
 <section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="What Hermes can do">
   <p class="kicker">Part 1 · Meet Hermes</p>
-  <h2>What Hermes can do</h2>
-  <div class="cards c3">
-    <div class="card"><span class="t">Use tools</span><p>Search the web, read pictures, run code, use files. You choose which.</p></div>
-    <div class="card"><span class="t">Remember you</span><p>It keeps short notes about you and your work between chats.</p></div>
-    <div class="card"><span class="t">Learn skills</span><p>It saves how-tos (skills) and reuses them next time.</p></div>
-    <div class="card"><span class="t">Work on a schedule</span><p>A morning briefing at 8:00, a weekly review on Monday.</p></div>
-    <div class="card"><span class="t">Live where you are</span><p>Telegram, Discord, Slack, WhatsApp, and more.</p></div>
-    <div class="card"><span class="t">Many agents</span><p>One profile per job: a study buddy, a news scout, a coder.</p></div>
+  <h2>Six things that make it more than a chatbot</h2>
+  <div class="grid3">
+    <div class="card"><span class="n">Tools</span><span class="t">Acts with switches</span><p>20+ toolsets, and each one can be on in the terminal but off on Telegram.</p></div>
+    <div class="card"><span class="n">Memory</span><span class="t">Remembers you</span><p>Two small notes files. Small on purpose, so only what matters is kept.</p></div>
+    <div class="card"><span class="n">Skills</span><span class="t">Learns how-tos</span><p>Saves a working method as a file and loads it only when it’s needed.</p></div>
+    <div class="card"><span class="n">Schedule</span><span class="t">Works on its own</span><p>Cron jobs wake it up at set times, with nobody typing.</p></div>
+    <div class="card"><span class="n">Messaging</span><span class="t">Lives in your apps</span><p>One gateway connects Telegram, Discord, Slack, WhatsApp and more.</p></div>
+    <div class="card"><span class="n">Profiles</span><span class="t">Many agents, one install</span><p>Each profile is a separate agent with its own keys and memory.</p></div>
   </div>
-  <div class="explain"><p><b>In plain words</b>You can build a helper that knows you, does its job by itself on time, and answers you on your phone.</p></div>
 </section>
 
-<!-- ================= PART 2 ================= -->
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="What you need">
   <p class="kicker">Part 2 · Set it up</p>
-  <h2>What you need</h2>
-  <table class="t">
-    <tr><th>What</th><th>Details</th></tr>
-    <tr><td><b>A computer</b></td><td>The app: a Mac with Apple Silicon (M1 or newer) or Windows 11 (22H2+). Other Windows, Linux, or WSL2: the terminal install.</td></tr>
-    <tr><td><b>About 4 GB free</b></td><td>For Hermes, its Python, and its tools.</td></tr>
-    <tr><td><b>An AI model</b></td><td><b>Nous Portal</b> (free tier), an <b>OpenRouter</b> key (some free models), or a <b>local model</b> (needs a strong PC).</td></tr>
-    <tr><td><b>Permission</b></td><td>Your own computer, or ask the owner first.</td></tr>
-    <tr><td><b>Telegram</b> (optional)</td><td>To chat with your agent from your phone.</td></tr>
-  </table>
-  <div class="explain"><p><b>In plain words</b>Hermes itself is free. A laptop, the internet, and one free account are enough to start.</p></div>
+  <h2>What you need before you start</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>The app has limits.</b> Apple Silicon Macs and Windows 11 only. Everyone else: one terminal line.</li>
+        <li><b>It brings its own Python.</b> About 4 GB, and your system Python doesn’t matter.</li>
+        <li><b>A model can be free.</b> Nous Portal’s free tier needs no API key at all.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>About This Mac › Chip: “Apple M…” means the app works</span></div>
+    </div>
+    <div class="media">
+      <table class="t">
+        <tr><th>What</th><th>Details</th></tr>
+        <tr><td><b>Computer</b></td><td>App: Mac (M1 or newer) or Windows 11 22H2+. Others: terminal install.</td></tr>
+        <tr><td><b>Disk</b></td><td>About 4 GB free</td></tr>
+        <tr><td><b>Model</b></td><td>Nous Portal, an OpenRouter key, or a local model</td></tr>
+        <tr><td><b>Permission</b></td><td>Your own computer, or ask the owner</td></tr>
+        <tr><td><b>Optional</b></td><td>Telegram, to chat from your phone</td></tr>
+      </table>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="Install the app">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span>Part 2 · Set it up</p>
-  <h2>Install the app, once</h2>
-  <div class="pair">
-    <figure class="shot h470"><img class="white" src="img/slides/desk-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally"><figcaption><b>1</b> First launch: choose <b>Install Hermes locally</b>.</figcaption></figure>
-    <figure class="shot h470"><img class="white" src="img/slides/desk-installer.jpg" alt="Setting up Hermes Agent: a one-time installer with 9 steps"><figcaption><b>2</b> A one-time setup with 9 steps. Next time it opens straight away.</figcaption></figure>
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span></p>
+  <h2>Install once, in two screens</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Pick “Install locally”.</b> “Connect” is for a Hermes already running on a server.</li>
+        <li><b>Slow once, fast forever.</b> The 9-step setup builds a private runtime; later launches skip it.</li>
+        <li><b>App and terminal share one folder.</b> You can switch between them any time.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>No app? <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:300px" src="img/slides/desk-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally"><figcaption><span class="k">1</span>First launch</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:460px" src="img/slides/desk-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer"><figcaption><span class="k">2</span>One-time setup</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Download the app from hermes-agent.nousresearch.com/desktop. No app? One line in the terminal does the same: <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="Connect a model">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span>Part 2 · Set it up</p>
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span></p>
   <h2>Connect a model: the agent’s brain</h2>
-  <div class="pair r">
-    <figure class="shot h480"><img class="white" src="img/slides/desk-provider.jpg" alt="Choose a provider: Nous Portal, run models locally, other providers, I have an API key"><figcaption><b>3</b> <b>Nous Portal</b> is easiest. Or click <b>I have an API key</b>.</figcaption></figure>
-    <figure class="shot h480"><img class="white" src="img/slides/desk-api-key.jpg" alt="OpenRouter selected, Paste API key, Connect"><figcaption><b>4</b> Pick a provider, <b>Get a key</b>, paste it, <b>Connect</b>.</figcaption></figure>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>The key is a password.</b> It lives in <code>~/.hermes/.env</code>, never in a chat.</li>
+        <li><b>A key fits one provider.</b> An OpenAI key fails on OpenRouter.</li>
+        <li><b>Free models are rate-limited.</b> Fine for learning; a 429 error means wait, not broken.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>Later: Settings › Model, or <code>hermes model</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:340px" src="img/slides/desk-provider.jpg" alt="Choose a provider: Nous Portal, run models locally, I have an API key"><figcaption><span class="k">1</span>Choose a provider</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:500px" src="img/slides/desk-api-key.jpg" alt="OpenRouter selected, Paste API key, Connect"><figcaption><span class="k">2</span>Paste a key, Connect</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>An <b>API key</b> is a password that lets Hermes use a model. Never put it in a chat, a screenshot, or GitHub. Change models later in Settings › Model.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="Check that it works">
-  <p class="kicker"><span class="chip term">Terminal</span>Part 2 · Set it up</p>
+  <p class="kicker">Part 2 · Set it up<span class="chip">TERMINAL</span></p>
   <h2>Check that it works</h2>
-  <div class="pair">
-    <figure class="shot"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version"><figcaption><code>hermes --version</code>: Hermes is installed.</figcaption></figure>
-    <figure class="shot h460"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks for the config files and folders"><figcaption><code>hermes doctor</code>: green check marks mean OK.</figcaption></figure>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Doctor first, questions second.</b> It checks files, keys, and folders in seconds.</li>
+        <li><b>Warnings aren’t errors.</b> They point to optional extras you can skip.</li>
+        <li><b>“command not found”?</b> Usually just a terminal opened before the install.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes doctor</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img style="--h:120px" src="img/terminal/version.png" alt="Terminal: hermes --version prints the version"><figcaption><span class="k">1</span><code>hermes --version</code></figcaption></figure>
+      <figure class="shot"><img style="--h:340px" src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks"><figcaption><span class="k">2</span><code>hermes doctor</code></figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b><code>hermes doctor</code> is the first thing to run when something feels wrong. It checks your files, your key, and your folders, and tells you what to fix.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="Your first chat">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip term">Terminal</span>Part 2 · Set it up</p>
-  <h2>Say hi</h2>
-  <div class="pair l">
-    <figure class="shot h460"><img class="white" src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box"><figcaption>The app: chat in the middle; tools, messaging, and jobs on the left.</figcaption></figure>
-    <div class="stack">
-      <figure class="shot"><img src="img/terminal/first-chat.png" alt="Terminal: a one-line question and the agent's two-sentence answer"><figcaption>Or the terminal: <code>hermes</code> to chat, <code>-z</code> for one question.</figcaption></figure>
-      <ul class="clean"><li><span><code>/new</code> starts a fresh chat</span></li><li><span><code>/retry</code> asks again</span></li><li><span><code>/model</code> switches the model</span></li></ul>
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>Say hi, then say exactly what you want</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>/new</code> also saves memory.</b> End each task with it.</li>
+        <li><b><code>-z</code> skips approvals.</b> Use one-shot mode only with safe tools.</li>
+        <li><b>Ask for a format.</b> “One line each, with a link” beats “tell me about…”.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes</code> to chat · <code>/retry</code> · <code>/model</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:360px" src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box"><figcaption><span class="k">1</span>The app</figcaption></figure>
+      <figure class="shot"><img style="--h:110px" src="img/terminal/first-chat.png" alt="Terminal: one question and a two-sentence answer"><figcaption><span class="k">2</span>The terminal</figcaption></figure>
     </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Ask like you’d brief a helper: the goal, the details, the limits. “Make a 4-day plan for my Friday exam, 1 hour a day.”</p></div>
 </section>
 
-<!-- ================= PART 3 ================= -->
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Where things live">
-  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
-  <h2>Everything lives in one folder</h2>
-  <div class="split wide">
-    <div class="col">
-      <table class="t">
-        <tr><td><code>config.yaml</code></td><td>Settings: model, tools, safety</td></tr>
-        <tr><td><code>.env</code></td><td><b>Secrets</b>: keys and tokens</td></tr>
-        <tr><td><code>SOUL.md</code></td><td>Who the agent is</td></tr>
-        <tr><td><code>memories/</code></td><td>What it remembers</td></tr>
-        <tr><td><code>skills/</code></td><td>Saved how-tos</td></tr>
-        <tr><td><code>cron/</code></td><td>Scheduled jobs</td></tr>
-      </table>
-      <div class="explain"><p><b>In plain words</b>Your whole agent is a folder called <code>~/.hermes</code>. Copy it and you’ve backed it up. Share <code>.env</code> and you’ve leaked your keys.</p></div>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
+  <h2>Your whole agent is one folder</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Backup = copy one folder.</b> Everything is in <code>~/.hermes</code>.</li>
+        <li><b><code>.env</code> is hidden.</b> Its name starts with a dot, and it’s the one file never to share.</li>
+        <li><b>Profiles are full copies.</b> Each has its own folder, memory, and keys.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>ls ~/.hermes</code></span></div>
     </div>
-    <figure class="shot"><img src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent's folder: SOUL.md, config.yaml, cron, logs, memories, sessions, skills"><figcaption>Inside our research agent’s folder. <code>.env</code> is hidden because its name starts with a dot.</figcaption></figure>
+    <div class="media col">
+      <div class="mono">~/.hermes/profiles/h101-researcher/
+  config.yaml   <span class="c"># model, tools, safety</span>
+  .env          <span class="c"># secrets: keys, tokens</span>
+  SOUL.md       <span class="c"># who it is</span>
+  memories/     <span class="c"># what it remembers</span>
+  skills/       <span class="c"># saved how-tos</span>
+  cron/         <span class="c"># scheduled jobs</span></div>
+      <figure class="shot"><img style="--h:150px" src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent folder"><figcaption>The real folder of our research agent</figcaption></figure>
+    </div>
   </div>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Profiles">
-  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
   <h2>One profile = one agent = one job</h2>
-  <div class="split">
-    <div class="col">
-      <div class="cmd">hermes profile create study-buddy
-hermes -p study-buddy        <span class="c"># chat</span>
-hermes profile list</div>
-      <p class="muted" style="font-size:21px">In the app: the <b>Bots</b> tab › create a new agent.</p>
-      <div class="explain"><p><b>In plain words</b>A study buddy and a news scout should be two profiles. Each has its own settings, memory, and keys, so one can’t mess up the other.</p></div>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Isolated by design.</b> Your study buddy can’t read your coder’s memory.</li>
+        <li><b>One gateway, many agents.</b> Each profile gets its own address.</li>
+        <li><b>Add <code>-p name</code> to any command</b> to aim it at one agent.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>App: Bots tab › create a new agent</span></div>
     </div>
-    <figure class="shot"><img src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent: path, model, gateway running, skills, .env and SOUL.md exist"><figcaption><code>hermes profile show</code>: one agent’s folder, model, gateway, skills, key file, and SOUL.md.</figcaption></figure>
+    <div class="media col">
+      <div class="mono">hermes profile create study-buddy
+hermes -p study-buddy          <span class="c"># chat with it</span>
+hermes -p study-buddy model    <span class="c"># its own model</span></div>
+      <figure class="shot"><img style="--h:240px" src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent"><figcaption><code>hermes profile show</code>: one agent at a glance</figcaption></figure>
+    </div>
   </div>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="SOUL.md">
-  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
   <h2>SOUL.md: who your agent is</h2>
-  <div class="split">
-    <div class="col">
-      <div class="cmd" style="font-size:19px"># Study Buddy
-You help a first-year IT student.
-Your one job: plan study time and
-explain hard topics.
-
-## Never
-- Do my graded work for me
-- Make up facts or sources</div>
-      <div class="explain"><p><b>In plain words</b>A short text file: its <b>job</b>, its <b>rules</b>, what it must <b>never</b> do, and its <b>tone</b>. Hermes reads it at the start of every chat.</p></div>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Read at the start of every chat.</b> Edit it, type <code>/new</code>, see the change.</li>
+        <li><b>Short beats long.</b> Ten clear lines work better than a page.</li>
+        <li><b>A rule is a request.</b> A tricky web page can talk the agent out of it.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>~/.hermes/profiles/&lt;name&gt;/SOUL.md</code></span></div>
     </div>
-    <figure class="shot"><img src="img/terminal/soul.png" alt="Terminal: the SOUL.md of Atlas, the research agent"><figcaption>A real one: the SOUL.md of Atlas, our research agent, saved in its profile folder.</figcaption></figure>
+    <div class="media col">
+      <div class="mono"># Study Buddy
+You help a first-year IT student.
+Your one job: plan study time.
+## Never
+- Do my graded work for me</div>
+      <figure class="shot"><img style="--h:230px" src="img/terminal/soul.png" alt="Terminal: the SOUL.md of our research agent"><figcaption>A real one: our research agent</figcaption></figure>
+    </div>
   </div>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Tools">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
-  <h2>Tools: every tool is a door</h2>
-  <div class="pair">
-    <figure class="shot h470"><img class="white" src="img/slides/desk-tools.jpg" alt="Hermes Desktop Capabilities, Tools: toolsets with switches"><figcaption>App: <b>Capabilities › Tools</b>, one switch per toolset.</figcaption></figure>
-    <figure class="shot h470"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list for the research agent: only web and vision enabled"><figcaption>Terminal: <code>hermes tools list</code>. Our research agent has only <b>web</b> and <b>vision</b>.</figcaption></figure>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>Every tool is a door</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Tools are set per platform.</b> Telegram can have fewer than your terminal.</li>
+        <li><b>The risky four:</b> terminal, files, browser, and code execution.</li>
+        <li><b>Changes need a new chat.</b> Running chats keep their old tools.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes tools</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:520px" src="img/slides/desk-tools.jpg" alt="Hermes Desktop, Capabilities, Tools: toolsets with switches"><figcaption><span class="k">1</span>App: Capabilities › Tools</figcaption></figure>
+      <figure class="shot"><img style="--h:300px" src="img/terminal/tools.png" alt="Terminal: hermes tools list, only web and vision enabled"><figcaption><span class="k">2</span>Our research agent: only web and vision</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Give an agent <b>only the tools its job needs</b> (least privilege). A news bot needs web search, not your files or your terminal.</p></div>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Make it safe">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span>Part 3 · Make your own agent</p>
-  <h2>A rule is a request. <span class="gold">A setting is a lock.</span></h2>
-  <div class="pair l">
-    <figure class="shot h380"><img class="white" src="img/slides/desk-approvals.jpg" alt="Settings, Safety, Approvals: Approval Mode, Timeout, Command Allowlist"><figcaption>App: <b>Settings › Safety › Approvals</b>.</figcaption></figure>
-    <div class="stack">
-      <figure class="shot h300"><img class="white" src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: allowed user IDs"><figcaption>App: <b>Messaging › Telegram</b>. The allowlist: who may talk to your bot.</figcaption></figure>
-      <table class="t" style="font-size:19px">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
+  <h2>A rule is a request. A setting is a lock.</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Approval Mode</b> makes risky commands wait for your yes.</li>
+        <li><b><code>deny</code> beats approve.</b> A denied command can’t run even if clicked.</li>
+        <li><b><code>max_turns</code> is your cost cap.</b> It ends loops before they burn credits.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes config set agent.max_turns 20</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:250px" src="img/slides/desk-approvals.jpg" alt="Hermes Desktop, Settings, Safety, Approvals"><figcaption>App: Settings › Safety › Approvals</figcaption></figure>
+      <table class="t">
         <tr><td><code>approvals.mode: manual</code></td><td>Risky commands wait for you</td></tr>
-        <tr><td><code>agent.max_turns: 20</code></td><td>It can’t loop forever</td></tr>
-        <tr><td>Telegram allowlist</td><td>Strangers get no answers</td></tr>
+        <tr><td><code>approvals.deny: ["rm -rf *"]</code></td><td>Never runs, even if approved</td></tr>
+        <tr><td><code>agent.max_turns: 20</code></td><td>Stops runaway loops</td></tr>
       </table>
     </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Telling an agent “never run risky commands” is only a request: a web page can trick it into ignoring that. Approval Mode is a lock: Hermes itself stops the command until you say yes.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Memory and skills">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span>Part 3 · Make your own agent</p>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
   <h2>It remembers you, and learns how-tos</h2>
-  <div class="pair">
-    <figure class="shot h470"><img class="white" src="img/slides/desk-memory.jpg" alt="Settings, Memory and Context: persistent memory and user profile"><figcaption><b>Memory</b>: two small files, <code>MEMORY.md</code> and <code>USER.md</code>.</figcaption></figure>
-    <figure class="shot h470"><img class="white" src="img/slides/desk-skills.jpg" alt="Capabilities, Skills: installed skills and the Skills Hub"><figcaption><b>Skills</b>: saved how-tos, and a hub to find more.</figcaption></figure>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Memory is tiny on purpose:</b> about 2,200 + 1,375 characters.</li>
+        <li><b>Memory saves on <code>/new</code>,</b> not in the middle of a chat.</li>
+        <li><b>A skill is instructions it will follow.</b> Read one before you install it.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes skills search study</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:200px" src="img/slides/desk-memory.jpg" alt="Hermes Desktop, Settings, Memory and Context"><figcaption><span class="k">1</span>Memory: on/off and size</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:290px" src="img/slides/desk-skills.jpg" alt="Hermes Desktop, Capabilities, Skills and the Skills Hub"><figcaption><span class="k">2</span>Skills, and the Skills Hub</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Say “Remember that I like short answers”, and type <code>/new</code> when a task is done. Read a skill before you install it: it’s instructions your agent will follow.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Scheduled jobs">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip proof">Running for real</span>Part 3 · Make your own agent</p>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
   <h2>It works while you sleep</h2>
-  <div class="pair r">
-    <figure class="shot h470"><img class="white" src="img/slides/desk-new-cron.jpg" alt="New cron job from the Morning briefing blueprint: time and delivery"><figcaption>App: <b>Scheduled jobs</b> › a blueprint › time › where to send it.</figcaption></figure>
-    <figure class="shot h470"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris: Morning Briefing and Midday Tip with schedules and last runs"><figcaption>Terminal: <code>hermes cron list</code>. Our Iris’s real jobs and their last runs.</figcaption></figure>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Jobs run inside Hermes.</b> Laptop asleep = job skipped.</li>
+        <li><b>Deliver to Telegram</b> so the result reaches your phone.</li>
+        <li><b><code>0 8 * * 1-5</code></b> means weekdays at 8:00.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes cron list</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:440px" src="img/slides/desk-new-cron.jpg" alt="Hermes Desktop: New cron job from the Morning briefing blueprint"><figcaption><span class="k">1</span>App: a blueprint, a time, a place</figcaption></figure>
+      <figure class="shot"><img style="--h:440px" src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris"><figcaption><span class="k">2</span>Our Iris’s real jobs and last runs</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>A scheduled job (a “cron job”) is an alarm clock for your agent. <code>0 8 * * *</code> means every day at 8:00. Your computer must be on for it to run.</p></div>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Telegram">
-  <p class="kicker"><span class="chip proof">Real Telegram</span>Part 3 · Make your own agent</p>
-  <h2>Chat with your agent from your phone</h2>
-  <div class="pair">
-    <figure class="shot h490"><img src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, Iris gives a pairing code and won't chat yet"><figcaption><b>1</b> Press Start: a stranger only gets a <b>pairing code</b>.</figcaption></figure>
-    <figure class="shot h490"><img src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><b>2</b> After approval, Iris answers. Real chat, real bot: @hermes101_iris_bot.</figcaption></figure>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip live">REAL TELEGRAM</span></p>
+  <h2>Your agent, on your phone</h2>
+  <div class="wide">
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:400px" src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: Create with QR and allowed user IDs"><figcaption><span class="k">1</span>Set up: Create with QR</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives a pairing code"><figcaption><span class="k">2</span>A stranger gets a code</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><span class="k">3</span>Approved: Iris answers</figcaption></figure>
+    </div>
+    <ul class="points strip">
+      <li><b>Create with QR</b> makes the bot and finds your user ID for you.</li>
+      <li><b>Codes last one hour.</b> Nobody gets answers until you approve them.</li>
+      <li><b>Hermes stays on your computer.</b> Telegram only carries the messages.</li>
+    </ul>
   </div>
-  <div class="explain"><p><b>In plain words</b>Hermes runs on a computer, not in Telegram. The <b>gateway</b> is the bridge. Nobody gets answers until the owner approves their code, so a stranger can’t use your agent.</p></div>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Connect apps">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
   <h2>Any app can talk to your agent</h2>
-  <div class="pair">
-    <figure class="shot h470"><img class="white" src="img/slides/desk-api-server.jpg" alt="Messaging, API server: OpenAI-compatible API"><figcaption>App: <b>Messaging › API server</b>, with a long secret key.</figcaption></figure>
-    <figure class="shot h470"><img src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption>A real call to one profile, and its answer.</figcaption></figure>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Same format as OpenAI.</b> Apps built for OpenAI work by changing one URL.</li>
+        <li><b>One profile, one endpoint:</b> <code>/p/&lt;name&gt;/v1</code>.</li>
+        <li><b>Keep it on 127.0.0.1.</b> Open it to the internet only through one guarded door.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>curl …/p/h101-researcher/v1/chat/completions</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:300px" src="img/slides/desk-api-server.jpg" alt="Hermes Desktop, Messaging, API server"><figcaption><span class="k">1</span>App: Messaging › API server</figcaption></figure>
+      <figure class="shot"><img style="--h:500px" src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption><span class="k">2</span>A real call and its answer</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>Hermes speaks the same “language” (API) as OpenAI. So a website, a script, or another app can use your agent. That’s how our course connects to its agents.</p></div>
 </section>
-
-<!-- ================= PART 4 ================= -->
 
 <section class="slide" data-min="1" data-part="4 · Our Hermes" data-title="The course agents">
   <p class="kicker">Part 4 · Our Hermes</p>
-  <h2>Real Hermes agents power the course</h2>
-  <table class="t">
-    <tr><th>Agent</th><th>Its one job</th><th>Tools</th></tr>
-    <tr><td><b>Atlas</b>, the researcher</td><td>Answers questions with sources</td><td>web, vision</td></tr>
-    <tr><td><b>Forge</b>, the coder</td><td>Writes and explains code (can’t run it)</td><td>web, vision</td></tr>
-    <tr><td><b>Iris</b>, the assistant</td><td>Plans, drafts, daily jobs, Telegram</td><td>web, vision</td></tr>
-    <tr><td><b>SOUL.md tester</b></td><td>Acts out the SOUL.md a student writes, so they can test it</td><td>none</td></tr>
-  </table>
-  <div class="explain"><p><b>In plain words</b>We followed our own rules: one job per agent, and no agent has the terminal or file tools. The worst a tricked agent can do is search the web.</p></div>
+  <h2>Real Hermes agents power this course</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>One job each.</b> Small agents are easier to secure and explain.</li>
+        <li><b>No terminal, no files.</b> A tricked agent can at worst search the web.</li>
+        <li><b>All on one gateway</b>, each at its own address.</li>
+      </ul>
+    </div>
+    <div class="media">
+      <div class="grid2">
+        <div class="card"><span class="n">Researcher</span><span class="t">Atlas</span><p>Answers with sources. Tools: web, vision.</p></div>
+        <div class="card"><span class="n">Coder</span><span class="t">Forge</span><p>Writes and explains code, but can’t run it. Tools: web, vision.</p></div>
+        <div class="card"><span class="n">Assistant</span><span class="t">Iris</span><p>Plans, drafts, daily jobs, Telegram. Tools: web, vision.</p></div>
+        <div class="card"><span class="n">Tester</span><span class="t">SOUL.md tester</span><p>Acts out the SOUL.md a student writes. No tools at all.</p></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Ask a real agent">
-  <p class="kicker"><span class="chip term">Terminal</span><span class="chip proof">Live on Hermes</span>Part 4 · Our Hermes</p>
+  <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
   <h2>Ask a real agent</h2>
-  <div class="split rev">
-    <figure class="shot"><img src="img/terminal/atlas-answer.png" alt="Terminal: asking the research agent for 2 free beginner courses on AI agents; it answers with two courses and links"><figcaption>Our research agent, Atlas, searched the web and answered with links.</figcaption></figure>
-    <div class="col">
-      <ul class="clean">
-        <li><span><b>Think</b>: it needs current info</span></li>
-        <li><span><b>Act</b>: it searches the web</span></li>
-        <li><span><b>Look</b>: it reads the results</span></li>
-        <li><span><b>Answer</b>: two courses, with links</span></li>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>-z</code> shows only the answer.</b> The web searches still happened.</li>
+        <li><b>Check every link.</b> Models can invent URLs that look real.</li>
+        <li><b>Same agent everywhere.</b> Terminal, Telegram, and apps reach the same Atlas.</li>
       </ul>
-      <div class="explain"><p><b>In plain words</b>This is the loop from Part 1, for real. Agents can be wrong, so open the links and check.</p></div>
+      <div class="try"><b>Try it</b><span><code>hermes -p h101-researcher -z "…"</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img style="--h:360px" src="img/terminal/atlas-answer.png" alt="Terminal: the research agent answers with two courses and links"><figcaption>Our research agent searched, then answered with links</figcaption></figure>
     </div>
   </div>
 </section>
@@ -483,51 +599,63 @@ explain hard topics.
 <section class="slide" data-min="2" data-part="4 · Our Hermes" data-title="How it fits together">
   <p class="kicker">Part 4 · Our Hermes</p>
   <h2>One website, one door to Hermes</h2>
-  <div class="arch">
-    <div class="box"><span class="tag">Student</span><b>Browser</b><small>Logs in. Never sees a key.</small></div>
-    <span class="to">→</span>
-    <div class="box"><span class="tag">Vercel</span><b>Website</b><small>Pages + server functions. Holds the keys. Data in Supabase.</small></div>
-    <span class="to">→</span>
-    <div class="box hi"><span class="tag">Tunnel</span><b>Edge</b><small>The only door in. Lets only the course agents through.</small></div>
-    <span class="to">→</span>
-    <div class="box v"><span class="tag">Our Mac</span><b>Hermes</b><small>One gateway serves the course agents, Telegram, and the daily jobs.</small></div>
-    <span class="to">→</span>
-    <div class="box"><span class="tag">Model</span><b>AI model</b><small>NVIDIA Nemotron (free) via OpenRouter</small></div>
+  <div class="wide">
+    <div class="media col">
+      <div class="arch">
+        <div class="box"><span class="tag">Student</span><b>Browser</b><small>Never sees a key.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Vercel</span><b>Website</b><small>Holds the keys, streams answers.</small></div>
+        <span class="to">→</span>
+        <div class="box hi"><span class="tag">Tunnel</span><b>Edge</b><small>The only door in. Lets only the course agents through.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Our Mac</span><b>Hermes</b><small>One gateway: agents, Telegram, daily jobs.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Model</span><b>AI model</b><small>NVIDIA Nemotron (free) via OpenRouter</small></div>
+      </div>
+    </div>
+    <ul class="points strip">
+      <li><b>Keys never reach the browser.</b> The website calls Hermes for you.</li>
+      <li><b>Allowlist, not blocklist.</b> The edge refuses everything it doesn’t know.</li>
+      <li><b>Stop means stop.</b> Closing the page cancels the Hermes run.</li>
+    </ul>
   </div>
-  <div class="cards c3">
-    <div class="card"><span class="t">Same API as OpenAI</span><p>Each profile is one address: <code>/p/&lt;profile&gt;/v1/chat/completions</code></p></div>
-    <div class="card"><span class="t">Streaming</span><p>Words and tool steps appear as they happen.</p></div>
-    <div class="card"><span class="t">Stop means stop</span><p>Close the page or press Stop, and the Hermes run is cancelled.</p></div>
-  </div>
-  <div class="explain"><p><b>In plain words</b>Your browser only talks to the website. The website talks to Hermes through one guarded door. Everything else on our computer stays private.</p></div>
 </section>
 
-
-
 <section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Proof it runs">
-  <p class="kicker"><span class="chip term">Terminal</span><span class="chip proof">Proof of work</span>Part 4 · Our Hermes</p>
-  <h2>Not a mock-up: it really runs</h2>
-  <div class="pair">
-    <figure class="shot h490"><img src="img/slides/proof-insights-atlas.png" alt="hermes insights for Atlas: sessions, tokens, and web_search calls"><figcaption><code>hermes insights</code>: Atlas really called web search.</figcaption></figure>
-    <figure class="shot h490"><img src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><code>hermes insights</code>: Iris’s scheduled runs and web searches.</figcaption></figure>
+  <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
+  <h2>Not a mock-up: Hermes’s own reports</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>insights</code> counts everything:</b> sessions, tokens, tool calls, platforms.</li>
+        <li><b>“cron” sessions</b> are jobs that ran with nobody typing.</li>
+        <li><b><code>web_search</code> calls</b> prove tools were used, not just text.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes -p h101-assistant insights --days 7</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img style="--h:520px" src="img/slides/proof-insights-atlas.png" alt="hermes insights for the research agent"><figcaption><span class="k">1</span>Atlas: web searches</figcaption></figure>
+      <figure class="shot"><img style="--h:520px" src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><span class="k">2</span>Iris: scheduled runs</figcaption></figure>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>These reports come straight from Hermes itself: the agents ran, and they really used their tools.</p></div>
 </section>
 
 <section class="slide" data-min="2.5" data-part="4 · Our Hermes" data-title="Live demo">
-  <p class="kicker">Part 4 · Live demo</p>
+  <p class="kicker">Part 4 · Our Hermes · Live demo</p>
   <h2>Let’s run it</h2>
-  <div class="split">
-    <ol class="num">
-      <li><span><b>Hermes Desktop</b>: Capabilities › Tools, turn one off</span></li>
-      <li><span><b>Settings › Safety</b>: show Approval Mode</span></li>
-      <li><span><b>Scheduled jobs</b>: open the Morning briefing blueprint</span></li>
-      <li><span><b>Terminal</b>: ask the research agent a question</span></li>
-      <li><span><b>Telegram</b>: say hi to Iris</span></li>
-    </ol>
-    <div class="col">
-      <div class="card"><span class="t">If the Wi-Fi fails</span><p>Every step has a slide with the real screen. Use the grid button to jump back to it.</p></div>
-      <div class="explain"><p><b>In plain words</b>Free models take 8 to 15 seconds to answer. That’s normal: the agent is thinking and searching.</p></div>
+  <div class="body">
+    <div class="side">
+      <ol class="steps">
+        <li><span><b>Desktop</b>: Capabilities › Tools, turn one off</span></li>
+        <li><span><b>Desktop</b>: Settings › Safety, Approval Mode</span></li>
+        <li><span><b>Desktop</b>: Scheduled jobs, Morning briefing</span></li>
+        <li><span><b>Terminal</b>: ask the research agent a question</span></li>
+        <li><span><b>Telegram</b>: say hi to Iris</span></li>
+      </ol>
+    </div>
+    <div class="media col">
+      <div class="card" style="width:100%"><span class="n">If the Wi-Fi fails</span><span class="t">Every step has a slide</span><p>Use the grid button to jump back to the real screen.</p></div>
+      <div class="card" style="width:100%"><span class="n">Why it feels slow</span><span class="t">8 to 15 seconds is normal</span><p>Free models think and search before they answer. Start the question first, then talk.</p></div>
     </div>
   </div>
 </section>
@@ -535,28 +663,28 @@ explain hard topics.
 <section class="slide" data-min="1" data-part="Wrap-up" data-title="Rules for using agents">
   <p class="kicker">Wrap-up</p>
   <h2>Six rules to take home</h2>
-  <div class="cards c3">
-    <div class="card"><span class="t">Keys are passwords</span><p>Never share an API key, a bot token, or <code>.env</code>.</p></div>
-    <div class="card"><span class="t">Fewest tools</span><p>Only what the job needs. Every tool is a door.</p></div>
-    <div class="card"><span class="t">Settings, not wishes</span><p>Approvals, step limits, allowlists.</p></div>
-    <div class="card"><span class="t">Check the answer</span><p>Open the sources. Agents can be wrong and sound sure.</p></div>
-    <div class="card"><span class="t">Protect people</span><p>No one else’s phone, address, or private messages.</p></div>
-    <div class="card"><span class="t">Learn, don’t copy</span><p>Use agents to understand, not to hand in work as yours.</p></div>
+  <div class="grid3">
+    <div class="card"><span class="n">01</span><span class="t">Keys are passwords</span><p>Never share an API key, a bot token, or <code>.env</code>.</p></div>
+    <div class="card"><span class="n">02</span><span class="t">Fewest tools</span><p>Only what the job needs. Every tool is a door.</p></div>
+    <div class="card"><span class="n">03</span><span class="t">Settings, not wishes</span><p>Approvals, step limits, allowlists.</p></div>
+    <div class="card"><span class="n">04</span><span class="t">Check the answer</span><p>Open the sources. Agents can be wrong and sound sure.</p></div>
+    <div class="card"><span class="n">05</span><span class="t">Protect people</span><p>No one else’s phone, address, or private messages.</p></div>
+    <div class="card"><span class="n">06</span><span class="t">Learn, don’t copy</span><p>Use agents to understand, not to hand in work as yours.</p></div>
   </div>
-  <div class="explain"><p><b>In plain words</b>An agent works for you, and you are responsible for what it does.</p></div>
+  <div class="try" style="margin-top:28px;max-width:900px"><b>Remember</b><span>An agent works for you, and you are responsible for what it does.</span></div>
 </section>
 
-<section class="slide" data-min="1" data-part="Wrap-up" data-title="Try it yourself">
-  <p class="kicker">Wrap-up</p>
-  <h2>Try it yourself</h2>
-  <div class="cmd" style="font-size:24px;margin-bottom:30px;color:var(--gold-ink)">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</div>
+<section class="slide blue" data-min="1" data-part="Wrap-up" data-title="Try it yourself">
+  <p class="kicker">Try it yourself</p>
+  <h1 style="font-size:84px;margin-bottom:26px">Thank you</h1>
+  <div class="cmdline">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</div>
   <div class="qrs">
     <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/"></div>These slides</figure>
     <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/manual.html"></div>Student manual</figure>
     <figure><div class="qr" data-qr="https://hermes-agent.nousresearch.com/"></div>Hermes official site</figure>
     <figure><div class="qr" data-qr="https://github.com/Debb1ie/Hermes-Agent-101"></div>Workshop code</figure>
   </div>
-  <p class="who muted" style="margin-top:34px;font-size:22px">Thank you! Questions? · <b style="color:var(--ink)">Precious Grace Deborah Manucom</b> · Not affiliated with Nous Research</p>
+  <p class="who" style="margin-top:34px">Questions? · <b>Precious Grace Deborah Manucom</b></p>
 </section>
 
 </div></div></div>
@@ -586,8 +714,6 @@ explain hard topics.
 
 <script>
 (() => {
-  const CADUCEUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.6V21.5"/><circle cx="12" cy="3.1" r="1.3"/><path d="M12 6.4C10 4.6 6.9 4.1 3.2 5.2c2.4.5 4.5 1.7 5.9 3.4"/><path d="M12 6.4c2-1.8 5.1-2.3 8.8-1.2-2.4.5-4.5 1.7-5.9 3.4"/><path d="M9.3 9.8c0 1.8 5.4 1.6 5.4 3.4s-5.4 1.6-5.4 3.4 5.4 1.6 5.4 3.3"/><path d="M14.7 9.8c0 1.8-5.4 1.6-5.4 3.4s5.4 1.6 5.4 3.4-5.4 1.6-5.4 3.3"/></svg>';
-  document.querySelectorAll('.mark').forEach(m => { m.innerHTML = CADUCEUS; });
   const QR = (() => {
     const ECC = [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28];
     const BLOCKS = [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49];
@@ -665,7 +791,7 @@ explain hard topics.
   const $ = id => document.getElementById(id);
   const slides = [...document.querySelectorAll('.slide')], deck = $('deck'), sizer = $('sizer'), vp = $('viewport');
   let i = 0, z = 1;
-  slides.forEach((s, k) => { if(k > 0) s.insertAdjacentHTML('beforeend', `<div class="foot"><span><b>Hermes Agent 101</b> · ${s.dataset.part}</span><span>${k + 1} / ${slides.length}</span></div>`); });
+  slides.forEach((s, k) => { if(k > 0) s.insertAdjacentHTML('beforeend', `<div class="foot"><span><img src="img/brand/hermes-icon.svg" alt=""><b>Hermes Agent 101</b> · ${s.dataset.part}</span><span>${k + 1} / ${slides.length}</span></div>`); });
 
   // scale to fit, times the zoom level; when zoomed in, the stage scrolls
   function fit(keepCenter){

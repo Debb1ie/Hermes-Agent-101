@@ -215,7 +215,7 @@ aside.say{display:none}
   <div class="mark" aria-hidden="true">CADUCEUS</div>
   <p class="kicker">A hands-on workshop for students</p>
   <h1>Hermes Agent <span>101</span></h1>
-  <p class="lead" style="margin-top:20px">Set up your own AI agent, make it safe, and put it to work. Every screen in this deck is a real screenshot.</p>
+  <p class="lead" style="margin-top:20px">Set up your own AI agent, make it safe, and put it to work. Every screenshot in this deck comes from Hermes itself.</p>
   <p class="who"><b>Precious Grace Deborah Manucom</b> · Workshop Lead</p>
   <aside class="say"><p>Hi everyone. In 30 minutes: what an AI agent is, how to set up Hermes, how to make your own agent safely, and how our whole workshop system runs on it.</p><p>Everything you’ll see is a real screenshot from our setup.</p></aside>
 </section>
@@ -225,9 +225,9 @@ aside.say{display:none}
   <h2>Four parts, one working agent</h2>
   <div class="parts">
     <div class="card"><span class="n">Part 1 · 3 min</span><span class="t">Meet Hermes</span><p>What an agent is, and what Hermes can do.</p></div>
-    <div class="card"><span class="n">Part 2 · 4 min</span><span class="t">Set it up</span><p>Install the app, connect a model, say hi.</p></div>
+    <div class="card"><span class="n">Part 2 · 5 min</span><span class="t">Set it up</span><p>Install the app, connect a model, check it, say hi.</p></div>
     <div class="card"><span class="n">Part 3 · 10 min</span><span class="t">Make your own agent</span><p>Profile, SOUL.md, tools, safety, memory, jobs, Telegram.</p></div>
-    <div class="card hi"><span class="n">Part 4 · 12 min</span><span class="t">The 101 system</span><p>The website, the live agents, how it all connects, and a demo.</p></div>
+    <div class="card hi"><span class="n">Part 4 · 9 min</span><span class="t">Our Hermes</span><p>The agents behind the course, how it connects, proof, and a demo.</p></div>
   </div>
   <div class="explain" style="margin-top:34px"><p><b>How to use these slides</b>Click the arrow buttons on the sides or at the bottom (or use the arrow keys). Click any screenshot to see it bigger. Use + and − to zoom, the sun or moon button for light or dark mode, and the grid button to jump to any slide.</p></div>
   <aside class="say"><p>Here’s the map. Short intro, quick setup, then most of the time on making your own agent and on how our system works.</p></aside>
@@ -318,6 +318,17 @@ aside.say{display:none}
   <aside class="say"><p>We used OpenRouter with a free NVIDIA Nemotron model for all workshop agents.</p></aside>
 </section>
 
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="Check that it works">
+  <p class="kicker"><span class="chip term">Terminal</span>Part 2 · Set it up</p>
+  <h2>Check that it works</h2>
+  <div class="pair">
+    <figure class="shot"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version"><figcaption><code>hermes --version</code>: Hermes is installed.</figcaption></figure>
+    <figure class="shot h460"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks for the config files and folders"><figcaption><code>hermes doctor</code>: green check marks mean OK.</figcaption></figure>
+  </div>
+  <div class="explain"><p><b>In plain words</b><code>hermes doctor</code> is the first thing to run when something feels wrong. It checks your files, your key, and your folders, and tells you what to fix.</p></div>
+  <aside class="say"><p>Two commands every student should know: version, and doctor.</p></aside>
+</section>
+
 <section class="slide" data-min="1" data-part="2 · Set it up" data-title="Your first chat">
   <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip term">Terminal</span>Part 2 · Set it up</p>
   <h2>Say hi</h2>
@@ -334,7 +345,7 @@ aside.say{display:none}
 
 <!-- ================= PART 3 ================= -->
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Where things live">
-  <p class="kicker"><span class="chip web">Course website</span>Part 3 · Make your own agent</p>
+  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
   <h2>Everything lives in one folder</h2>
   <div class="split wide">
     <div class="col">
@@ -348,13 +359,13 @@ aside.say{display:none}
       </table>
       <div class="explain"><p><b>In plain words</b>Your whole agent is a folder called <code>~/.hermes</code>. Copy it and you’ve backed it up. Share <code>.env</code> and you’ve leaked your keys.</p></div>
     </div>
-    <figure class="shot"><img src="img/slides/sys-files.jpg" alt="Course page Where things live: a clickable file tree with config.yaml explained"><figcaption>The course’s clickable folder map: click a file to see what’s inside.</figcaption></figure>
+    <figure class="shot"><img src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent's folder: SOUL.md, config.yaml, cron, logs, memories, sessions, skills"><figcaption>Inside our research agent’s folder. <code>.env</code> is hidden because its name starts with a dot.</figcaption></figure>
   </div>
-  <aside class="say"><p>Students click through the folder in the course. Three files matter most: config.yaml, .env, and SOUL.md.</p></aside>
+  <aside class="say"><p>Three files matter most: config.yaml, .env, and SOUL.md.</p></aside>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Profiles">
-  <p class="kicker"><span class="chip web">Course website</span>Part 3 · Make your own agent</p>
+  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
   <h2>One profile = one agent = one job</h2>
   <div class="split">
     <div class="col">
@@ -364,40 +375,49 @@ hermes profile list</div>
       <p class="muted" style="font-size:21px">In the app: the <b>Bots</b> tab › create a new agent.</p>
       <div class="explain"><p><b>In plain words</b>A study buddy and a news scout should be two profiles. Each has its own settings, memory, and keys, so one can’t mess up the other.</p></div>
     </div>
-    <figure class="shot h470"><img src="img/slides/sys-profiles.jpg" alt="Course page Profiles: name your agent, generated commands, and the five workshop profiles"><figcaption>Type a name, and the course writes the commands for you.</figcaption></figure>
+    <figure class="shot"><img src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent: path, model, gateway running, skills, .env and SOUL.md exist"><figcaption><code>hermes profile show</code>: one agent’s folder, model, gateway, skills, key file, and SOUL.md.</figcaption></figure>
   </div>
-  <aside class="say"><p>Profiles are how you keep agents small and separate. Each agent in our course is its own profile.</p></aside>
+  <aside class="say"><p>Profiles keep agents small and separate. Each agent in our course is its own profile.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="SOUL.md">
-  <p class="kicker"><span class="chip web">Course website</span><span class="chip proof">Live on Hermes</span>Part 3 · Make your own agent</p>
+  <p class="kicker"><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
   <h2>SOUL.md: who your agent is</h2>
-  <div class="pair">
-    <figure class="shot h470"><img src="img/slides/app-soul-builder.jpg" alt="The SOUL.md builder: name, who it helps, its job, how it works, never, ask first, tone"><figcaption>Fill in the form; the course writes the SOUL.md.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/app-soul-test.jpg" alt="Testing the SOUL.md: asked to ignore its rules and do graded work, the agent refuses"><figcaption>Then test it on a real Hermes agent. “Ignore your rules” → it refuses.</figcaption></figure>
+  <div class="split">
+    <div class="col">
+      <div class="cmd" style="font-size:19px"># Study Buddy
+You help a first-year IT student.
+Your one job: plan study time and
+explain hard topics.
+
+## Never
+- Do my graded work for me
+- Make up facts or sources</div>
+      <div class="explain"><p><b>In plain words</b>A short text file: its <b>job</b>, its <b>rules</b>, what it must <b>never</b> do, and its <b>tone</b>. Hermes reads it at the start of every chat.</p></div>
+    </div>
+    <figure class="shot"><img src="img/terminal/soul.png" alt="Terminal: the SOUL.md of Atlas, the research agent"><figcaption>A real one: the SOUL.md of Atlas, our research agent, saved in its profile folder.</figcaption></figure>
   </div>
-  <div class="explain"><p><b>In plain words</b>SOUL.md is a short text file: its <b>job</b>, its <b>rules</b>, what it must <b>never</b> do, and its <b>tone</b>. Hermes reads it at the start of every chat. But a rule is only a request (next slides).</p></div>
-  <aside class="say"><p>Students build a SOUL.md and it’s sent to a real Hermes profile. Here a student tried to make it break its rule, and it held.</p></aside>
+  <aside class="say"><p>Left: what a student writes. Right: the SOUL.md our research agent actually uses. A rule here is still only a request, which is why the next slides matter.</p></aside>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Tools">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip web">Course website</span>Part 3 · Make your own agent</p>
+  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip term">Terminal</span>Part 3 · Make your own agent</p>
   <h2>Tools: every tool is a door</h2>
   <div class="pair">
     <figure class="shot h470"><img class="white" src="img/slides/desk-tools.jpg" alt="Hermes Desktop Capabilities, Tools: toolsets with switches"><figcaption>App: <b>Capabilities › Tools</b>, one switch per toolset.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/sys-tools.jpg" alt="Course page Choose tools: toolsets marked low risk, careful, or high risk"><figcaption>Course: pick tools and see the risk of each.</figcaption></figure>
+    <figure class="shot h470"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list for the research agent: only web and vision enabled"><figcaption>Terminal: <code>hermes tools list</code>. Our research agent has only <b>web</b> and <b>vision</b>.</figcaption></figure>
   </div>
   <div class="explain"><p><b>In plain words</b>Give an agent <b>only the tools its job needs</b> (least privilege). A news bot needs web search, not your files or your terminal.</p></div>
   <aside class="say"><p>Low risk: web, vision, to-do. High risk: terminal, files, browser, code. Turn on only what the job needs.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Make it safe">
-  <p class="kicker"><span class="chip desk">Hermes Desktop</span><span class="chip web">Course website</span>Part 3 · Make your own agent</p>
+  <p class="kicker"><span class="chip desk">Hermes Desktop</span>Part 3 · Make your own agent</p>
   <h2>A rule is a request. <span class="gold">A setting is a lock.</span></h2>
   <div class="pair l">
     <figure class="shot h380"><img class="white" src="img/slides/desk-approvals.jpg" alt="Settings, Safety, Approvals: Approval Mode, Timeout, Command Allowlist"><figcaption>App: <b>Settings › Safety › Approvals</b>.</figcaption></figure>
     <div class="stack">
-      <figure class="shot"><img src="img/slides/sys-safety.jpg" alt="Course safety quiz: for each risk, pick the setting that really stops it"><figcaption>Course quiz: pick the setting that really stops each risk.</figcaption></figure>
+      <figure class="shot h300"><img class="white" src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: allowed user IDs"><figcaption>App: <b>Messaging › Telegram</b>. The allowlist: who may talk to your bot.</figcaption></figure>
       <table class="t" style="font-size:19px">
         <tr><td><code>approvals.mode: manual</code></td><td>Risky commands wait for you</td></tr>
         <tr><td><code>agent.max_turns: 20</code></td><td>It can’t loop forever</td></tr>
@@ -425,10 +445,10 @@ hermes profile list</div>
   <h2>It works while you sleep</h2>
   <div class="pair r">
     <figure class="shot h470"><img class="white" src="img/slides/desk-new-cron.jpg" alt="New cron job from the Morning briefing blueprint: time and delivery"><figcaption>App: <b>Scheduled jobs</b> › a blueprint › time › where to send it.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/app-iris-jobs.jpg" alt="Iris's real jobs on the course website: Morning Briefing, Midday Tip, Evening Wrap-up with today's results"><figcaption>Our Iris runs 3 jobs a day. The course shows today’s real results.</figcaption></figure>
+    <figure class="shot h470"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris: Morning Briefing and Midday Tip with schedules and last runs"><figcaption>Terminal: <code>hermes cron list</code>. Our Iris’s real jobs and their last runs.</figcaption></figure>
   </div>
   <div class="explain"><p><b>In plain words</b>A scheduled job (a “cron job”) is an alarm clock for your agent. <code>0 8 * * *</code> means every day at 8:00. Your computer must be on for it to run.</p></div>
-  <aside class="say"><p>Iris, our assistant, writes a morning briefing, a midday tip, and an evening wrap-up every day, and students see the real output.</p></aside>
+  <aside class="say"><p>Iris, our assistant, runs her briefings on schedule. Hermes shows each job, its schedule, and its last run.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Telegram">
@@ -447,33 +467,16 @@ hermes profile list</div>
   <h2>Any app can talk to your agent</h2>
   <div class="pair">
     <figure class="shot h470"><img class="white" src="img/slides/desk-api-server.jpg" alt="Messaging, API server: OpenAI-compatible API"><figcaption>App: <b>Messaging › API server</b>, with a long secret key.</figcaption></figure>
-    <figure class="shot h470"><img src="img/terminal/api-call.png" alt="Terminal: a curl request to a profile and its JSON answer"><figcaption>A real call to one profile, and its answer.</figcaption></figure>
+    <figure class="shot h470"><img src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption>A real call to one profile, and its answer.</figcaption></figure>
   </div>
-  <div class="explain"><p><b>In plain words</b>Hermes speaks the same “language” (API) as OpenAI. So a website, a script, or another app can use your agent. That’s how our workshop website works.</p></div>
+  <div class="explain"><p><b>In plain words</b>Hermes speaks the same “language” (API) as OpenAI. So a website, a script, or another app can use your agent. That’s how our course connects to its agents.</p></div>
   <aside class="say"><p>This is the bridge to Part 4: our website is just an app talking to Hermes this way.</p></aside>
 </section>
 
 <!-- ================= PART 4 ================= -->
-<section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="The workshop website">
-  <p class="kicker"><span class="chip web">Course website</span>Part 4 · The Hermes Agent 101 system</p>
-  <h2>A 13-step course, powered by Hermes</h2>
-  <div class="split rev">
-    <figure class="shot h580"><img src="img/slides/sys-course.jpg" alt="A course page, Memory and skills, with the list of steps in the sidebar"><figcaption>Every step is a page. The sidebar shows where you are.</figcaption></figure>
-    <div class="col">
-      <ol class="num steps13">
-        <li><span>Meet Hermes</span></li><li><span>Install</span></li><li><span>Where things live</span></li><li><span>Profiles</span></li>
-        <li><span>Write a SOUL.md</span></li><li><span>Choose tools</span></li><li><span>Make it safe</span></li><li><span>Real agents</span></li>
-        <li><span>Memory &amp; skills</span></li><li><span>Scheduled jobs</span></li><li><span>Telegram</span></li><li><span>Connect apps</span></li>
-        <li><span>Takeaways</span></li>
-      </ol>
-      <div class="explain"><p><b>In plain words</b>Students open the course in a browser and go step by step. They never need an API key: the website keeps it. The interactive parts run on real Hermes agents.</p></div>
-    </div>
-  </div>
-  <aside class="say"><p>Everything in Part 3 is a step in this course. Students never see a key; the website holds them.</p></aside>
-</section>
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="The course agents">
-  <p class="kicker">Part 4 · The Hermes Agent 101 system</p>
+<section class="slide" data-min="1" data-part="4 · Our Hermes" data-title="The course agents">
+  <p class="kicker">Part 4 · Our Hermes</p>
   <h2>Real Hermes agents power the course</h2>
   <table class="t">
     <tr><th>Agent</th><th>Its one job</th><th>Tools</th></tr>
@@ -486,19 +489,26 @@ hermes profile list</div>
   <aside class="say"><p>Each agent is its own Hermes profile with one job and the fewest tools. The tester has no tools at all.</p></aside>
 </section>
 
-<section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="Real agents, live">
-  <p class="kicker"><span class="chip proof">Live on Hermes</span>Part 4 · The Hermes Agent 101 system</p>
-  <h2>Watch an agent work</h2>
-  <div class="pair">
-    <figure class="shot h470"><img src="img/slides/app-atlas-working.jpg" alt="Atlas working: Searching the web for free beginner courses on AI agents"><figcaption><b>Act</b>: Atlas is searching the web. You see the tool call as it happens.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/app-atlas-answer.jpg" alt="Atlas answer with three courses and links"><figcaption><b>Answer</b>: three courses, each with a link to check.</figcaption></figure>
+<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Ask a real agent">
+  <p class="kicker"><span class="chip term">Terminal</span><span class="chip proof">Live on Hermes</span>Part 4 · Our Hermes</p>
+  <h2>Ask a real agent</h2>
+  <div class="split rev">
+    <figure class="shot"><img src="img/terminal/atlas-answer.png" alt="Terminal: asking the research agent for 2 free beginner courses on AI agents; it answers with two courses and links"><figcaption>Our research agent, Atlas, searched the web and answered with links.</figcaption></figure>
+    <div class="col">
+      <ul class="clean">
+        <li><span><b>Think</b>: it needs current info</span></li>
+        <li><span><b>Act</b>: it searches the web</span></li>
+        <li><span><b>Look</b>: it reads the results</span></li>
+        <li><span><b>Answer</b>: two courses, with links</span></li>
+      </ul>
+      <div class="explain"><p><b>In plain words</b>This is the loop from Part 1, for real. Agents can be wrong, so open the links and check.</p></div>
+    </div>
   </div>
-  <div class="explain"><p><b>In plain words</b>This is the think → act → look → answer loop from Part 1, live. Agents can be wrong, so students open the links and check.</p></div>
-  <aside class="say"><p>Students chat with Atlas, Forge, and Iris. The answer streams in, and the “Searching the web” line shows the real search.</p></aside>
+  <aside class="say"><p>One question to our research agent in the terminal. It used its web tool and gave sources.</p></aside>
 </section>
 
-<section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="How it fits together">
-  <p class="kicker">Part 4 · The Hermes Agent 101 system</p>
+<section class="slide" data-min="2" data-part="4 · Our Hermes" data-title="How it fits together">
+  <p class="kicker">Part 4 · Our Hermes</p>
   <h2>One website, one door to Hermes</h2>
   <div class="arch">
     <div class="box"><span class="tag">Student</span><b>Browser</b><small>Logs in. Never sees a key.</small></div>
@@ -521,19 +531,9 @@ hermes profile list</div>
 </section>
 
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="The student manual">
-  <p class="kicker"><span class="chip web">Course website</span>Part 4 · The Hermes Agent 101 system</p>
-  <h2>Take the manual home</h2>
-  <div class="pair">
-    <figure class="shot h470"><img src="img/slides/sys-manual.jpg" alt="The student manual: Your AI agent, from zero to working"><figcaption>17 parts: requirements, install, using and making agents, safety, every command.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/sys-manual-trouble.jpg" alt="The manual's troubleshooting table: problems and fixes"><figcaption>Troubleshooting: the common problems and how to fix them.</figcaption></figure>
-  </div>
-  <div class="explain"><p><b>In plain words</b>Everything from today, step by step, with the same screenshots. Print it or save it as a PDF, and set up your own agent at home.</p></div>
-  <aside class="say"><p>The manual is how students repeat all of this on their own computer.</p></aside>
-</section>
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="Proof it runs">
-  <p class="kicker"><span class="chip proof">Proof of work</span>Part 4 · The Hermes Agent 101 system</p>
+<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Proof it runs">
+  <p class="kicker"><span class="chip term">Terminal</span><span class="chip proof">Proof of work</span>Part 4 · Our Hermes</p>
   <h2>Not a mock-up: it really runs</h2>
   <div class="pair">
     <figure class="shot h490"><img src="img/slides/proof-insights-atlas.png" alt="hermes insights for Atlas: sessions, tokens, and web_search calls"><figcaption><code>hermes insights</code>: Atlas really called web search.</figcaption></figure>
@@ -543,15 +543,15 @@ hermes profile list</div>
   <aside class="say"><p>Hermes’s own reports: real runs, real scheduled jobs, real web searches.</p></aside>
 </section>
 
-<section class="slide" data-min="2" data-part="4 · The 101 system" data-title="Live demo">
-  <p class="kicker">Part 4 · Live demo · 2 minutes</p>
+<section class="slide" data-min="2.5" data-part="4 · Our Hermes" data-title="Live demo">
+  <p class="kicker">Part 4 · Live demo</p>
   <h2>Let’s run it</h2>
   <div class="split">
     <ol class="num">
       <li><span><b>Hermes Desktop</b>: Capabilities › Tools, turn one off</span></li>
       <li><span><b>Settings › Safety</b>: show Approval Mode</span></li>
-      <li><span><b>Website</b>: write a SOUL.md, then “break a rule”</span></li>
-      <li><span><b>Website</b>: ask Atlas, watch it search the web</span></li>
+      <li><span><b>Scheduled jobs</b>: open the Morning briefing blueprint</span></li>
+      <li><span><b>Terminal</b>: ask the research agent a question</span></li>
       <li><span><b>Telegram</b>: say hi to Iris</span></li>
     </ol>
     <div class="col">
@@ -559,7 +559,7 @@ hermes profile list</div>
       <div class="explain"><p><b>In plain words</b>Free models take 8 to 15 seconds to answer. That’s normal: the agent is thinking and searching.</p></div>
     </div>
   </div>
-  <aside class="say"><p>Start the Atlas question first since it takes a few seconds, and talk while it searches.</p></aside>
+  <aside class="say"><p>Ask the research agent first since it takes a few seconds, and talk while it searches.</p></aside>
 </section>
 
 <section class="slide" data-min="1" data-part="Wrap-up" data-title="Rules for using agents">

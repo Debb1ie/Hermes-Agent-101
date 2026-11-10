@@ -31,7 +31,7 @@ never get stuck if Hermes is slow, busy, or offline. Only the SOUL.md tester and
 Students learn to set up and run Hermes themselves. Every step shows real screenshots of the commands
 (`img/terminal/`, captured from a real Hermes install) so anyone who falls behind can catch up.
 
-1. **Meet Hermes** `/meet-hermes`: what an agent is, what Hermes adds, and a live agent trace.
+1. **Meet Hermes** `/meet-hermes`: Hermes as its official site presents it (“The Agent That Grows With You”, a screenshot of hermes-agent.nousresearch.com, the six official features, three ways to run it, the FAQ), then agent vs. chatbot and a live agent trace.
 2. **Install Hermes** `/install`: the install command for macOS, Linux/WSL2, Windows, or Android, then `hermes setup`, `hermes model`, `hermes doctor`, and a first chat. Includes a checklist.
 3. **Where things live** `/where-things-live`: a clickable tour of `~/.hermes` (`config.yaml`, `.env`, `SOUL.md`, `memories/`, `skills/`, `cron/`, `sessions/`, `logs/`, `profiles/`).
 4. **Profiles** `/profiles`: one agent per job. Students name their own profile and get the commands for it.
@@ -112,6 +112,18 @@ free models can take 20–90 s per answer. On the Hobby plan this needs Fluid Co
 projects); otherwise Vercel caps functions at 60 s. After changing a variable in Vercel, redeploy.
 
 ### Run it locally
+Quickest way, with no Vercel CLI (needs Node 20+; Hermes ships one in `~/.hermes/tools/`):
+
+```bash
+node scripts/local-preview.mjs              # http://localhost:3000, with the login screen
+node scripts/local-preview.mjs 3000 student # skip login, as "Preview Student"
+node scripts/local-preview.mjs 3001 admin   # skip login, as "Preview Admin"
+```
+
+It reads `.env`, serves the page with the same rewrites and headers as `vercel.json`, and runs the
+`api/` functions. Without Supabase, accounts live in memory until you stop it.
+
+Or with the Vercel CLI:
 Install Node.js 20+ and the Vercel CLI (`npm i -g vercel`), then in this folder: `vercel link`, copy
 `.env.example` to `.env` and fill it in, and run `vercel dev`. The site runs at http://localhost:3000.
 Without Supabase, `vercel dev` keeps accounts in memory until you stop it.

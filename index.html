@@ -892,6 +892,19 @@ select:disabled{cursor:default;opacity:.6}
   .score-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:4px;color:var(--muted);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
   .score-table .cell{width:100%}
 }
+.hermes-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:26px;align-items:center;margin:0 0 6px}
+@media (max-width:950px){.hermes-intro{grid-template-columns:1fr}}
+.official-tag{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3.2vw,2.4rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 14px}
+.site-shot{margin:0}
+.site-shot figcaption a{color:var(--muted)}
+.feat{position:relative}
+.feat .feat-n{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--violet) 80%,var(--ink))}
+.feat .link{justify-self:start;font-size:.86rem;margin-top:4px}
+.faq{display:grid;gap:8px;max-width:820px}
+.faq details{background:var(--surf-grad);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--sh-1);padding:0 16px}
+.faq summary{cursor:pointer;font-weight:600;padding:12px 0}
+.faq details[open] summary{border-bottom:1px solid var(--rule);margin-bottom:10px}
+.faq p{color:var(--muted);font-size:.94rem}
 /* ---------- course pages ---------- */
 figure.shot{margin:14px 0 0;min-width:0}
 figure.shot img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:var(--sh-2);border:1px solid var(--rule)}
@@ -1192,8 +1205,51 @@ a.btn{text-decoration:none}
 
 <!-- MEET HERMES -->
 <section class="view" data-view="meet" hidden>
-  <div class="vhead"><span class="tile" data-ic="caduceus"></span><div><p class="step">Step 1 of 13, 8 min</p><h2>Meet Hermes</h2><p class="lede">What an AI agent is, and what Hermes adds.</p></div></div>
-  <h3 class="sec" style="margin-top:0">Chatbot answers. Agent acts.</h3>
+  <div class="vhead"><span class="tile" data-ic="caduceus"></span><div><p class="step">Step 1 of 13, 10 min</p><h2>Meet Hermes</h2><p class="lede">What Hermes is, what it does, and what makes an agent different from a chatbot.</p></div></div>
+  <div class="hermes-intro">
+    <div>
+      <p class="kicker" style="margin:0 0 6px">Hermes Agent, by Nous Research</p>
+      <p class="official-tag">“The Agent That Grows With You”</p>
+      <p>Hermes is an AI agent you install once. It runs on your own computer (or in the cloud), works with almost any AI model, and gets more useful the more you use it: it remembers your projects and saves what worked as reusable skills.</p>
+      <ul class="ticks">
+        <li><span data-ic="check"></span><span><b>Free and open source</b> (MIT license). You only pay for the AI model, if you pick a paid one.</span></li>
+        <li><span data-ic="check"></span><span><b>Yours</b>: your chats, memory, and skills are saved in a folder on your computer.</span></li>
+        <li><span data-ic="check"></span><span><b>Any model</b>: Nous Portal, OpenRouter, OpenAI, or one running on your own PC.</span></li>
+      </ul>
+      <div class="linkrow"><a class="btn primary small" href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Visit the official site <span data-ic="external"></span></a><a class="btn small" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">GitHub <span data-ic="external"></span></a><a class="btn small" href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener">Docs <span data-ic="external"></span></a></div>
+    </div>
+    <figure class="shot site-shot"><a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener"><img src="img/hermes-official-site.jpg" alt="The official Hermes Agent website: a blue page with the headline The Agent That Grows With You, buttons to download for macOS or deploy to the cloud, and the install command" loading="lazy" width="1200" height="750"></a><figcaption>The official site, <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">hermes-agent.nousresearch.com</a>. Screenshot and quotes © Nous Research.</figcaption></figure>
+  </div>
+
+  <h3 class="sec">What Hermes does</h3>
+  <p class="muted" style="margin-top:-6px">The six features on the official site, in plain words, and where you try each one today.</p>
+  <div class="grid-3 vary">
+    <div class="card level feat"><span class="feat-n">#1 Connect</span><b>Lives Everywhere</b><span>Talk to the same agent on Telegram, Discord, Slack, WhatsApp, Signal, email, or the terminal. One agent, one memory, everywhere.</span><button class="link" type="button" data-go="telegram">Try it in step 11</button></div>
+    <div class="card level feat"><span class="feat-n">#2 Remember</span><b>Persistent Memory</b><span>It remembers your projects, turns what worked into skills, and doesn’t forget how it solved a problem.</span><button class="link" type="button" data-go="memory">Try it in step 9</button></div>
+    <div class="card level feat"><span class="feat-n">#3 Schedule</span><b>Focused Automation</b><span>Say it in plain words, like “every morning at 8, send me a briefing”, and it runs on its own.</span><button class="link" type="button" data-go="auto">Try it in step 10</button></div>
+    <div class="card level feat"><span class="feat-n">#4 Delegate</span><b>Tasks Multiplied</b><span>A big job can be split among helper agents (subagents) that work at the same time.</span><button class="link" type="button" data-go="tools">See the delegation tool in step 6</button></div>
+    <div class="card level feat"><span class="feat-n">#5 Search</span><b>Browse the Web</b><span>It can search the web, use a browser, look at images, make images, and talk out loud.</span><button class="link" type="button" data-go="agents">Try it in step 8</button></div>
+    <div class="card level feat"><span class="feat-n">#6 Experiment</span><b>Isolated Sandboxing</b><span>Its commands can run in a safe, separate box (Docker, SSH, or the cloud) instead of straight on your computer.</span><button class="link" type="button" data-go="safety">Learn about safety in step 7</button></div>
+  </div>
+
+  <h3 class="sec">Three ways to run it</h3>
+  <div class="grid-3 vary">
+    <div class="card level"><span class="tile" data-ic="monitor"></span><b>Desktop app</b><span>For macOS 12+ and Windows 10/11 (Microsoft Store). The easiest start.</span></div>
+    <div class="card level"><span class="tile" data-ic="terminal"></span><b>Terminal</b><span>One command on macOS, Linux, or Windows. This is what you’ll learn in step 2.</span></div>
+    <div class="card level"><span class="tile" data-ic="send"></span><b>In the cloud</b><span>An always-on agent hosted for you, through Nous Portal. Optional and paid.</span></div>
+  </div>
+
+  <h3 class="sec">Questions people ask</h3>
+  <div class="faq">
+    <details><summary>How much does it cost?</summary><p>Hermes itself is free and open source (MIT license). The AI model is separate: use your own provider, or Nous Portal, which has a free tier with free models and paid plans for more. Cloud hosting is optional.</p></details>
+    <details><summary>How do I get started?</summary><p>Install the desktop app (macOS or Windows) or run the install command, connect a model provider in the setup, then start chatting. Step 2 walks you through it.</p></details>
+    <details><summary>How do I chat with my agent?</summary><p>In the desktop app or the terminal, or connect a messaging app like Telegram, Discord, Slack, WhatsApp, Signal, or email. You’ll connect Telegram in step 11.</p></details>
+    <details><summary>Does it remember things between sessions?</summary><p>Yes. Hermes saves your conversations, memories, and skills, so you can pick up later. Back up your Hermes folder (<code>~/.hermes</code>) if you move to another computer.</p></details>
+    <details><summary>What happens when I stop it?</summary><p>It stops running, but nothing is deleted: its chats, memories, and skills stay. Start it again to continue. Scheduled jobs don’t run while it’s stopped.</p></details>
+  </div>
+  <p class="muted" style="font-size:.86rem;margin-top:10px">Answers based on the FAQ at <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">hermes-agent.nousresearch.com</a>.</p>
+
+  <h3 class="sec">Chatbot answers. Agent acts.</h3>
   <p class="muted" style="margin-top:-6px;max-width:70ch">A chatbot replies to you. An agent works toward a goal: it thinks, uses a tool, looks at the result, and repeats until the job is done.</p>
   <div class="grid-2">
     <div class="card loopviz" aria-hidden="true">
@@ -1216,17 +1272,6 @@ a.btn{text-decoration:none}
       <div><span class="tile ghost" data-ic="shield"></span><dt>Guardrails</dt><dd>What it refuses, when it stops</dd></div>
       <div><span class="tile ghost" data-ic="user"></span><dt>Human</dt><dd>Approves risks, owns results</dd></div>
     </dl></div>
-  </div>
-
-  <h3 class="sec">What is Hermes?</h3>
-  <p class="muted" style="margin-top:-6px;max-width:72ch">Hermes Agent is free, open-source software from Nous Research. It runs AI agents for real: it keeps the loop going and gives each agent what it needs for its job.</p>
-  <div class="grid-3 vary">
-    <div class="card level lift"><span class="tile" data-ic="loop"></span><b>Runs agents</b><span>Keeps the think, act, observe loop going until the job is done.</span></div>
-    <div class="card level lift"><span class="tile" data-ic="tool"></span><b>Gives them tools</b><span>Web search, files, code and more. You choose which tools each agent gets.</span></div>
-    <div class="card level lift"><span class="tile" data-ic="brain"></span><b>Memory</b><span>Remembers useful things about you from one chat to the next.</span></div>
-    <div class="card level lift"><span class="tile" data-ic="book"></span><b>Skills</b><span>Saved how-tos it can reuse, like recipe cards.</span></div>
-    <div class="card level lift"><span class="tile" data-ic="clock"></span><b>Scheduled jobs</b><span>Does tasks on its own, like a briefing every morning at 8:00.</span></div>
-    <div class="card level lift"><span class="tile" data-ic="chat"></span><b>Messaging apps</b><span>Talk to it on Telegram, Discord, Slack and more.</span></div>
   </div>
 
   <h3 class="sec">Watch an agent work</h3>
@@ -2368,7 +2413,7 @@ Every exam has study blocks before its date.</pre></div>
   const VIEWS = ORDER;
   const NAV = {
     start:['home','Start','Start','Overview'],
-    meet:['caduceus','Meet Hermes','Hermes','Step 1, 8 min'],
+    meet:['caduceus','Meet Hermes','Hermes','Step 1, 10 min'],
     install:['download','Install Hermes','Install','Step 2, 10 min'],
     files:['folder','Where things live','Files','Step 3, 5 min'],
     profiles:['user','Profiles','Profiles','Step 4, 7 min'],
@@ -2389,6 +2434,7 @@ Every exam has study blocks before its date.</pre></div>
 
   const D = 'https://hermes-agent.nousresearch.com/docs';
   const RESOURCES = [
+    {cat:'Start', t:'Hermes Agent official site', s:'Nous Research', u:'https://hermes-agent.nousresearch.com/', d:'What Hermes is, downloads, and plans.'},
     {cat:'Start', t:'Hermes Agent on GitHub', s:'Nous Research', u:'https://github.com/NousResearch/hermes-agent', d:'The code, the install command, and what’s new.'},
     {cat:'Start', t:'Hermes Agent docs', s:'Nous Research', u:D, d:'Everything about Hermes, in one place.'},
     {cat:'Start', t:'Quickstart', s:'Hermes docs', u:D + '/getting-started/quickstart', d:'Install, set up, and chat in a few minutes.'},
@@ -2411,6 +2457,7 @@ Every exam has study blocks before its date.</pre></div>
   /* ---------- course content ---------- */
   const INSTALL_SH = 'curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash';
   const OS = {
+    desktop:{label:'Desktop app', where:'Download it from the official site', cmd:'# macOS 12+:      Download Desktop App\n# Windows 10/11:  Microsoft Store\n# https://hermes-agent.nousresearch.com/', note:'Prefer clicking to typing? The desktop app is the easiest start. This lab uses the terminal, so you see what happens under the hood.'},
     mac:{label:'macOS', where:'Open Terminal and paste this', cmd:INSTALL_SH, note:'If “hermes: command not found” appears afterwards, open a new Terminal window.'},
     linux:{label:'Linux or WSL2', where:'Open a terminal and paste this', cmd:INSTALL_SH, note:'On Windows you can also use WSL2 (Linux inside Windows) with this same command.'},
     windows:{label:'Windows', where:'Open PowerShell and paste this', cmd:'iex (irm https://hermes-agent.nousresearch.com/install.ps1)', note:'This installs Hermes natively on Windows. No WSL needed.'},

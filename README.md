@@ -52,6 +52,12 @@ profile name, tools, and safety score.
 To refresh the screenshots after a Hermes update, re-run the commands shown in each image on a Hermes
 install and replace the PNGs in `img/terminal/`. Never include keys, other profiles, or personal paths.
 
+## Talk slides
+`slides.html` (at `/slides`) is a 17-slide deck for a talk of under 30 minutes about Hermes Agent 101, with
+speaker notes and a time budget per slide. Keys: → / Space next, ← back, **N** notes and timer,
+**F** fullscreen; click a screenshot to zoom; print to PDF from the browser (one slide per page).
+The proof slides use real screenshots from a running Hermes, stored in `img/slides/`.
+
 ## 1. Connect Supabase (accounts, progress, feedback)
 Supabase is required on Vercel. Without it, sign-up returns "Storage is not configured."
 

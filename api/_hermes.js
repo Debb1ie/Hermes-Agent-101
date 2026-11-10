@@ -4,7 +4,7 @@
 // Keys come from server environment variables and never reach a browser.
 
 export const AGENTS = {
-  lab: { profile: 'h101-lab', env: 'HERMES_KEY_LAB', label: 'Playground Live AI' },
+  lab: { profile: 'h101-lab', env: 'HERMES_KEY_LAB', label: 'SOUL.md tester' },
   mentor: { profile: 'h101-mentor', env: 'HERMES_KEY_MENTOR', label: 'Dashboard assistant' },
   researcher: { profile: 'h101-researcher', env: 'HERMES_KEY_RESEARCHER', label: 'Atlas, researcher' },
   coder: { profile: 'h101-coder', env: 'HERMES_KEY_CODER', label: 'Forge, coder' },

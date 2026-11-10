@@ -28,7 +28,7 @@ if (AUTO === 'student' || AUTO === 'admin') process.env.DEV_AUTO_LOGIN = AUTO;
 process.env.VERCEL_ENV = 'development';
 
 const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
-const rewrite = new RegExp('^' + cfg.rewrites[0].source + '$');
+const rewrites = cfg.rewrites.map(r => [new RegExp('^' + r.source + '$'), r.destination.replace(/^\//, '')]);
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
 
 function headersFor(res, pathname) {
@@ -57,7 +57,7 @@ http.createServer(async (req, res) => {
     catch (e) { console.error(`api/${fn[1]} crashed:`, e); if (!res.headersSent) { res.statusCode = 500; res.end('Server error'); } }
     return;
   }
-  const rel = pathname === '/' || rewrite.test(pathname) ? 'index.html' : pathname.slice(1);
+  const rel = pathname === '/' ? 'index.html' : rewrites.find(([rx]) => rx.test(pathname))?.[1] || pathname.slice(1);
   const full = path.join(ROOT, rel);
   // Only the website's own files: never the API source, scripts, or settings.
   if (!full.startsWith(ROOT + path.sep) || /^(api|scripts|hermes-side|\.)/.test(rel) || !fs.existsSync(full) || fs.statSync(full).isDirectory()) {

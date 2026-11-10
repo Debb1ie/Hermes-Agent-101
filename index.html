@@ -1688,7 +1688,7 @@ Every exam has study blocks before its date.</pre></div>
 <section class="view" data-view="policies" hidden>
   <div class="vhead"><span class="tile" data-ic="scale"></span><div><p class="step">Read before you start</p><h2>Policies and disclaimer</h2><p class="lede">The short version of the rules for today.</p></div></div>
   <div class="grid-2">
-    <div class="card policy"><span class="tile ghost" data-ic="info"></span><h4>Workshop disclaimer</h4><p>An educational demo. Missions, tools and data are made up. AI output can be wrong or unsafe, so verify before you use it. Live AI and Real agents send your messages to the workshop’s Hermes server and the AI model behind it, so never type personal data. Not affiliated with or endorsed by Nous Research or any AI company.</p></div>
+    <div class="card policy"><span class="tile ghost" data-ic="info"></span><h4>Workshop disclaimer</h4><p>An educational workshop. Examples and sample data are made up. AI output can be wrong or unsafe, so verify before you use it. The SOUL.md tester and Real agents send your messages to the workshop’s Hermes server and the AI model behind it, so never type personal data. Not affiliated with or endorsed by Nous Research or any AI company.</p></div>
     <div class="card policy"><span class="tile ghost" data-ic="user"></span><h4>Age and accounts</h4><p>Each AI tool sets its own minimum age and terms, and some require users to be 18 or older. If you’re under a tool’s age limit, use a different tool, pair up, or follow the projector.</p></div>
     <div class="card policy"><span class="tile ghost" data-ic="lock"></span><h4>Your data</h4><p>Lab work stays on this PC. If you pair Telegram, only your pairing code and the username you type are saved. Survey answers go only to the workshop speaker, for attendance and improvement, in line with the Data Privacy Act of 2012 (RA 10173). Never paste real personal data into AI tools.</p></div>
     <div class="card policy"><span class="tile ghost" data-ic="book"></span><h4>Academic integrity</h4><p>Use AI to learn and build, not to pass off its work as yours. Follow your teachers’ rules on AI use.</p></div>
@@ -1906,7 +1906,7 @@ Every exam has study blocks before its date.</pre></div>
     return `<section class="card dash-section ai-box" aria-labelledby="aiTitle"><h3 id="aiTitle">Dashboard assistant</h3>
       <p class="muted">Hermes reads the live class data${isAdmin() ? ' (names, progress, and survey answers; never emails)' : ' for your lab'} and answers in plain language. It can take up to a minute. Check important details in the tables.</p>
       <div class="ai-presets">${presets.map(([id, label]) => `<button class="btn small" type="button" data-ai-preset="${id}">${label}</button>`).join('')}</div>
-      <form id="aiForm" class="ai-form"><input id="aiQuestion" type="text" maxlength="500" placeholder="Or ask anything, e.g. Who hasn’t picked a mission yet?" aria-label="Question for the assistant"><button class="btn primary small" type="submit">Ask</button></form>
+      <form id="aiForm" class="ai-form"><input id="aiQuestion" type="text" maxlength="500" placeholder="Or ask anything, e.g. Who hasn’t passed the safety check yet?" aria-label="Question for the assistant"><button class="btn primary small" type="submit">Ask</button></form>
       <div id="aiOut" class="ai-out" aria-live="polite"></div></section>`;
   }
   function md(text){
@@ -1973,7 +1973,7 @@ Every exam has study blocks before its date.</pre></div>
   /* Hermes tab (admin only): status, Telegram pairing approvals, and today's usage. */
   function previewHermes(){
     const t = m => new Date(Date.now() - m * 60000).toISOString();
-    const profiles = [['lab','h101-lab','HERMES_KEY_LAB','Playground Live AI'],['mentor','h101-mentor','HERMES_KEY_MENTOR','Dashboard assistant'],['researcher','h101-researcher','HERMES_KEY_RESEARCHER','Atlas, researcher'],['coder','h101-coder','HERMES_KEY_CODER','Forge, coder'],['assistant','h101-assistant','HERMES_KEY_ASSISTANT','Iris, daily assistant']]
+    const profiles = [['lab','h101-lab','HERMES_KEY_LAB','SOUL.md tester'],['mentor','h101-mentor','HERMES_KEY_MENTOR','Dashboard assistant'],['researcher','h101-researcher','HERMES_KEY_RESEARCHER','Atlas, researcher'],['coder','h101-coder','HERMES_KEY_CODER','Forge, coder'],['assistant','h101-assistant','HERMES_KEY_ASSISTANT','Iris, daily assistant']]
       .map(([use, profile, env, label]) => ({use, profile, env, label, keySet:true}));
     const telegram = [{id:'sample2', name:'Bea Villanueva', email:'bea@example.test', lab:'CL6', code:'K7MPX3QA', username:'@bea_v', status:'pending', at:t(3)},
       {id:'sample0', name:'Andrea Santos', email:'andrea@example.test', lab:'CL6', code:'R4TW9ZHN', username:'@andrea_s', status:'approved', at:t(40), approvedAt:t(35), approvedBy:'Local preview'}]
@@ -2011,8 +2011,8 @@ Every exam has study blocks before its date.</pre></div>
         <div class="scroll"><table class="dash-table"><thead><tr><th>Student</th><th>Telegram</th><th>Code</th><th>Status</th><th>Action</th></tr></thead><tbody>
         ${h.telegram.length ? h.telegram.map(r => `<tr><td><b>${esc(r.name)}</b><br><span class="muted">${esc(r.email)}</span><br><small class="muted">${esc(labName(r.lab))}</small></td><td>${r.username ? esc(r.username) : '<span class="muted">Not given</span>'}</td><td><code>${esc(r.code)}</code><br><small class="muted">${esc(ago(r.at))}</small></td><td>${r.status === 'approved' ? pill('good', 'Approved') + (r.approvedBy ? `<br><small class="muted">by ${esc(r.approvedBy)}</small>` : '') : pill('warn', 'Pending')}</td><td>${r.status === 'approved' ? `<button class="btn small" type="button" data-tg-command="${esc(r.id)}">Show command</button>` : `<button class="btn small primary" type="button" data-tg-approve="${esc(r.id)}">Approve</button>`}</td></tr>`).join('') : '<tr><td colspan="5">No pairing requests yet.</td></tr>'}
         </tbody></table></div></div>
-      <div class="card dash-section"><h3>Usage today</h3><p class="muted">Messages sent to Hermes on ${esc(u.date)} (${esc(u.timeZone)} time). Each Live AI step is one message.</p>
-        ${statTiles([[u.live.CL6 || 0, 'Live AI, Lab 6'], [u.live.CL7 || 0, 'Live AI, Lab 7'], [u.agentsTotal || 0, 'Real agents']])}
+      <div class="card dash-section"><h3>Usage today</h3><p class="muted">Messages sent to Hermes on ${esc(u.date)} (${esc(u.timeZone)} time). Each message counts once.</p>
+        ${statTiles([[u.live.CL6 || 0, 'SOUL.md tests, Lab 6'], [u.live.CL7 || 0, 'SOUL.md tests, Lab 7'], [u.agentsTotal || 0, 'Real agents']])}
         <p class="muted">Real agents: Atlas ${u.agents.researcher || 0}, Forge ${u.agents.coder || 0}, Iris ${u.agents.assistant || 0}.</p></div>`;
   }
   const commandHtml = command => `<div class="temp-pass cmd"><code>${esc(command)}</code><button class="btn small" type="button" data-copy-text="${esc(command)}">Copy</button></div>`;

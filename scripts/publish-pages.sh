@@ -35,7 +35,7 @@ REMOTE="$(git remote get-url origin)"
 cd "$OUT"
 git init -q -b gh-pages
 git add -A
-git -c user.name="$(git -C "$ROOT" config user.name)" -c user.email="$(git -C "$ROOT" config user.email)" \
+git -c user.name="$(git -C "$ROOT" log -1 --format=%an)" -c user.email="$(git -C "$ROOT" log -1 --format=%ae)" \
   commit -q -m "Publish slides and manual ($(git -C "$ROOT" rev-parse --short HEAD))"
 git push -q -f "$REMOTE" gh-pages
 OWNER_REPO="$(echo "$REMOTE" | sed -E 's#.*github\.com[:/]##; s#\.git$##')"

@@ -905,6 +905,15 @@ select:disabled{cursor:default;opacity:.6}
 .faq summary{cursor:pointer;font-weight:600;padding:12px 0}
 .faq details[open] summary{border-bottom:1px solid var(--rule);margin-bottom:10px}
 .faq p{color:var(--muted);font-size:.94rem}
+.desk-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.desk-tag{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--violet) 18%,var(--surface));color:color-mix(in srgb,var(--violet) 85%,var(--ink));border:1px solid color-mix(in srgb,var(--violet) 40%,var(--rule))}
+.desk-grid{display:grid;gap:18px;align-items:start}
+.desk-grid.dg2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.desk-grid.dg1{grid-template-columns:minmax(0,1fr);max-width:980px}
+@media (max-width:800px){.desk-grid.dg2{grid-template-columns:1fr}}
+.desk-shot{margin:0}
+.desk-shot img{background:#fff}
+.dnum{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:.75rem;margin-right:8px;vertical-align:1px}
 /* ---------- course pages ---------- */
 figure.shot{margin:14px 0 0;min-width:0}
 figure.shot img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:var(--sh-2);border:1px solid var(--rule)}
@@ -1239,6 +1248,12 @@ a.btn{text-decoration:none}
     <div class="card level"><span class="tile" data-ic="send"></span><b>In the cloud</b><span>An always-on agent hosted for you, through Nous Portal. Optional and paid.</span></div>
   </div>
 
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>This is Hermes Desktop</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch">Chat in the middle. On the left: <b>Capabilities</b> (tools and skills), <b>Messaging</b> (Telegram and more), and <b>Scheduled jobs</b>. Settings is the gear at the top right.</p>
+  <div class="desk-grid dg1">
+    <figure class="shot desk-shot"><a href="img/desktop/06-home.jpg" target="_blank" rel="noopener"><img src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box and the sidebar" loading="lazy" width="1600" height="1017"></a><figcaption>The home screen of Hermes Desktop</figcaption></figure>
+  </div>
+
   <h3 class="sec">Questions people ask</h3>
   <div class="faq">
     <details><summary>How much does it cost?</summary><p>Hermes itself is free and open source (MIT license). The AI model is separate: use your own provider, or Nous Portal, which has a free tier with free models and paid plans for more. Cloud hosting is optional.</p></details>
@@ -1299,7 +1314,17 @@ a.btn{text-decoration:none}
   <div class="pick-row" role="group" aria-label="Your computer" id="osPick"></div>
   <div class="codebox"><div class="bar"><span id="osLabel"></span><button class="btn small" type="button" data-copy="installCmd" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="installCmd"></pre></div>
   <p class="muted" id="osNote" style="margin-top:8px"></p>
-  <h3 class="sec">2. Pick a model, then check everything</h3>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>2. Set it up in the app</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch">Open Hermes Desktop for the first time and follow these screens. It takes a few minutes, once.</p>
+  <div class="desk-grid dg2">
+    <figure class="shot desk-shot"><a href="img/desktop/01-first-run.jpg" target="_blank" rel="noopener"><img src="img/desktop/01-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally" loading="lazy" width="852" height="415"></a><figcaption><span class="dnum">1</span>Choose <b>Install Hermes locally</b>.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/02-installer.jpg" target="_blank" rel="noopener"><img src="img/desktop/02-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer with progress" loading="lazy" width="860" height="709"></a><figcaption><span class="dnum">2</span>Wait for the one-time setup (9 steps).</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/03-choose-provider.jpg" target="_blank" rel="noopener"><img src="img/desktop/03-choose-provider.jpg" alt="Let’s get you setup with Hermes Agent: Nous Portal, Run models locally, Other providers, I have an API key" loading="lazy" width="942" height="555"></a><figcaption><span class="dnum">3</span>Pick a model provider. <b>Nous Portal</b> is easiest; or click <b>I have an API key</b>.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/04-api-key.jpg" target="_blank" rel="noopener"><img src="img/desktop/04-api-key.jpg" alt="OpenRouter selected with an empty Paste API key box and a Connect button" loading="lazy" width="944" height="959"></a><figcaption><span class="dnum">4</span>Choose a provider (here OpenRouter), click <b>Get a key</b>, paste it, then <b>Connect</b>.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/05-connected.jpg" target="_blank" rel="noopener"><img src="img/desktop/05-connected.jpg" alt="OpenRouter connected, default model, Change, Begin" loading="lazy" width="377" height="299"></a><figcaption><span class="dnum">5</span>Connected. Click <b>Change</b> to pick another model, then <b>Begin</b>.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/07-settings-model.jpg" target="_blank" rel="noopener"><img src="img/desktop/07-settings-model.jpg" alt="Settings, Model, Main model: provider and model drop-downs with Apply" loading="lazy" width="1600" height="1017"></a><figcaption><span class="dnum">6</span>Later: switch models in <b>Settings › Model</b>.</figcaption></figure>
+  </div>
+  <h3 class="sec">Or set it up in the terminal</h3>
   <div class="grid-2" style="align-items:start">
     <div class="codebox"><div class="bar"><span>Run these one at a time</span><button class="btn small" type="button" data-copy="setupCmds" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="setupCmds">hermes setup      # the setup wizard: model, keys, tools
 hermes model      # change the AI model any time
@@ -1311,7 +1336,7 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
       <li><span data-ic="check"></span><span><b>A local model</b>: runs on your own computer. Needs a strong PC.</span></li>
     </ul><p class="muted" style="margin:10px 0 0;font-size:.88rem">Keys are saved in <code>~/.hermes/.env</code>. Never paste a key into a chat or a screenshot.</p></div>
   </div>
-  <h3 class="sec">What you should see</h3>
+  <h3 class="sec">What the terminal shows</h3>
   <div class="grid-2 shots">
     <figure class="shot"><a href="img/terminal/version.png" target="_blank" rel="noopener"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version" loading="lazy"></a><figcaption><code>hermes --version</code> shows the version you installed.</figcaption></figure>
     <figure class="shot"><a href="img/terminal/doctor.png" target="_blank" rel="noopener"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks for the config files and folders" loading="lazy"></a><figcaption><code>hermes doctor</code>: green ✓ means OK. ⚠ items are optional.</figcaption></figure>
@@ -1410,7 +1435,12 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
     <div class="codebox"><div class="bar"><span>Add to config.yaml</span><button class="btn small primary" type="button" data-copy="toolsConfig" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="toolsConfig"></pre></div>
     <div class="codebox"><div class="bar"><span>Or use commands</span><button class="btn small" type="button" data-copy="toolsCmds" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="toolsCmds"></pre></div>
   </div>
-  <h3 class="sec">What you should see</h3>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>Turn tools on and off</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch"><b>Capabilities › Tools</b>. Flip a switch to turn a toolset off. Changes apply to new chats.</p>
+  <div class="desk-grid dg1">
+    <figure class="shot desk-shot"><a href="img/desktop/08-tools.jpg" target="_blank" rel="noopener"><img src="img/desktop/08-tools.jpg" alt="Capabilities, Tools: toolsets with on/off switches and how many tools each has" loading="lazy" width="1600" height="1017"></a><figcaption>Each toolset has a switch. Leave on only what the job needs.</figcaption></figure>
+  </div>
+  <h3 class="sec">In the terminal</h3>
   <figure class="shot"><a href="img/terminal/tools.png" target="_blank" rel="noopener"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list shows web and vision enabled and everything else disabled for Atlas" loading="lazy"></a><figcaption>Atlas only has <b>web</b> and <b>vision</b>. Everything risky is off.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
@@ -1420,6 +1450,12 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
   <div class="vhead"><span class="tile" data-ic="shield"></span><div><p class="step">Step 7 of 13, 12 min</p><h2>Make it safe</h2><p class="lede">A rule in SOUL.md is a request. A setting is a lock. Pick the setting that stops each risk.</p></div></div>
   <p class="safety-score" id="safetyScore" role="status"></p>
   <div class="stack-gap" id="safetyList"></div>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>The same locks, in the app</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch"><b>Settings › Safety › Approvals</b> sets when Hermes must ask you. On <b>Messaging › Telegram</b>, “Allowed Telegram user IDs” is the allowlist.</p>
+  <div class="desk-grid dg2">
+    <figure class="shot desk-shot"><a href="img/desktop/09-approvals.jpg" target="_blank" rel="noopener"><img src="img/desktop/09-approvals.jpg" alt="Settings, Safety, Approvals: Approval Mode, Approval Timeout, Command Allowlist" loading="lazy" width="1600" height="1017"></a><figcaption><b>Approval Mode</b> decides when Hermes stops and asks. <b>Command Allowlist</b> lists commands that are always OK.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/14-telegram.jpg" target="_blank" rel="noopener"><img src="img/desktop/14-telegram.jpg" alt="Messaging, Telegram: bot token and Allowed Telegram user IDs" loading="lazy" width="1600" height="1017"></a><figcaption>“Without this, anyone can DM your bot”: add your user ID.</figcaption></figure>
+  </div>
   <h3 class="sec">Your safe settings</h3>
   <div class="codebox"><div class="bar"><span>config.yaml and .env for your profile</span><button class="btn small primary" type="button" data-copy="safeConfig" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="safeConfig"></pre></div>
   <div class="pager" data-pager></div>
@@ -1490,7 +1526,13 @@ The user lists exams or deadlines and asks for a plan.
 
 ## Verification
 Every exam has study blocks before its date.</pre></div>
-  <h3 class="sec">What you should see</h3>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>Memory and skills in the app</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch"><b>Settings › Memory &amp; Context</b> turns memory on and sets its size. <b>Capabilities › Skills</b> lists your skills and the Skills Hub.</p>
+  <div class="desk-grid dg2">
+    <figure class="shot desk-shot"><a href="img/desktop/10-memory.jpg" target="_blank" rel="noopener"><img src="img/desktop/10-memory.jpg" alt="Settings, Memory and Context: Persistent Memory and User Profile switches, memory budgets" loading="lazy" width="1600" height="1017"></a><figcaption>Persistent memory and the user profile (MEMORY.md and USER.md).</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/11-skills.jpg" target="_blank" rel="noopener"><img src="img/desktop/11-skills.jpg" alt="Capabilities, Skills: installed skills with switches and the Skills Hub" loading="lazy" width="1600" height="1017"></a><figcaption>Skills you have, and the Skills Hub to find more.</figcaption></figure>
+  </div>
+  <h3 class="sec">In the terminal</h3>
   <figure class="shot"><a href="img/terminal/skills.png" target="_blank" rel="noopener"><img src="img/terminal/skills.png" alt="Terminal: hermes skills list shows a table of installed skills" loading="lazy"></a><figcaption><code>hermes skills list</code>: the skills you have, where they came from, and if they’re on.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
@@ -1518,7 +1560,13 @@ Every exam has study blocks before its date.</pre></div>
     </div>
   </div>
   <div class="codebox" style="margin-top:18px"><div class="bar"><span>Your command</span><button class="btn small primary" type="button" data-copy="cronCmd" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="cronCmd"></pre></div>
-  <h3 class="sec">What you should see</h3>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>Make a job in the app</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch"><b>Scheduled jobs</b> has ready-made blueprints. Pick one, set the time and where to deliver it, then <b>Schedule it</b>.</p>
+  <div class="desk-grid dg2">
+    <figure class="shot desk-shot"><a href="img/desktop/12-scheduled-jobs.jpg" target="_blank" rel="noopener"><img src="img/desktop/12-scheduled-jobs.jpg" alt="Scheduled jobs: blueprints like Morning briefing, Weekly review, Daily learning drip" loading="lazy" width="1600" height="1017"></a><figcaption>Blueprints: Morning briefing, Weekly review, Daily learning drip, and more.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/13-new-cron.jpg" target="_blank" rel="noopener"><img src="img/desktop/13-new-cron.jpg" alt="New cron job: start from Morning briefing, time 08:00, deliver to This desktop or Bot Chat" loading="lazy" width="1600" height="1017"></a><figcaption>New cron job: what time, and where to deliver it.</figcaption></figure>
+  </div>
+  <h3 class="sec">In the terminal</h3>
   <figure class="shot"><a href="img/terminal/cron.png" target="_blank" rel="noopener"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list shows Iris’s Morning Briefing and Midday Tip with their schedules" loading="lazy"></a><figcaption><code>hermes cron list</code>: each job, its schedule, and when it runs next.</figcaption></figure>
   <div class="path-head"><h3>Iris’s scheduled jobs</h3><button class="btn small" type="button" id="autoRefresh"><span data-ic="refresh"></span>Refresh</button></div>
   <p class="muted" id="autoMsg" role="status" style="margin-top:-6px"></p>
@@ -1566,6 +1614,11 @@ Every exam has study blocks before its date.</pre></div>
   </div>
   <p class="muted" style="font-size:.86rem;margin-top:12px">Telegram is optional and has its own rules. This site saves only your pairing code and the username you type.</p>
   <h3 class="sec">At home: put your own agent on Telegram</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch">Easiest in Hermes Desktop: <b>Messaging › Telegram › Create with QR</b>. Scan, confirm in Telegram, and Hermes makes the bot and finds your user ID. Or paste a token from @BotFather.</p>
+  <div class="desk-grid dg1">
+    <figure class="shot desk-shot"><a href="img/desktop/14-telegram.jpg" target="_blank" rel="noopener"><img src="img/desktop/14-telegram.jpg" alt="Messaging, Telegram: Quick setup with Create with QR, bot token, Allowed Telegram user IDs" loading="lazy" width="1600" height="1017"></a><figcaption><b>Create with QR</b>, or paste the bot token. Then add your user ID to the allowlist and <b>Save changes</b>.</figcaption></figure>
+  </div>
+  <p style="font-weight:600;margin:18px 0 8px">Or in the terminal:</p>
   <ol class="key-steps" style="max-width:760px">
     <li><span>In Telegram, message <b>@BotFather</b>, send <code>/newbot</code>, pick a name, and copy the <b>token</b>.</span></li>
     <li><span>Run <code>hermes gateway setup</code> and paste the token when it asks. (It’s saved in <code>.env</code> as <code>TELEGRAM_BOT_TOKEN</code>.)</span></li>
@@ -1604,7 +1657,13 @@ Every exam has study blocks before its date.</pre></div>
   -H "Content-Type: application/json" \
   -d '{"model":"my-agent","messages":[{"role":"user","content":"Hi!"}]}'</pre></div>
   </div>
-  <h3 class="sec">What you should see</h3>
+  <h3 class="sec desk-h"><span class="desk-tag">Hermes Desktop</span>Turn on the API server in the app</h3>
+  <p class="muted" style="margin-top:-6px;max-width:72ch"><b>Messaging › API server</b> turns on the OpenAI-compatible API. <b>Settings › Gateways</b> connects the app to a Hermes running somewhere else, like a cloud server.</p>
+  <div class="desk-grid dg2">
+    <figure class="shot desk-shot"><a href="img/desktop/15-api-server.jpg" target="_blank" rel="noopener"><img src="img/desktop/15-api-server.jpg" alt="Messaging, API server: expose Hermes as an OpenAI-compatible HTTP API" loading="lazy" width="1600" height="1017"></a><figcaption>API server: set a key, enable it, <b>Save changes</b>.</figcaption></figure>
+    <figure class="shot desk-shot"><a href="img/desktop/16-gateways.jpg" target="_blank" rel="noopener"><img src="img/desktop/16-gateways.jpg" alt="Settings, Gateways: Local gateway, Hermes Cloud, Remote gateway, Connect via SSH" loading="lazy" width="1600" height="1017"></a><figcaption>Gateways: local, Hermes Cloud, remote, or over SSH.</figcaption></figure>
+  </div>
+  <h3 class="sec">In the terminal</h3>
   <figure class="shot"><a href="img/terminal/api-call.png" target="_blank" rel="noopener"><img src="img/terminal/api-call.png" alt="Terminal: a curl request to a profile and the JSON answer with the reply text" loading="lazy"></a><figcaption>A real call. The answer is in <code>choices[0].message.content</code>.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
@@ -2463,7 +2522,7 @@ Every exam has study blocks before its date.</pre></div>
     windows:{label:'Windows', where:'Open PowerShell and paste this', cmd:'iex (irm https://hermes-agent.nousresearch.com/install.ps1)', note:'This installs Hermes natively on Windows. No WSL needed.'},
     android:{label:'Android', where:'Android uses Termux', cmd:'# Android has its own package. Follow the Termux guide:\n# ' + D + '/getting-started/termux', note:'Install Termux first, then follow the guide.'}
   };
-  const CHECKS = [['installed','<code>hermes --version</code> shows a version'],['model','I picked a model with <code>hermes setup</code>'],['doctor','<code>hermes doctor</code> shows ✓ for my config'],['chat','I said hi in <code>hermes</code>']];
+  const CHECKS = [['installed','Hermes is installed (the Desktop app, or <code>hermes --version</code> works)'],['model','I connected a model provider'],['doctor','Setup shows no errors (<code>hermes doctor</code> in the terminal)'],['chat','I said hi to Hermes']];
   const FILES = [
     {id:'config', name:'config.yaml', icon:'sliders', short:'settings', what:'Settings: which model, which tools, safety rules, and step limits.', example:'model:\n  default: openrouter/free-model\nagent:\n  max_turns: 30\napprovals:\n  mode: manual', cmds:'hermes config get agent.max_turns\nhermes config set agent.max_turns 30'},
     {id:'env', name:'.env', icon:'lock', short:'secrets', what:'Secrets: API keys and bot tokens. Never share it, never screenshot it, never put it on GitHub.', example:'OPENROUTER_API_KEY=sk-or-…\nTELEGRAM_BOT_TOKEN=…', cmds:'hermes setup       # adds keys for you\nhermes model       # changes model and key'},
@@ -2525,7 +2584,7 @@ Every exam has study blocks before its date.</pre></div>
   ];
   const DAYS = {'*':'every day', '1-5':'on weekdays', '0,6':'on weekends', '1':'on Mondays'};
   const blankSoul = () => ({tpl:'', name:'', who:'', job:'', how:'', never:'', ask:'', tone:'friendly'});
-  const defaults = () => ({team:'', os:'mac', checks:{}, file:'config', profile:{name:'my-agent'}, soul:blankSoul(), tools:['web','todo','clarify'], safety:{},
+  const defaults = () => ({team:'', os:'desktop', checks:{}, file:'config', profile:{name:'my-agent'}, soul:blankSoul(), tools:['web','todo','clarify'], safety:{},
     cron:{name:'Morning Briefing', time:'08:00', days:'*', task:'Write a short morning briefing: one AI tip and one thing to try today.', deliver:'local'},
     seen:{}, left:{}, ready:{}, celebrated:{}, certs:[], local:[], draft:{}, bypass:false,
     copiedSoul:false, soulTested:false, toolsSaved:false, copiedCron:false, copiedBundle:false,

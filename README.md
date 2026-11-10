@@ -201,6 +201,10 @@ Hermes also needs to serve:
 - The Telegram gateway on `h101-assistant`, with DM pairing on. Students get an 8-character code from the
   bot, a mentor approves it on the dashboard, and the operator runs
   `hermes -p h101-assistant pairing approve telegram <CODE>`.
+  To connect the bot: create it with @BotFather (`/newbot`), then run `bash hermes-side/set-telegram.sh`
+  and paste the token when asked (hidden). Or copy the token and run it with `--clipboard`. The script
+  checks the token with Telegram, saves it only in the profile's `.env`, writes `TELEGRAM_BOT_USERNAME`
+  to the website's `.env`, and restarts the gateway. On Vercel, set `TELEGRAM_BOT_USERNAME` too.
 
 ### Running Hermes on your own computer: `hermes-side/`
 If Hermes runs on a Mac or PC (not a server), `hermes-side/` connects it to the website safely:

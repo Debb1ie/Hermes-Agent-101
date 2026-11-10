@@ -777,6 +777,12 @@ hermes -p study-buddy cron run &lt;job_id&gt;    <span class="c"># try it now</s
     <figure class="term"><a href="img/terminal/gateway.png" target="_blank" rel="noopener"><img src="img/terminal/gateway.png" alt="Terminal: hermes gateway status shows the gateway running" loading="lazy" width="1764" height="604"></a><figcaption><code>hermes gateway status</code>: it’s running.</figcaption></figure>
     <figure class="term"><a href="img/terminal/pairing.png" target="_blank" rel="noopener"><img src="img/terminal/pairing.png" alt="Terminal: hermes pairing list with no pending requests" loading="lazy" width="1764" height="216"></a><figcaption><code>hermes pairing list</code>: who is waiting to be let in.</figcaption></figure>
   </div>
+  <h3>What you’ll see in Telegram</h3>
+  <p class="prose">Strangers get a pairing code, not answers. After you approve them, they send their message again and the agent replies.</p>
+  <div class="shots">
+    <figure class="term"><a href="img/telegram/01-pairing.jpg" target="_blank" rel="noopener"><img src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives an 8-character pairing code and the approve command" loading="lazy" width="1078" height="588"></a><figcaption><span class="d">1</span>Press <b>Start</b>: the bot gives a pairing code that works for 1 hour.</figcaption></figure>
+    <figure class="term"><a href="img/telegram/02-chat.jpg" target="_blank" rel="noopener"><img src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers a request for a study tip" loading="lazy" width="1078" height="1052"></a><figcaption><span class="d">2</span>Approved: send the message again, and the agent answers. Type <code>/sethome</code> if you want scheduled jobs delivered to this chat.</figcaption></figure>
+  </div>
   <div class="note lab"><span class="t">In the lab</span><p>You don’t make a bot in class. Open the workshop’s bot from the <a href="/telegram">Hermes on Telegram</a> page, press Start, paste your pairing code there, and wait for a mentor to approve you.</p></div>
   <div class="note warn"><span class="t">Your bot token is a key</span><p>Anyone with it controls your bot. If it leaks, open @BotFather and revoke it.</p></div>
 </section>

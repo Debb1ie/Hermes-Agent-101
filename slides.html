@@ -105,7 +105,7 @@ figure.shot figcaption{font-size:18px;color:var(--muted);line-height:1.35}
 
 /* plain-words explanation for students */
 .explain{display:flex;gap:16px;align-items:flex-start;background:color-mix(in srgb,var(--violet) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--violet) 35%,var(--rule));border-radius:18px;padding:16px 20px}
-.explain::before{content:"💡";font-size:26px;line-height:1.2}
+.explain::before{content:"";flex:none;width:6px;align-self:stretch;border-radius:3px;background:var(--violet)}
 .explain p{font-size:21px;line-height:1.45;color:var(--ink-2)}
 .explain p b:first-child{color:var(--violet-ink);font-family:var(--mono);font-size:15px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
 .slide > .explain{margin-top:auto}
@@ -229,7 +229,7 @@ aside.say{display:none}
     <div class="card"><span class="n">Part 3 · 10 min</span><span class="t">Make your own agent</span><p>Profile, SOUL.md, tools, safety, memory, jobs, Telegram.</p></div>
     <div class="card hi"><span class="n">Part 4 · 12 min</span><span class="t">The 101 system</span><p>The website, the live agents, how it all connects, and a demo.</p></div>
   </div>
-  <div class="explain" style="margin-top:34px"><p><b>How to use these slides</b>Click ◀ ▶ (or use the arrow keys). Click any screenshot to see it bigger. Use + and − to zoom, ☀ / ☾ for light or dark, and ▦ to jump to any slide.</p></div>
+  <div class="explain" style="margin-top:34px"><p><b>How to use these slides</b>Click the arrow buttons on the sides or at the bottom (or use the arrow keys). Click any screenshot to see it bigger. Use + and − to zoom, the sun or moon button for light or dark mode, and the grid button to jump to any slide.</p></div>
   <aside class="say"><p>Here’s the map. Short intro, quick setup, then most of the time on making your own agent and on how our system works.</p></aside>
 </section>
 
@@ -269,12 +269,12 @@ aside.say{display:none}
   <p class="kicker">Part 1 · Meet Hermes</p>
   <h2>What Hermes can do</h2>
   <div class="cards c3">
-    <div class="card"><span class="ic">🧰</span><span class="t">Use tools</span><p>Search the web, read pictures, run code, use files. You choose which.</p></div>
-    <div class="card"><span class="ic">🧠</span><span class="t">Remember you</span><p>It keeps short notes about you and your work between chats.</p></div>
-    <div class="card"><span class="ic">📚</span><span class="t">Learn skills</span><p>It saves how-tos (skills) and reuses them next time.</p></div>
-    <div class="card"><span class="ic">⏰</span><span class="t">Work on a schedule</span><p>A morning briefing at 8:00, a weekly review on Monday.</p></div>
-    <div class="card"><span class="ic">💬</span><span class="t">Live where you are</span><p>Telegram, Discord, Slack, WhatsApp, and more.</p></div>
-    <div class="card"><span class="ic">👥</span><span class="t">Many agents</span><p>One profile per job: a study buddy, a news scout, a coder.</p></div>
+    <div class="card"><span class="t">Use tools</span><p>Search the web, read pictures, run code, use files. You choose which.</p></div>
+    <div class="card"><span class="t">Remember you</span><p>It keeps short notes about you and your work between chats.</p></div>
+    <div class="card"><span class="t">Learn skills</span><p>It saves how-tos (skills) and reuses them next time.</p></div>
+    <div class="card"><span class="t">Work on a schedule</span><p>A morning briefing at 8:00, a weekly review on Monday.</p></div>
+    <div class="card"><span class="t">Live where you are</span><p>Telegram, Discord, Slack, WhatsApp, and more.</p></div>
+    <div class="card"><span class="t">Many agents</span><p>One profile per job: a study buddy, a news scout, a coder.</p></div>
   </div>
   <div class="explain"><p><b>In plain words</b>You can build a helper that knows you, does its job by itself on time, and answers you on your phone.</p></div>
   <aside class="say"><p>Six things, in plain words. We’ll set up each one in Part 3.</p></aside>
@@ -364,9 +364,9 @@ hermes profile list</div>
       <p class="muted" style="font-size:21px">In the app: the <b>Bots</b> tab › create a new agent.</p>
       <div class="explain"><p><b>In plain words</b>A study buddy and a news scout should be two profiles. Each has its own settings, memory, and keys, so one can’t mess up the other.</p></div>
     </div>
-    <figure class="shot h580"><img src="img/slides/sys-profiles.jpg" alt="Course page Profiles: name your agent, generated commands, and the five workshop profiles"><figcaption>The course writes the commands for the name you type, and lists the 5 real profiles behind this workshop.</figcaption></figure>
+    <figure class="shot h470"><img src="img/slides/sys-profiles.jpg" alt="Course page Profiles: name your agent, generated commands, and the five workshop profiles"><figcaption>Type a name, and the course writes the commands for you.</figcaption></figure>
   </div>
-  <aside class="say"><p>Profiles are how you keep agents small and separate. Our website runs on five of them.</p></aside>
+  <aside class="say"><p>Profiles are how you keep agents small and separate. Each agent in our course is its own profile.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="SOUL.md">
@@ -439,7 +439,7 @@ hermes profile list</div>
     <figure class="shot h490"><img src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><b>2</b> After approval, Iris answers. Real chat, real bot: @hermes101_iris_bot.</figcaption></figure>
   </div>
   <div class="explain"><p><b>In plain words</b>Hermes runs on a computer, not in Telegram. The <b>gateway</b> is the bridge. Nobody gets answers until the owner approves their code, so a stranger can’t use your agent.</p></div>
-  <aside class="say"><p>These are real screenshots of our workshop bot. Students press Start, get a code, a mentor approves them, then they chat with Iris.</p></aside>
+  <aside class="say"><p>These are real screenshots of our workshop bot. Students press Start, get a code, the bot owner approves them, then they chat with Iris.</p></aside>
 </section>
 
 <section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Connect apps">
@@ -454,11 +454,11 @@ hermes profile list</div>
 </section>
 
 <!-- ================= PART 4 ================= -->
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="The workshop website">
+<section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="The workshop website">
   <p class="kicker"><span class="chip web">Course website</span>Part 4 · The Hermes Agent 101 system</p>
   <h2>A 13-step course, powered by Hermes</h2>
   <div class="split rev">
-    <figure class="shot h580"><img src="img/slides/sys-start.jpg" alt="The course start page: Set up your own AI agent with Hermes, with today's path"><figcaption>The start page and today’s path.</figcaption></figure>
+    <figure class="shot h580"><img src="img/slides/sys-course.jpg" alt="A course page, Memory and skills, with the list of steps in the sidebar"><figcaption>Every step is a page. The sidebar shows where you are.</figcaption></figure>
     <div class="col">
       <ol class="num steps13">
         <li><span>Meet Hermes</span></li><li><span>Install</span></li><li><span>Where things live</span></li><li><span>Profiles</span></li>
@@ -466,25 +466,24 @@ hermes profile list</div>
         <li><span>Memory &amp; skills</span></li><li><span>Scheduled jobs</span></li><li><span>Telegram</span></li><li><span>Connect apps</span></li>
         <li><span>Takeaways</span></li>
       </ol>
-      <div class="explain"><p><b>In plain words</b>Students log in and work in pairs for about 2 hours. They never need an API key. The interactive parts run on real Hermes agents.</p></div>
+      <div class="explain"><p><b>In plain words</b>Students open the course in a browser and go step by step. They never need an API key: the website keeps it. The interactive parts run on real Hermes agents.</p></div>
     </div>
   </div>
   <aside class="say"><p>Everything in Part 3 is a step in this course. Students never see a key; the website holds them.</p></aside>
 </section>
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="Five real agents">
+<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="The course agents">
   <p class="kicker">Part 4 · The Hermes Agent 101 system</p>
-  <h2>Five Hermes profiles run the class</h2>
+  <h2>Real Hermes agents power the course</h2>
   <table class="t">
-    <tr><th>Agent</th><th>Profile</th><th>Its one job</th><th>Tools</th></tr>
-    <tr><td><b>Atlas</b> 🔍</td><td><code>h101-researcher</code></td><td>Answers questions with sources</td><td>web, vision</td></tr>
-    <tr><td><b>Forge</b> 🛠️</td><td><code>h101-coder</code></td><td>Writes and explains code (can’t run it)</td><td>web, vision</td></tr>
-    <tr><td><b>Iris</b> 🌅</td><td><code>h101-assistant</code></td><td>Plans, drafts, daily jobs, Telegram</td><td>web, vision</td></tr>
-    <tr><td><b>SOUL tester</b></td><td><code>h101-lab</code></td><td>Becomes the SOUL.md a student writes</td><td>none</td></tr>
-    <tr><td><b>Mentor assistant</b></td><td><code>h101-mentor</code></td><td>Answers staff questions about the class</td><td>none</td></tr>
+    <tr><th>Agent</th><th>Its one job</th><th>Tools</th></tr>
+    <tr><td><b>Atlas</b>, the researcher</td><td>Answers questions with sources</td><td>web, vision</td></tr>
+    <tr><td><b>Forge</b>, the coder</td><td>Writes and explains code (can’t run it)</td><td>web, vision</td></tr>
+    <tr><td><b>Iris</b>, the assistant</td><td>Plans, drafts, daily jobs, Telegram</td><td>web, vision</td></tr>
+    <tr><td><b>SOUL.md tester</b></td><td>Acts out the SOUL.md a student writes, so they can test it</td><td>none</td></tr>
   </table>
   <div class="explain"><p><b>In plain words</b>We followed our own rules: one job per agent, and no agent has the terminal or file tools. The worst a tricked agent can do is search the web.</p></div>
-  <aside class="say"><p>Five profiles, each with one job and the fewest tools. Two have no tools at all.</p></aside>
+  <aside class="say"><p>Each agent is its own Hermes profile with one job and the fewest tools. The tester has no tools at all.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="Real agents, live">
@@ -495,20 +494,20 @@ hermes profile list</div>
     <figure class="shot h470"><img src="img/slides/app-atlas-answer.jpg" alt="Atlas answer with three courses and links"><figcaption><b>Answer</b>: three courses, each with a link to check.</figcaption></figure>
   </div>
   <div class="explain"><p><b>In plain words</b>This is the think → act → look → answer loop from Part 1, live. Agents can be wrong, so students open the links and check.</p></div>
-  <aside class="say"><p>Students chat with Atlas, Forge, and Iris. The answer streams in, and the 🔍 line shows the real web search.</p></aside>
+  <aside class="say"><p>Students chat with Atlas, Forge, and Iris. The answer streams in, and the “Searching the web” line shows the real search.</p></aside>
 </section>
 
 <section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="How it fits together">
   <p class="kicker">Part 4 · The Hermes Agent 101 system</p>
-  <h2>One website, one door, five agents</h2>
+  <h2>One website, one door to Hermes</h2>
   <div class="arch">
     <div class="box"><span class="tag">Student</span><b>Browser</b><small>Logs in. Never sees a key.</small></div>
     <span class="to">→</span>
     <div class="box"><span class="tag">Vercel</span><b>Website</b><small>Pages + server functions. Holds the keys. Data in Supabase.</small></div>
     <span class="to">→</span>
-    <div class="box hi"><span class="tag">Tunnel</span><b>Edge</b><small>The only door in. Lets 5 profiles through, nothing else.</small></div>
+    <div class="box hi"><span class="tag">Tunnel</span><b>Edge</b><small>The only door in. Lets only the course agents through.</small></div>
     <span class="to">→</span>
-    <div class="box v"><span class="tag">Our Mac</span><b>Hermes</b><small>One gateway, 5 profiles. Also runs Telegram and the daily jobs.</small></div>
+    <div class="box v"><span class="tag">Our Mac</span><b>Hermes</b><small>One gateway serves the course agents, Telegram, and the daily jobs.</small></div>
     <span class="to">→</span>
     <div class="box"><span class="tag">Model</span><b>AI model</b><small>NVIDIA Nemotron (free) via OpenRouter</small></div>
   </div>
@@ -518,43 +517,33 @@ hermes profile list</div>
     <div class="card"><span class="t">Stop means stop</span><p>Close the page or press Stop, and the Hermes run is cancelled.</p></div>
   </div>
   <div class="explain"><p><b>In plain words</b>Your browser only talks to the website. The website talks to Hermes through one guarded door. Everything else on our computer stays private.</p></div>
-  <aside class="say"><p>The edge is the only thing exposed to the internet, and it only allows the five workshop profiles.</p></aside>
+  <aside class="say"><p>The edge is the only thing exposed to the internet, and it only allows the course agents.</p></aside>
 </section>
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="Mentor dashboard">
-  <p class="kicker"><span class="chip web">Course website</span>Part 4 · The Hermes Agent 101 system</p>
-  <h2>Mentors see the whole class, live</h2>
-  <div class="pair">
-    <figure class="shot h470"><img src="img/slides/app-admin-overview.jpg" alt="Admin dashboard overview: students, steps, feedback, safety checks"><figcaption>Where every student is, safety scores, feedback.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/app-admin-hermes.jpg" alt="Admin Hermes tab: Hermes status, profiles, Telegram pairing requests, usage today"><figcaption>Hermes status, Telegram pairing approvals, and today’s usage.</figcaption></figure>
-  </div>
-  <div class="explain"><p><b>In plain words</b>Mentors check who’s stuck, approve Telegram codes, and see that Hermes is online. They can even ask the mentor agent: “Who needs help?”</p></div>
-  <aside class="say"><p>The staff dashboard. The Hermes tab shows status and the pairing requests mentors approve.</p></aside>
-</section>
 
-<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="Certificate and manual">
+<section class="slide" data-min="1" data-part="4 · The 101 system" data-title="The student manual">
   <p class="kicker"><span class="chip web">Course website</span>Part 4 · The Hermes Agent 101 system</p>
-  <h2>Leave with a certificate and a manual</h2>
+  <h2>Take the manual home</h2>
   <div class="pair">
-    <figure class="shot h470"><img src="img/slides/sys-cert.jpg" alt="Feedback and e-certificate page with a checklist of steps to finish first"><figcaption>Finish the key steps, give feedback, download an e-certificate.</figcaption></figure>
-    <figure class="shot h470"><img src="img/slides/sys-manual.jpg" alt="The student manual: Your AI agent, from zero to working"><figcaption>The student manual: 17 parts, printable, in light or dark mode.</figcaption></figure>
+    <figure class="shot h470"><img src="img/slides/sys-manual.jpg" alt="The student manual: Your AI agent, from zero to working"><figcaption>17 parts: requirements, install, using and making agents, safety, every command.</figcaption></figure>
+    <figure class="shot h470"><img src="img/slides/sys-manual-trouble.jpg" alt="The manual's troubleshooting table: problems and fixes"><figcaption>Troubleshooting: the common problems and how to fix them.</figcaption></figure>
   </div>
-  <div class="explain"><p><b>In plain words</b>The manual covers requirements, install, using and making agents, safety, troubleshooting, and every command, so students can do it again at home.</p></div>
-  <aside class="say"><p>Two things to take home: the certificate, and the manual to repeat everything on their own computer.</p></aside>
+  <div class="explain"><p><b>In plain words</b>Everything from today, step by step, with the same screenshots. Print it or save it as a PDF, and set up your own agent at home.</p></div>
+  <aside class="say"><p>The manual is how students repeat all of this on their own computer.</p></aside>
 </section>
 
 <section class="slide" data-min="1" data-part="4 · The 101 system" data-title="Proof it runs">
   <p class="kicker"><span class="chip proof">Proof of work</span>Part 4 · The Hermes Agent 101 system</p>
   <h2>Not a mock-up: it really runs</h2>
   <div class="pair">
-    <figure class="shot h490"><img src="img/terminal/profile-list.png" alt="hermes profile list showing the five h101 profiles running"><figcaption><code>hermes profile list</code>: our 5 profiles, all running.</figcaption></figure>
+    <figure class="shot h490"><img src="img/slides/proof-insights-atlas.png" alt="hermes insights for Atlas: sessions, tokens, and web_search calls"><figcaption><code>hermes insights</code>: Atlas really called web search.</figcaption></figure>
     <figure class="shot h490"><img src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><code>hermes insights</code>: Iris’s scheduled runs and web searches.</figcaption></figure>
   </div>
-  <div class="explain"><p><b>In plain words</b>These come straight from Hermes itself: the agents exist, they’re running, and they really used their tools.</p></div>
-  <aside class="say"><p>Hermes’s own reports. Real profiles, real scheduled runs, real web searches.</p></aside>
+  <div class="explain"><p><b>In plain words</b>These reports come straight from Hermes itself: the agents ran, and they really used their tools.</p></div>
+  <aside class="say"><p>Hermes’s own reports: real runs, real scheduled jobs, real web searches.</p></aside>
 </section>
 
-<section class="slide" data-min="1.5" data-part="4 · The 101 system" data-title="Live demo">
+<section class="slide" data-min="2" data-part="4 · The 101 system" data-title="Live demo">
   <p class="kicker">Part 4 · Live demo · 2 minutes</p>
   <h2>Let’s run it</h2>
   <div class="split">
@@ -562,11 +551,11 @@ hermes profile list</div>
       <li><span><b>Hermes Desktop</b>: Capabilities › Tools, turn one off</span></li>
       <li><span><b>Settings › Safety</b>: show Approval Mode</span></li>
       <li><span><b>Website</b>: write a SOUL.md, then “break a rule”</span></li>
-      <li><span><b>Website</b>: ask Atlas, watch the 🔍 search</span></li>
+      <li><span><b>Website</b>: ask Atlas, watch it search the web</span></li>
       <li><span><b>Telegram</b>: say hi to Iris</span></li>
     </ol>
     <div class="col">
-      <div class="card"><span class="t">If the Wi-Fi fails</span><p>Every step has a slide with the real screen. Use ▦ to jump back to it.</p></div>
+      <div class="card"><span class="t">If the Wi-Fi fails</span><p>Every step has a slide with the real screen. Use the grid button to jump back to it.</p></div>
       <div class="explain"><p><b>In plain words</b>Free models take 8 to 15 seconds to answer. That’s normal: the agent is thinking and searching.</p></div>
     </div>
   </div>
@@ -577,12 +566,12 @@ hermes profile list</div>
   <p class="kicker">Wrap-up</p>
   <h2>Six rules to take home</h2>
   <div class="cards c3">
-    <div class="card"><span class="t">🔑 Keys are passwords</span><p>Never share an API key, a bot token, or <code>.env</code>.</p></div>
-    <div class="card"><span class="t">🧰 Fewest tools</span><p>Only what the job needs. Every tool is a door.</p></div>
-    <div class="card"><span class="t">🔒 Settings, not wishes</span><p>Approvals, step limits, allowlists.</p></div>
-    <div class="card"><span class="t">🔍 Check the answer</span><p>Open the sources. Agents can be wrong and sound sure.</p></div>
-    <div class="card"><span class="t">🙋 Protect people</span><p>No one else’s phone, address, or private messages.</p></div>
-    <div class="card"><span class="t">🎓 Learn, don’t copy</span><p>Use agents to understand, not to hand in work as yours.</p></div>
+    <div class="card"><span class="t">Keys are passwords</span><p>Never share an API key, a bot token, or <code>.env</code>.</p></div>
+    <div class="card"><span class="t">Fewest tools</span><p>Only what the job needs. Every tool is a door.</p></div>
+    <div class="card"><span class="t">Settings, not wishes</span><p>Approvals, step limits, allowlists.</p></div>
+    <div class="card"><span class="t">Check the answer</span><p>Open the sources. Agents can be wrong and sound sure.</p></div>
+    <div class="card"><span class="t">Protect people</span><p>No one else’s phone, address, or private messages.</p></div>
+    <div class="card"><span class="t">Learn, don’t copy</span><p>Use agents to understand, not to hand in work as yours.</p></div>
   </div>
   <div class="explain"><p><b>In plain words</b>An agent works for you, and you are responsible for what it does.</p></div>
   <aside class="say"><p>If you remember one slide, remember this one.</p></aside>
@@ -609,9 +598,9 @@ hermes profile list</div>
 
 <div class="toolbar" role="toolbar" aria-label="Slide controls">
   <div class="grp">
-    <button class="tb" type="button" id="prevBtn" aria-label="Previous slide" title="Previous (←)">◀</button>
+    <button class="tb" type="button" id="prevBtn" aria-label="Previous slide" title="Previous (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
     <span class="count" id="count" aria-live="polite">1 / 1</span>
-    <button class="tb" type="button" id="nextBtn" aria-label="Next slide" title="Next (→)">▶</button>
+    <button class="tb" type="button" id="nextBtn" aria-label="Next slide" title="Next (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
   <div class="grp">
     <button class="tb" type="button" id="zoomOut" aria-label="Zoom out" title="Zoom out (−)">−</button>
@@ -619,14 +608,14 @@ hermes profile list</div>
     <button class="tb" type="button" id="zoomIn" aria-label="Zoom in" title="Zoom in (+)">+</button>
   </div>
   <div class="grp">
-    <button class="tb" type="button" id="themeBtn" aria-label="Switch light or dark mode" title="Light / dark (T)">☀︎</button>
-    <button class="tb" type="button" id="ovBtn" aria-label="All slides" title="All slides (O)">▦</button>
+    <button class="tb" type="button" id="themeBtn" aria-label="Switch light or dark mode" title="Light / dark (T)"></button>
+    <button class="tb" type="button" id="ovBtn" aria-label="All slides" title="All slides (O)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></svg></button>
     <button class="tb opt" type="button" id="notesBtn" aria-pressed="false" title="Speaker notes (N)">Notes</button>
-    <button class="tb opt" type="button" id="fsBtn" aria-label="Full screen" title="Full screen (F)">⛶</button>
+    <button class="tb opt" type="button" id="fsBtn" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
   </div>
 </div>
 <div class="notes" id="notes" hidden><div class="say" id="noteText"></div><div class="side"><span>Elapsed</span><span class="clock" id="clock">0:00</span><span id="budget"></span><span id="nextUp"></span><button class="tb" type="button" id="timerReset">Reset timer</button></div></div>
-<div class="overlay" id="overview" hidden role="dialog" aria-modal="true" aria-label="All slides"><div class="ov"><button class="tb close" type="button" id="ovClose" aria-label="Close">✕</button><h2>All slides</h2><p class="hint">Click a slide to jump to it. Esc to close.</p><div id="ovList"></div></div></div>
+<div class="overlay" id="overview" hidden role="dialog" aria-modal="true" aria-label="All slides"><div class="ov"><button class="tb close" type="button" id="ovClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h2>All slides</h2><p class="hint">Click a slide to jump to it. Esc to close.</p><div id="ovList"></div></div></div>
 <div class="lightbox" id="lightbox" hidden><img id="lbImg" alt=""><p>Click or press Esc to close</p></div>
 
 <script>
@@ -748,7 +737,8 @@ hermes profile list</div>
   // theme
   const root = document.documentElement;
   const isLight = () => (root.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')) === 'light';
-  const paintTheme = () => { $('themeBtn').textContent = isLight() ? '☾' : '☀︎'; $('themeBtn').setAttribute('aria-label', isLight() ? 'Switch to dark mode' : 'Switch to light mode'); };
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>', MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+  const paintTheme = () => { $('themeBtn').innerHTML = isLight() ? MOON : SUN; $('themeBtn').setAttribute('aria-label', isLight() ? 'Switch to dark mode' : 'Switch to light mode'); };
   function toggleTheme(){ root.dataset.theme = isLight() ? 'dark' : 'light'; try{ localStorage.setItem('hermes101-slides-theme', root.dataset.theme); }catch(e){} paintTheme(); }
   paintTheme(); matchMedia('(prefers-color-scheme: light)').addEventListener?.('change', paintTheme);
 

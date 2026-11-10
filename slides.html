@@ -214,8 +214,8 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
   <div class="grid4">
     <div class="card"><span class="n">Part 1 · 3 min</span><span class="t">Meet Hermes</span><p>What makes an agent different, and what Hermes adds.</p></div>
     <div class="card"><span class="n">Part 2 · 5 min</span><span class="t">Set it up</span><p>Install, connect a model, check it, first chat.</p></div>
-    <div class="card"><span class="n">Part 3 · 10 min</span><span class="t">Make your own agent</span><p>Profile, SOUL.md, tools, safety, memory, jobs, Telegram, apps.</p></div>
-    <div class="card"><span class="n">Part 4 · 9 min</span><span class="t">Our Hermes</span><p>The agents behind this course, proof they run, and a live demo.</p></div>
+    <div class="card"><span class="n">Part 3 · 12 min</span><span class="t">Make your own agent</span><p>Profile, group chats, SOUL.md, tools, safety, memory, jobs, Telegram, apps.</p></div>
+    <div class="card"><span class="n">Part 4 · 7 min</span><span class="t">Our Hermes</span><p>The agents behind this course, proof they run, and a live demo.</p></div>
   </div>
   <div class="try" style="margin-top:34px;max-width:1100px"><b>How to use these slides</b><span>Arrow buttons or arrow keys to move · click a screenshot to enlarge · + and − to zoom · sun or moon for light or dark · grid to jump</span></div>
 </section>
@@ -421,7 +421,42 @@ hermes -p study-buddy model    <span class="c"># its own model</span></div>
   </div>
 </section>
 
-<section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="SOUL.md">
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Your agents in the app">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
+  <h2>Your agents, side by side</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Every profile becomes a bot</b> with its own face and its own Bot Chat.</li>
+        <li><b>A bot keeps its own SOUL.md, tools, and memory,</b> even inside a group.</li>
+        <li><b>Groups take 2 to 6 bots.</b> Pick the ones whose jobs fit the task.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>Bots tab › + › New group chat</span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:440px" src="img/slides/desk-bots.jpg" alt="Hermes Desktop Bots tab listing Atlas, Forge, Iris and Hermes"><figcaption><span class="k">1</span>The Bots tab</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-new-group.jpg" alt="New group chat dialog with Atlas, Forge and Iris selected and the name Study Squad"><figcaption><span class="k">2</span>New group chat: pick bots, name it</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Agents in a group chat">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip live">LIVE</span></p>
+  <h2>A study group of agents</h2>
+  <div class="wide">
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-group-chat.jpg" alt="Study Squad group chat: the student asks everyone; Atlas shares a free resource, Forge gives a practice exercise, both hand off"><figcaption><span class="k">1</span>One question to <code>@everyone</code>: each bot does its own part</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-group-handoff.jpg" alt="Forge adds LeetCode links and a starter template; Iris replies to Forge by name"><figcaption><span class="k">2</span>They read each other and reply by name</figcaption></figure>
+    </div>
+    <ul class="points strip">
+      <li><b><code>@everyone</code> reaches all; <code>@name</code> reaches one.</b> Direct work to the right bot.</li>
+      <li><b>Bots hand off on their own:</b> “@iris your turn”.</li>
+      <li><b>Every reply costs tokens.</b> Three bots means about three times the usage.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="SOUL.md">
   <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
   <h2>SOUL.md: who your agent is</h2>
   <div class="body">
@@ -582,7 +617,7 @@ Your one job: plan study time.
   </div>
 </section>
 
-<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Ask a real agent">
+<section class="slide" data-min="1" data-part="4 · Our Hermes" data-title="Ask a real agent">
   <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
   <h2>Ask a real agent</h2>
   <div class="body">
@@ -600,7 +635,7 @@ Your one job: plan study time.
   </div>
 </section>
 
-<section class="slide" data-min="2" data-part="4 · Our Hermes" data-title="How it fits together">
+<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="How it fits together">
   <p class="kicker">Part 4 · Our Hermes</p>
   <h2>One website, one door to Hermes</h2>
   <div class="wide">
@@ -625,7 +660,7 @@ Your one job: plan study time.
   </div>
 </section>
 
-<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Proof it runs">
+<section class="slide" data-min="1" data-part="4 · Our Hermes" data-title="Proof it runs">
   <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
   <h2>Not a mock-up: Hermes’s own reports</h2>
   <div class="body">
@@ -644,7 +679,7 @@ Your one job: plan study time.
   </div>
 </section>
 
-<section class="slide" data-min="2.5" data-part="4 · Our Hermes" data-title="Live demo">
+<section class="slide" data-min="2" data-part="4 · Our Hermes" data-title="Live demo">
   <p class="kicker">Part 4 · Our Hermes · Live demo</p>
   <h2>Let’s run it</h2>
   <div class="body">
@@ -652,7 +687,7 @@ Your one job: plan study time.
       <ol class="steps">
         <li><span><b>Desktop</b>: Capabilities › Tools, turn one off</span></li>
         <li><span><b>Desktop</b>: Settings › Safety, Approval Mode</span></li>
-        <li><span><b>Desktop</b>: Scheduled jobs, Morning briefing</span></li>
+        <li><span><b>Desktop</b>: Bots › Study Squad, ask <code>@everyone</code></span></li>
         <li><span><b>Terminal</b>: ask the research agent a question</span></li>
         <li><span><b>Telegram</b>: say hi to Iris</span></li>
       </ol>

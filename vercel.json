@@ -18,6 +18,10 @@
     {
       "source": "/slides",
       "destination": "/slides.html"
+    },
+    {
+      "source": "/manual",
+      "destination": "/manual.html"
     }
   ],
   "headers": [

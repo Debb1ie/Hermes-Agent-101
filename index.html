@@ -1309,7 +1309,7 @@ a.btn{text-decoration:none}
 <!-- INSTALL -->
 <section class="view" data-view="install" hidden>
   <div class="vhead"><span class="tile" data-ic="download"></span><div><p class="step">Step 2 of 13, 10 min</p><h2>Install Hermes</h2><p class="lede">Get Hermes on your computer, pick a model, and say hi.</p></div></div>
-  <div class="card hermes-note"><p style="margin:0"><b>In the lab:</b> follow along and read. Install it on your own computer at home (ask first if the computer isn’t yours).</p></div>
+  <div class="card hermes-note"><p style="margin:0"><b>In the lab:</b> follow along and read. Install it on your own computer at home (ask first if the computer isn’t yours). Requirements and every step are in the <a href="/manual#requirements" target="_blank" rel="noopener">student manual</a>.</p></div>
   <h3 class="sec">1. Install it</h3>
   <div class="pick-row" role="group" aria-label="Your computer" id="osPick"></div>
   <div class="codebox"><div class="bar"><span id="osLabel"></span><button class="btn small" type="button" data-copy="installCmd" data-label="Copy"><span data-ic="copy"></span>Copy</button></div><pre id="installCmd"></pre></div>
@@ -1338,10 +1338,10 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
   </div>
   <h3 class="sec">What the terminal shows</h3>
   <div class="grid-2 shots">
-    <figure class="shot"><a href="img/terminal/version.png" target="_blank" rel="noopener"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version" loading="lazy"></a><figcaption><code>hermes --version</code> shows the version you installed.</figcaption></figure>
-    <figure class="shot"><a href="img/terminal/doctor.png" target="_blank" rel="noopener"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks for the config files and folders" loading="lazy"></a><figcaption><code>hermes doctor</code>: green ✓ means OK. ⚠ items are optional.</figcaption></figure>
+    <figure class="shot"><a href="img/terminal/version.png" target="_blank" rel="noopener"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version" loading="lazy" width="1764" height="294"></a><figcaption><code>hermes --version</code> shows the version you installed.</figcaption></figure>
+    <figure class="shot"><a href="img/terminal/doctor.png" target="_blank" rel="noopener"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks for the config files and folders" loading="lazy" width="1764" height="798"></a><figcaption><code>hermes doctor</code>: green ✓ means OK. ⚠ items are optional.</figcaption></figure>
   </div>
-  <figure class="shot"><a href="img/terminal/first-chat.png" target="_blank" rel="noopener"><img src="img/terminal/first-chat.png" alt="Terminal: a one-line question to Iris and her two-sentence answer" loading="lazy"></a><figcaption>A first chat. <code>-z</code> asks one question and prints only the answer.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/first-chat.png" target="_blank" rel="noopener"><img src="img/terminal/first-chat.png" alt="Terminal: a one-line question to Iris and her two-sentence answer" loading="lazy" width="1764" height="256"></a><figcaption>A first chat. <code>-z</code> asks one question and prints only the answer.</figcaption></figure>
   <h3 class="sec">Your checklist</h3>
   <ul class="ready-list" id="installChecks"></ul>
   <div class="pager" data-pager></div>
@@ -1357,7 +1357,7 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
   <div class="card hermes-note" style="margin-top:18px"><h4 style="margin-bottom:6px">Easy to mix up</h4>
     <dl class="kv"><dt><code>config.yaml</code></dt><dd>Settings: model, tools, safety rules</dd><dt><code>.env</code></dt><dd>Secrets: keys and tokens. Never share it.</dd><dt><code>SOUL.md</code></dt><dd>Who the agent is: its job, rules, and tone</dd></dl></div>
   <h3 class="sec">What you should see</h3>
-  <figure class="shot"><a href="img/terminal/profile-folder.png" target="_blank" rel="noopener"><img src="img/terminal/profile-folder.png" alt="Terminal: listing a profile folder shows SOUL.md, config.yaml, cron, memories, sessions, skills" loading="lazy"></a><figcaption>Inside one profile’s folder. <code>.env</code> is hidden because its name starts with a dot.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/profile-folder.png" target="_blank" rel="noopener"><img src="img/terminal/profile-folder.png" alt="Terminal: listing a profile folder shows SOUL.md, config.yaml, cron, memories, sessions, skills" loading="lazy" width="1764" height="294"></a><figcaption>Inside one profile’s folder. <code>.env</code> is hidden because its name starts with a dot.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1380,7 +1380,7 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
     <tr><td><code>h101-mentor</code></td><td>The staff dashboard assistant</td><td>none</td></tr>
   </tbody></table></div>
   <h3 class="sec">What you should see</h3>
-  <figure class="shot"><a href="img/terminal/profile-list.png" target="_blank" rel="noopener"><img src="img/terminal/profile-list.png" alt="Terminal: hermes profile list shows default and the five h101 profiles, all running" loading="lazy"></a><figcaption><code>hermes profile list</code>: every agent, its model, and whether its gateway is running.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/profile-list.png" target="_blank" rel="noopener"><img src="img/terminal/profile-list.png" alt="Terminal: hermes profile list shows default and the five h101 profiles, all running" loading="lazy" width="1764" height="488"></a><figcaption><code>hermes profile list</code>: every agent, its model, and whether its gateway is running.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1421,7 +1421,7 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
   </div>
   <h3 class="sec">A real one</h3>
   <p class="muted" style="margin-top:-6px">This is the SOUL.md of Atlas, the workshop’s research agent.</p>
-  <figure class="shot"><a href="img/terminal/soul.png" target="_blank" rel="noopener"><img src="img/terminal/soul.png" alt="Terminal: the first lines of Atlas’s SOUL.md" loading="lazy"></a><figcaption>Atlas’s SOUL.md: a name, a job, and how it works. Yours looks like this too.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/soul.png" target="_blank" rel="noopener"><img src="img/terminal/soul.png" alt="Terminal: the first lines of Atlas’s SOUL.md" loading="lazy" width="1764" height="604"></a><figcaption>Atlas’s SOUL.md: a name, a job, and how it works. Yours looks like this too.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1441,7 +1441,7 @@ hermes            # start chatting (Ctrl+C to quit)</pre></div>
     <figure class="shot desk-shot"><a href="img/desktop/08-tools.jpg" target="_blank" rel="noopener"><img src="img/desktop/08-tools.jpg" alt="Capabilities, Tools: toolsets with on/off switches and how many tools each has" loading="lazy" width="1600" height="1017"></a><figcaption>Each toolset has a switch. Leave on only what the job needs.</figcaption></figure>
   </div>
   <h3 class="sec">In the terminal</h3>
-  <figure class="shot"><a href="img/terminal/tools.png" target="_blank" rel="noopener"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list shows web and vision enabled and everything else disabled for Atlas" loading="lazy"></a><figcaption>Atlas only has <b>web</b> and <b>vision</b>. Everything risky is off.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/tools.png" target="_blank" rel="noopener"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list shows web and vision enabled and everything else disabled for Atlas" loading="lazy" width="1764" height="682"></a><figcaption>Atlas only has <b>web</b> and <b>vision</b>. Everything risky is off.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1533,7 +1533,7 @@ Every exam has study blocks before its date.</pre></div>
     <figure class="shot desk-shot"><a href="img/desktop/11-skills.jpg" target="_blank" rel="noopener"><img src="img/desktop/11-skills.jpg" alt="Capabilities, Skills: installed skills with switches and the Skills Hub" loading="lazy" width="1600" height="1017"></a><figcaption>Skills you have, and the Skills Hub to find more.</figcaption></figure>
   </div>
   <h3 class="sec">In the terminal</h3>
-  <figure class="shot"><a href="img/terminal/skills.png" target="_blank" rel="noopener"><img src="img/terminal/skills.png" alt="Terminal: hermes skills list shows a table of installed skills" loading="lazy"></a><figcaption><code>hermes skills list</code>: the skills you have, where they came from, and if they’re on.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/skills.png" target="_blank" rel="noopener"><img src="img/terminal/skills.png" alt="Terminal: hermes skills list shows a table of installed skills" loading="lazy" width="1764" height="758"></a><figcaption><code>hermes skills list</code>: the skills you have, where they came from, and if they’re on.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1567,7 +1567,7 @@ Every exam has study blocks before its date.</pre></div>
     <figure class="shot desk-shot"><a href="img/desktop/13-new-cron.jpg" target="_blank" rel="noopener"><img src="img/desktop/13-new-cron.jpg" alt="New cron job: start from Morning briefing, time 08:00, deliver to This desktop or Bot Chat" loading="lazy" width="1600" height="1017"></a><figcaption>New cron job: what time, and where to deliver it.</figcaption></figure>
   </div>
   <h3 class="sec">In the terminal</h3>
-  <figure class="shot"><a href="img/terminal/cron.png" target="_blank" rel="noopener"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list shows Iris’s Morning Briefing and Midday Tip with their schedules" loading="lazy"></a><figcaption><code>hermes cron list</code>: each job, its schedule, and when it runs next.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/cron.png" target="_blank" rel="noopener"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list shows Iris’s Morning Briefing and Midday Tip with their schedules" loading="lazy" width="1764" height="1030"></a><figcaption><code>hermes cron list</code>: each job, its schedule, and when it runs next.</figcaption></figure>
   <div class="path-head"><h3>Iris’s scheduled jobs</h3><button class="btn small" type="button" id="autoRefresh"><span data-ic="refresh"></span>Refresh</button></div>
   <p class="muted" id="autoMsg" role="status" style="margin-top:-6px"></p>
   <div class="grid-3 vary" id="autoJobs"></div>
@@ -1628,8 +1628,8 @@ Every exam has study blocks before its date.</pre></div>
   </ol>
   <h3 class="sec">What you should see</h3>
   <div class="grid-2 shots">
-    <figure class="shot"><a href="img/terminal/gateway.png" target="_blank" rel="noopener"><img src="img/terminal/gateway.png" alt="Terminal: hermes gateway status shows the gateway running and the profile addresses" loading="lazy"></a><figcaption><code>hermes gateway status</code>: it’s running, and where each profile answers.</figcaption></figure>
-    <figure class="shot"><a href="img/terminal/pairing.png" target="_blank" rel="noopener"><img src="img/terminal/pairing.png" alt="Terminal: hermes pairing list says no one has tried to pair yet" loading="lazy"></a><figcaption><code>hermes pairing list</code> before anyone has messaged the bot.</figcaption></figure>
+    <figure class="shot"><a href="img/terminal/gateway.png" target="_blank" rel="noopener"><img src="img/terminal/gateway.png" alt="Terminal: hermes gateway status shows the gateway running and the profile addresses" loading="lazy" width="1764" height="604"></a><figcaption><code>hermes gateway status</code>: it’s running, and where each profile answers.</figcaption></figure>
+    <figure class="shot"><a href="img/terminal/pairing.png" target="_blank" rel="noopener"><img src="img/terminal/pairing.png" alt="Terminal: hermes pairing list says no one has tried to pair yet" loading="lazy" width="1764" height="216"></a><figcaption><code>hermes pairing list</code> before anyone has messaged the bot.</figcaption></figure>
   </div>
   <div class="pager" data-pager></div>
 </section>
@@ -1664,7 +1664,7 @@ Every exam has study blocks before its date.</pre></div>
     <figure class="shot desk-shot"><a href="img/desktop/16-gateways.jpg" target="_blank" rel="noopener"><img src="img/desktop/16-gateways.jpg" alt="Settings, Gateways: Local gateway, Hermes Cloud, Remote gateway, Connect via SSH" loading="lazy" width="1600" height="1017"></a><figcaption>Gateways: local, Hermes Cloud, remote, or over SSH.</figcaption></figure>
   </div>
   <h3 class="sec">In the terminal</h3>
-  <figure class="shot"><a href="img/terminal/api-call.png" target="_blank" rel="noopener"><img src="img/terminal/api-call.png" alt="Terminal: a curl request to a profile and the JSON answer with the reply text" loading="lazy"></a><figcaption>A real call. The answer is in <code>choices[0].message.content</code>.</figcaption></figure>
+  <figure class="shot"><a href="img/terminal/api-call.png" target="_blank" rel="noopener"><img src="img/terminal/api-call.png" alt="Terminal: a curl request to a profile and the JSON answer with the reply text" loading="lazy" width="1764" height="992"></a><figcaption>A real call. The answer is in <code>choices[0].message.content</code>.</figcaption></figure>
   <div class="pager" data-pager></div>
 </section>
 
@@ -1689,7 +1689,7 @@ Every exam has study blocks before its date.</pre></div>
     <div class="card level"><span class="tile" data-ic="download"></span><b>Install Hermes</b><span>Step 2 has the commands for your computer.</span></div>
     <div class="card level"><span class="tile" data-ic="user"></span><b>Make your profile</b><span>Paste your SOUL.md and settings into it.</span></div>
     <div class="card level"><span class="tile" data-ic="send"></span><b>Put it on Telegram</b><span>Your own bot, with pairing on.</span></div>
-    <div class="card level"><span class="tile" data-ic="book"></span><b>Read the docs</b><span>Links in Resources.</span></div>
+    <div class="card level"><span class="tile" data-ic="book"></span><b>Keep the manual</b><span><a href="/manual" target="_blank" rel="noopener">The student manual</a> has every step. Print it or save it as a PDF.</span></div>
   </div>
   <div class="pager" data-pager></div>
 </section>
@@ -2493,6 +2493,7 @@ Every exam has study blocks before its date.</pre></div>
 
   const D = 'https://hermes-agent.nousresearch.com/docs';
   const RESOURCES = [
+    {cat:'Start', t:'Hermes Agent 101 student manual', s:'This workshop', u:'/manual', d:'Requirements, install, using and making agents, safety, and fixes. Printable.'},
     {cat:'Start', t:'Hermes Agent official site', s:'Nous Research', u:'https://hermes-agent.nousresearch.com/', d:'What Hermes is, downloads, and plans.'},
     {cat:'Start', t:'Hermes Agent on GitHub', s:'Nous Research', u:'https://github.com/NousResearch/hermes-agent', d:'The code, the install command, and what’s new.'},
     {cat:'Start', t:'Hermes Agent docs', s:'Nous Research', u:D, d:'Everything about Hermes, in one place.'},
@@ -2516,7 +2517,7 @@ Every exam has study blocks before its date.</pre></div>
   /* ---------- course content ---------- */
   const INSTALL_SH = 'curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash';
   const OS = {
-    desktop:{label:'Desktop app', where:'Download it from the official site', cmd:'# macOS 12+:      Download Desktop App\n# Windows 10/11:  Microsoft Store\n# https://hermes-agent.nousresearch.com/', note:'Prefer clicking to typing? The desktop app is the easiest start. This lab uses the terminal, so you see what happens under the hood.'},
+    desktop:{label:'Desktop app', where:'Download it from the official site', cmd:'# Mac with Apple Silicon (M1 or newer): download the app\n# Windows 11 (22H2 or newer):            download the app\n# https://hermes-agent.nousresearch.com/desktop', note:'Prefer clicking to typing? The app is the easiest start. Intel Mac, Windows 10, or Linux? Use the terminal install (pick your computer above).'},
     mac:{label:'macOS', where:'Open Terminal and paste this', cmd:INSTALL_SH, note:'If “hermes: command not found” appears afterwards, open a new Terminal window.'},
     linux:{label:'Linux or WSL2', where:'Open a terminal and paste this', cmd:INSTALL_SH, note:'On Windows you can also use WSL2 (Linux inside Windows) with this same command.'},
     windows:{label:'Windows', where:'Open PowerShell and paste this', cmd:'iex (irm https://hermes-agent.nousresearch.com/install.ps1)', note:'This installs Hermes natively on Windows. No WSL needed.'},

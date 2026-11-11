@@ -5,12 +5,19 @@
 #   img/...     = only the images those two pages use
 # It builds the gh-pages branch from scratch each time and pushes it.
 # The course app itself (index.html + api/) is NOT published here; it needs Vercel.
-#   bash scripts/publish-pages.sh
+#   bash scripts/publish-pages.sh                     # build and publish
+#   bash scripts/publish-pages.sh --build-only <dir>  # build into <dir> to preview, no push
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-OUT="$(mktemp -d)"
-trap 'rm -rf "$OUT"' EXIT
+BUILD_ONLY=""
+if [ "${1:-}" = "--build-only" ]; then
+  [ -n "${2:-}" ] || { echo "usage: $0 --build-only <dir>"; exit 1; }
+  BUILD_ONLY=1; OUT="$2"; rm -rf "$OUT"; mkdir -p "$OUT"
+else
+  OUT="$(mktemp -d)"
+  trap 'rm -rf "$OUT"' EXIT
+fi
 
 python3 -I - "$ROOT" "$OUT" <<'PY'
 import os, re, shutil, sys
@@ -30,6 +37,8 @@ for rel in sorted(imgs):
 open(os.path.join(out, '.nojekyll'), 'w').close()
 print(f'built {len(pages)} pages and {len(imgs)} images')
 PY
+
+if [ -n "$BUILD_ONLY" ]; then echo "Built into $OUT (not published)."; exit 0; fi
 
 REMOTE="$(git remote get-url origin)"
 cd "$OUT"

@@ -5,7 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hermes Agent 101 Slides</title>
 <link rel="icon" href="img/brand/hermes-icon.svg" type="image/svg+xml">
-<meta name="description" content="Hermes Agent 101 in 30 minutes: what Hermes is, how to set it up in Hermes Desktop, how to make your own safe agent, and how the whole workshop system works. Real screenshots throughout.">
+<meta name="description" content="Hermes Agent 101 in 30 minutes: what Hermes is, how to set it up in Hermes Desktop, how to make your own safe agent, and how the whole Hermes Agent 101 system works. Real screenshots throughout.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hermes Agent 101">
+<meta property="og:title" content="Hermes Agent 101: slides">
+<meta property="og:description" content="Set up your own AI agent with Hermes, make it safe, and put it to work. A 30-minute talk with real Hermes screenshots.">
+<meta property="og:url" content="https://debb1ie.github.io/Hermes-Agent-101/">
+<meta property="og:image" content="https://debb1ie.github.io/Hermes-Agent-101/img/brand/og-slides.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0000F2">
+<link rel="image_src" href="img/brand/og-slides.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -147,23 +158,26 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
 /* chrome: toolbar, edge arrows, overview, lightbox */
 .bar{position:fixed;left:0;top:0;height:4px;background:#0000F2;transition:width .3s ease;z-index:20}
 .toolbar{position:fixed;left:0;right:0;bottom:0;height:var(--tool-h);display:flex;align-items:center;justify-content:center;gap:6px;background:color-mix(in srgb,var(--chrome) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--rule);z-index:25;padding:0 10px;transform:translateY(100%);opacity:0;transition:transform .25s ease,opacity .25s ease}
-.toolbar.show,.toolbar:hover,.toolbar:focus-within{transform:none;opacity:1}
+.toolbar.show,.toolbar:hover,.toolbar:has(:focus-visible){transform:none;opacity:1}
 .hotzone{position:fixed;left:0;right:0;bottom:0;height:28px;z-index:24}
-@media (hover:none){.viewport{bottom:var(--tool-h)}.toolbar{transform:none;opacity:1}.hotzone{display:none}}
-@media (prefers-reduced-motion:reduce){.toolbar{transition:none}}
+@media (hover:none){.hotzone{display:none}}
+@media (prefers-reduced-motion:reduce){.toolbar,.edge{transition:none}}
 .toolbar .grp{display:flex;align-items:center;gap:4px;padding:0 8px;border-right:1px solid var(--rule)}
 .toolbar .grp:last-child{border-right:0}
 .tb{min-width:40px;height:38px;border-radius:10px;border:1px solid var(--rule);background:var(--chrome-btn);color:var(--ink);font:600 15px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;cursor:pointer}
 .tb:hover{border-color:#0000F2}
 .tb:focus-visible,.edge:focus-visible{outline:3px solid #0000F2;outline-offset:2px}
 .tb svg{width:18px;height:18px}
-.count{font:600 15px var(--mono);color:var(--ink-2);min-width:74px;text-align:center}
+.count{font:600 15px var(--mono);color:var(--ink-2);min-width:74px;text-align:center;cursor:pointer;border-radius:8px;padding:6px 4px}
+.count:hover{background:var(--chrome-btn)}
 .zl{font:600 14px var(--mono);color:var(--ink-2);min-width:54px;text-align:center}
-.edge{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:.6;transition:opacity .2s}
-.edge:hover{opacity:1;border-color:#0000F2}
+.edge{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:.07;transition:opacity .6s ease}
+.edge.awake{opacity:.45;transition:opacity .2s ease}
+.edge.flash{opacity:1;border-color:#0000F2;transition:none}
+.edge:hover,.edge:focus-visible{opacity:1;border-color:#0000F2;transition:opacity .15s ease}
 .edge svg{width:26px;height:26px}
 .edge.prev{left:14px}.edge.next{right:14px}
-.edge:disabled{opacity:.15;cursor:default}
+.edge:disabled{opacity:0!important;pointer-events:none}
 .overlay{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--bg) 95%,transparent);overflow:auto;padding:40px 24px}
 .ov{max-width:1100px;margin:0 auto}
 .ov h2{font-size:34px;margin:0 0 6px}
@@ -184,6 +198,71 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
   .tb{min-width:36px;padding:0 8px}
   .edge{width:44px;height:44px}
 }
+@media screen{
+html.fluid .viewport{display:block;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+html.fluid .sizer{width:auto!important;height:auto!important;margin:0}
+html.fluid .deck{position:static;width:auto;height:auto;transform:none!important}
+html.fluid .slide{position:relative;inset:auto;display:none;min-height:100vh;min-height:100dvh;padding:30px 18px 84px;opacity:1;visibility:visible;transition:none;overflow:visible}
+html.fluid .slide.on{display:flex}
+html.fluid h1,html.fluid .slide.blue h1{font-size:clamp(40px,11vw,68px)!important;margin-bottom:14px!important}
+html.fluid h2{font-size:clamp(26px,6.8vw,38px);margin-bottom:16px}
+html.fluid .kicker{font-size:11px;letter-spacing:.1em;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+html.fluid .chip{font-size:10px;padding:2px 7px}
+html.fluid p,html.fluid li{font-size:16px}
+html.fluid .muted[style]{font-size:15px!important}
+html.fluid ul.points{gap:12px}
+html.fluid ul.points li{font-size:16.5px;padding-left:22px}
+html.fluid ul.points li::before{top:8px;width:9px;height:9px}
+html.fluid .body,html.fluid .body.flip{display:flex;flex-direction:column;gap:18px}
+html.fluid .side{gap:14px}
+html.fluid .try{margin-top:4px!important;padding:12px 14px;border-radius:10px}
+html.fluid .try b{font-size:11px}
+html.fluid .try span{font-size:14px;overflow-wrap:anywhere}
+html.fluid .media,html.fluid .media.col{flex-direction:column;height:auto;padding:12px;gap:16px;border-radius:16px}
+html.fluid figure.shot{flex:none;width:100%}
+html.fluid figure.shot img{max-height:72vh}
+html.fluid figure.shot figcaption{font-size:13px}
+html.fluid .grid2,html.fluid .grid3,html.fluid .grid4,html.fluid .strip{grid-template-columns:1fr;gap:12px}
+html.fluid .strip{margin-top:16px}
+html.fluid .card{padding:14px 16px}
+html.fluid .card .t{font-size:19px}
+html.fluid .card p{font-size:15px}
+html.fluid .loop{grid-template-columns:1fr 1fr;gap:10px}
+html.fluid .loop div{padding:14px}
+html.fluid .loop div span{font-size:20px}
+html.fluid .loop div p{font-size:14px}
+html.fluid .arch{flex-direction:column;gap:8px}
+html.fluid .arch .to{transform:rotate(90deg)}
+html.fluid .arch .box b{font-size:19px}
+html.fluid .mono{font-size:12.5px;overflow-x:auto;padding:12px 14px}
+html.fluid table.t{font-size:14px}
+html.fluid table.t th,html.fluid table.t td{padding:8px 10px}
+html.fluid ol.steps li{font-size:16px}
+html.fluid ol.steps li::before{width:28px;height:28px;line-height:28px;font-size:14px}
+html.fluid .slide.blue{justify-content:flex-start;padding-top:44px}
+html.fluid .logo{width:84px;height:84px;border-radius:20px;margin-bottom:22px}
+html.fluid .slide.blue .lead{font-size:18px}
+html.fluid .who{font-size:16px!important;margin-top:24px!important}
+html.fluid .credit{position:static;margin-top:28px;font-size:12px}
+html.fluid .cmdline{font-size:12px;width:auto;white-space:normal;overflow-wrap:anywhere;padding:10px 12px;margin-bottom:20px}
+html.fluid .qrs{flex-wrap:wrap;gap:14px}
+html.fluid .qr{width:128px;height:128px;padding:7px}
+html.fluid .qrs figure{font-size:13px}
+html.fluid .foot{position:static;margin-top:26px;font-size:12px}
+html.fluid .wide{display:block}
+html.fluid .edge,html.fluid .hotzone,html.fluid .toolbar .zoomgrp{display:none}
+@media (min-width:600px){
+  html.fluid .grid3,html.fluid .grid4{grid-template-columns:1fr 1fr}
+  html.fluid .media:not(.col){flex-direction:row;align-items:flex-start}
+  html.fluid .media:not(.col) figure.shot{flex:1 1 0}
+}
+@media (min-width:700px){html.fluid .strip{grid-template-columns:repeat(3,1fr)}}
+/* phones: a tapped screenshot opens at full size so small text can be read by panning */
+html.fluid .lightbox{display:block;overflow:auto;padding:14px 14px 48px;-webkit-overflow-scrolling:touch}
+html.fluid .lightbox[hidden]{display:none!important}
+html.fluid .lightbox img{max-width:none;max-height:none;width:auto;min-width:100%}
+html.fluid .lightbox p{background:rgba(3,3,10,.85);padding:10px 0;bottom:0}
+}
 @media print{
   @page{size:1600px 900px;margin:0}
   html,body{overflow:visible;height:auto}
@@ -201,11 +280,11 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
 
 <section class="slide blue" data-min="0.5" data-part="Start" data-title="Hermes Agent 101">
   <img class="logo" src="img/brand/hermes-icon.svg" alt="Hermes Agent logo by Nous Research">
-  <p class="kicker">A hands-on workshop for students</p>
+  <p class="kicker">A talk for students</p>
   <h1>Hermes Agent 101</h1>
   <p class="lead" style="margin-top:22px">Set up your own AI agent, make it safe, and put it to work. Every screenshot comes from Hermes itself.</p>
-  <p class="who"><b>Precious Grace Deborah Manucom</b> · Workshop Lead</p>
-  <p class="credit">Hermes Agent and its logo are by Nous Research. This workshop is independent and not affiliated with Nous Research.</p>
+  <p class="who"><b>Precious Grace Deborah Manucom</b> · Speaker</p>
+  <p class="credit">Hermes Agent and its logo are by Nous Research. This talk is independent and not affiliated with Nous Research.</p>
 </section>
 
 <section class="slide" data-min="0.5" data-part="Start" data-title="Today’s map">
@@ -238,7 +317,7 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
         <div><b>STEP 3</b><span>Look</span><p>Read the result. Good enough?</p></div>
         <div><b>STEP 4</b><span>Answer</span><p>Or go back to step 1.</p></div>
       </div>
-      <p class="muted" style="font-size:19px;text-align:center">This is why the rest of the workshop is about which tools an agent gets, and which settings stop it.</p>
+      <p class="muted" style="font-size:19px;text-align:center">This is why the rest of this talk is about which tools an agent gets, and which settings stop it.</p>
     </div>
   </div>
 </section>
@@ -256,7 +335,7 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="try"><b>Try it</b><span>hermes-agent.nousresearch.com</span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img style="--h:500px" src="img/hermes-official-site.jpg" alt="The official Hermes Agent website"><figcaption>hermes-agent.nousresearch.com · © Nous Research</figcaption></figure>
+      <figure class="shot"><img style="--h:500px" data-src="img/hermes-official-site.jpg" alt="The official Hermes Agent website"><figcaption>hermes-agent.nousresearch.com · © Nous Research</figcaption></figure>
     </div>
   </div>
 </section>
@@ -312,8 +391,8 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="try"><b>Try it</b><span>No app? <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:300px" src="img/slides/desk-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally"><figcaption><span class="k">1</span>First launch</figcaption></figure>
-      <figure class="shot"><img class="white" style="--h:460px" src="img/slides/desk-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer"><figcaption><span class="k">2</span>One-time setup</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:300px" data-src="img/slides/desk-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally"><figcaption><span class="k">1</span>First launch</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:460px" data-src="img/slides/desk-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer"><figcaption><span class="k">2</span>One-time setup</figcaption></figure>
     </div>
   </div>
 </section>
@@ -331,8 +410,8 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="try"><b>Try it</b><span>Later: Settings › Model, or <code>hermes model</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:340px" src="img/slides/desk-provider.jpg" alt="Choose a provider: Nous Portal, run models locally, I have an API key"><figcaption><span class="k">1</span>Choose a provider</figcaption></figure>
-      <figure class="shot"><img class="white" style="--h:500px" src="img/slides/desk-api-key.jpg" alt="OpenRouter selected, Paste API key, Connect"><figcaption><span class="k">2</span>Paste a key, Connect</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:340px" data-src="img/slides/desk-provider.jpg" alt="Choose a provider: Nous Portal, run models locally, I have an API key"><figcaption><span class="k">1</span>Choose a provider</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:500px" data-src="img/slides/desk-api-key.jpg" alt="OpenRouter selected, Paste API key, Connect"><figcaption><span class="k">2</span>Paste a key, Connect</figcaption></figure>
     </div>
   </div>
 </section>
@@ -350,8 +429,8 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="try"><b>Try it</b><span><code>hermes doctor</code></span></div>
     </div>
     <div class="media col">
-      <figure class="shot"><img style="--h:120px" src="img/terminal/version.png" alt="Terminal: hermes --version prints the version"><figcaption><span class="k">1</span><code>hermes --version</code></figcaption></figure>
-      <figure class="shot"><img style="--h:340px" src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks"><figcaption><span class="k">2</span><code>hermes doctor</code></figcaption></figure>
+      <figure class="shot"><img style="--h:120px" data-src="img/terminal/version.png" alt="Terminal: hermes --version prints the version"><figcaption><span class="k">1</span><code>hermes --version</code></figcaption></figure>
+      <figure class="shot"><img style="--h:340px" data-src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks"><figcaption><span class="k">2</span><code>hermes doctor</code></figcaption></figure>
     </div>
   </div>
 </section>
@@ -369,8 +448,8 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="try"><b>Try it</b><span><code>hermes</code> to chat · <code>/retry</code> · <code>/model</code></span></div>
     </div>
     <div class="media col">
-      <figure class="shot"><img class="white" style="--h:360px" src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box"><figcaption><span class="k">1</span>The app</figcaption></figure>
-      <figure class="shot"><img style="--h:110px" src="img/terminal/first-chat.png" alt="Terminal: one question and a two-sentence answer"><figcaption><span class="k">2</span>The terminal</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:360px" data-src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box"><figcaption><span class="k">1</span>The app</figcaption></figure>
+      <figure class="shot"><img style="--h:110px" data-src="img/terminal/first-chat.png" alt="Terminal: one question and a two-sentence answer"><figcaption><span class="k">2</span>The terminal</figcaption></figure>
     </div>
   </div>
 </section>
@@ -395,7 +474,7 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
   memories/     <span class="c"># what it remembers</span>
   skills/       <span class="c"># saved how-tos</span>
   cron/         <span class="c"># scheduled jobs</span></div>
-      <figure class="shot"><img style="--h:150px" src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent folder"><figcaption>The real folder of our research agent</figcaption></figure>
+      <figure class="shot"><img style="--h:150px" data-src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent folder"><figcaption>The real folder of our research agent</figcaption></figure>
     </div>
   </div>
 </section>
@@ -416,7 +495,7 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
       <div class="mono">hermes profile create study-buddy
 hermes -p study-buddy          <span class="c"># chat with it</span>
 hermes -p study-buddy model    <span class="c"># its own model</span></div>
-      <figure class="shot"><img style="--h:240px" src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent"><figcaption><code>hermes profile show</code>: one agent at a glance</figcaption></figure>
+      <figure class="shot"><img style="--h:240px" data-src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent"><figcaption><code>hermes profile show</code>: one agent at a glance</figcaption></figure>
     </div>
   </div>
 </section>
@@ -434,8 +513,8 @@ hermes -p study-buddy model    <span class="c"># its own model</span></div>
       <div class="try"><b>Try it</b><span>Bots tab › + › New group chat</span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:440px" src="img/slides/desk-bots.jpg" alt="Hermes Desktop Bots tab listing Atlas, Forge, Iris and Hermes"><figcaption><span class="k">1</span>The Bots tab</figcaption></figure>
-      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-new-group.jpg" alt="New group chat dialog with Atlas, Forge and Iris selected and the name Study Squad"><figcaption><span class="k">2</span>New group chat: pick bots, name it</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:440px" data-src="img/slides/desk-bots.jpg" alt="Hermes Desktop Bots tab listing Atlas, Forge, Iris and Hermes"><figcaption><span class="k">1</span>The Bots tab</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-new-group.jpg" alt="New group chat dialog with Atlas, Forge and Iris selected and the name Study Squad"><figcaption><span class="k">2</span>New group chat: pick bots, name it</figcaption></figure>
     </div>
   </div>
 </section>
@@ -445,8 +524,8 @@ hermes -p study-buddy model    <span class="c"># its own model</span></div>
   <h2>A study group of agents</h2>
   <div class="wide">
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-group-chat.jpg" alt="Study Squad group chat: the student asks everyone; Atlas shares a free resource, Forge gives a practice exercise, both hand off"><figcaption><span class="k">1</span>One question to <code>@everyone</code>: each bot does its own part</figcaption></figure>
-      <figure class="shot"><img class="white" style="--h:420px" src="img/slides/desk-group-handoff.jpg" alt="Forge adds LeetCode links and a starter template; Iris replies to Forge by name"><figcaption><span class="k">2</span>They read each other and reply by name</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-group-chat.jpg" alt="Study Squad group chat: the student asks everyone; Atlas shares a free resource, Forge gives a practice exercise, both hand off"><figcaption><span class="k">1</span>One question to <code>@everyone</code>: each bot does its own part</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-group-handoff.jpg" alt="Forge adds LeetCode links and a starter template; Iris replies to Forge by name"><figcaption><span class="k">2</span>They read each other and reply by name</figcaption></figure>
     </div>
     <ul class="points strip">
       <li><b><code>@everyone</code> reaches all; <code>@name</code> reaches one.</b> Direct work to the right bot.</li>
@@ -474,7 +553,7 @@ You help a first-year IT student.
 Your one job: plan study time.
 ## Never
 - Do my graded work for me</div>
-      <figure class="shot"><img style="--h:230px" src="img/terminal/soul.png" alt="Terminal: the SOUL.md of our research agent"><figcaption>A real one: our research agent</figcaption></figure>
+      <figure class="shot"><img style="--h:230px" data-src="img/terminal/soul.png" alt="Terminal: the SOUL.md of our research agent"><figcaption>A real one: our research agent</figcaption></figure>
     </div>
   </div>
 </section>
@@ -492,8 +571,8 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes tools</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:520px" src="img/slides/desk-tools.jpg" alt="Hermes Desktop, Capabilities, Tools: toolsets with switches"><figcaption><span class="k">1</span>App: Capabilities › Tools</figcaption></figure>
-      <figure class="shot"><img style="--h:300px" src="img/terminal/tools.png" alt="Terminal: hermes tools list, only web and vision enabled"><figcaption><span class="k">2</span>Our research agent: only web and vision</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:520px" data-src="img/slides/desk-tools.jpg" alt="Hermes Desktop, Capabilities, Tools: toolsets with switches"><figcaption><span class="k">1</span>App: Capabilities › Tools</figcaption></figure>
+      <figure class="shot"><img style="--h:300px" data-src="img/terminal/tools.png" alt="Terminal: hermes tools list, only web and vision enabled"><figcaption><span class="k">2</span>Our research agent: only web and vision</figcaption></figure>
     </div>
   </div>
 </section>
@@ -511,7 +590,7 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes config set agent.max_turns 20</code></span></div>
     </div>
     <div class="media col">
-      <figure class="shot"><img class="white" style="--h:250px" src="img/slides/desk-approvals.jpg" alt="Hermes Desktop, Settings, Safety, Approvals"><figcaption>App: Settings › Safety › Approvals</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:250px" data-src="img/slides/desk-approvals.jpg" alt="Hermes Desktop, Settings, Safety, Approvals"><figcaption>App: Settings › Safety › Approvals</figcaption></figure>
       <table class="t">
         <tr><td><code>approvals.mode: manual</code></td><td>Risky commands wait for you</td></tr>
         <tr><td><code>approvals.deny: ["rm -rf *"]</code></td><td>Never runs, even if approved</td></tr>
@@ -534,8 +613,8 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes skills search study</code></span></div>
     </div>
     <div class="media col">
-      <figure class="shot"><img class="white" style="--h:200px" src="img/slides/desk-memory.jpg" alt="Hermes Desktop, Settings, Memory and Context"><figcaption><span class="k">1</span>Memory: on/off and size</figcaption></figure>
-      <figure class="shot"><img class="white" style="--h:290px" src="img/slides/desk-skills.jpg" alt="Hermes Desktop, Capabilities, Skills and the Skills Hub"><figcaption><span class="k">2</span>Skills, and the Skills Hub</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:200px" data-src="img/slides/desk-memory.jpg" alt="Hermes Desktop, Settings, Memory and Context"><figcaption><span class="k">1</span>Memory: on/off and size</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:290px" data-src="img/slides/desk-skills.jpg" alt="Hermes Desktop, Capabilities, Skills and the Skills Hub"><figcaption><span class="k">2</span>Skills, and the Skills Hub</figcaption></figure>
     </div>
   </div>
 </section>
@@ -553,8 +632,8 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes cron list</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:440px" src="img/slides/desk-new-cron.jpg" alt="Hermes Desktop: New cron job from the Morning briefing blueprint"><figcaption><span class="k">1</span>App: a blueprint, a time, a place</figcaption></figure>
-      <figure class="shot"><img style="--h:440px" src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris"><figcaption><span class="k">2</span>Our Iris’s real jobs and last runs</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:440px" data-src="img/slides/desk-new-cron.jpg" alt="Hermes Desktop: New cron job from the Morning briefing blueprint"><figcaption><span class="k">1</span>App: a blueprint, a time, a place</figcaption></figure>
+      <figure class="shot"><img style="--h:440px" data-src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris"><figcaption><span class="k">2</span>Our Iris’s real jobs and last runs</figcaption></figure>
     </div>
   </div>
 </section>
@@ -564,9 +643,9 @@ Your one job: plan study time.
   <h2>Your agent, on your phone</h2>
   <div class="wide">
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:400px" src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: Create with QR and allowed user IDs"><figcaption><span class="k">1</span>Set up: Create with QR</figcaption></figure>
-      <figure class="shot"><img style="--h:400px" src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives a pairing code"><figcaption><span class="k">2</span>A stranger gets a code</figcaption></figure>
-      <figure class="shot"><img style="--h:400px" src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><span class="k">3</span>Approved: Iris answers</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:400px" data-src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: Create with QR and allowed user IDs"><figcaption><span class="k">1</span>Set up: Create with QR</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" data-src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives a pairing code"><figcaption><span class="k">2</span>A stranger gets a code</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" data-src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><span class="k">3</span>Approved: Iris answers</figcaption></figure>
     </div>
     <ul class="points strip">
       <li><b>Create with QR</b> makes the bot and finds your user ID for you.</li>
@@ -589,8 +668,8 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>curl …/p/h101-researcher/v1/chat/completions</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img class="white" style="--h:300px" src="img/slides/desk-api-server.jpg" alt="Hermes Desktop, Messaging, API server"><figcaption><span class="k">1</span>App: Messaging › API server</figcaption></figure>
-      <figure class="shot"><img style="--h:500px" src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption><span class="k">2</span>A real call and its answer</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:300px" data-src="img/slides/desk-api-server.jpg" alt="Hermes Desktop, Messaging, API server"><figcaption><span class="k">1</span>App: Messaging › API server</figcaption></figure>
+      <figure class="shot"><img style="--h:500px" data-src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption><span class="k">2</span>A real call and its answer</figcaption></figure>
     </div>
   </div>
 </section>
@@ -630,7 +709,7 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes -p h101-researcher -z "…"</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img style="--h:360px" src="img/terminal/atlas-answer.png" alt="Terminal: the research agent answers with two courses and links"><figcaption>Our research agent searched, then answered with links</figcaption></figure>
+      <figure class="shot"><img style="--h:360px" data-src="img/terminal/atlas-answer.png" alt="Terminal: the research agent answers with two courses and links"><figcaption>Our research agent searched, then answered with links</figcaption></figure>
     </div>
   </div>
 </section>
@@ -673,8 +752,8 @@ Your one job: plan study time.
       <div class="try"><b>Try it</b><span><code>hermes -p h101-assistant insights --days 7</code></span></div>
     </div>
     <div class="media">
-      <figure class="shot"><img style="--h:520px" src="img/slides/proof-insights-atlas.png" alt="hermes insights for the research agent"><figcaption><span class="k">1</span>Atlas: web searches</figcaption></figure>
-      <figure class="shot"><img style="--h:520px" src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><span class="k">2</span>Iris: scheduled runs</figcaption></figure>
+      <figure class="shot"><img style="--h:520px" data-src="img/slides/proof-insights-atlas.png" alt="hermes insights for the research agent"><figcaption><span class="k">1</span>Atlas: web searches</figcaption></figure>
+      <figure class="shot"><img style="--h:520px" data-src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><span class="k">2</span>Iris: scheduled runs</figcaption></figure>
     </div>
   </div>
 </section>
@@ -721,7 +800,6 @@ Your one job: plan study time.
     <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/"></div>These slides</figure>
     <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/manual.html"></div>Student manual</figure>
     <figure><div class="qr" data-qr="https://hermes-agent.nousresearch.com/"></div>Hermes official site</figure>
-    <figure><div class="qr" data-qr="https://github.com/Debb1ie/Hermes-Agent-101"></div>Workshop code</figure>
   </div>
   <p class="who" style="margin-top:34px">Questions? · <b>Precious Grace Deborah Manucom</b></p>
 </section>
@@ -735,10 +813,10 @@ Your one job: plan study time.
 <div class="toolbar" role="toolbar" aria-label="Slide controls" id="toolbar">
   <div class="grp">
     <button class="tb" type="button" id="prevBtn" aria-label="Previous slide" title="Previous (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <span class="count" id="count" aria-live="polite">1 / 1</span>
+    <span class="count" id="count" aria-live="polite" title="All slides (O)">1 / 1</span>
     <button class="tb" type="button" id="nextBtn" aria-label="Next slide" title="Next (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
-  <div class="grp">
+  <div class="grp zoomgrp">
     <button class="tb" type="button" id="zoomOut" aria-label="Zoom out" title="Zoom out (−)">−</button>
     <button class="tb zl" type="button" id="zoomReset" aria-label="Reset zoom" title="Reset zoom (0)">100%</button>
     <button class="tb" type="button" id="zoomIn" aria-label="Zoom in" title="Zoom in (+)">+</button>
@@ -749,8 +827,8 @@ Your one job: plan study time.
     <button class="tb opt" type="button" id="fsBtn" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
   </div>
 </div>
-<div class="overlay" id="overview" hidden role="dialog" aria-modal="true" aria-label="All slides"><div class="ov"><button class="tb close" type="button" id="ovClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h2>All slides</h2><p class="hint">Click a slide to jump to it. Esc to close.</p><div id="ovList"></div></div></div>
-<div class="lightbox" id="lightbox" hidden><img id="lbImg" alt=""><p>Click or press Esc to close</p></div>
+<div class="overlay" id="overview" hidden role="dialog" aria-modal="true" aria-label="All slides"><div class="ov"><button class="tb close" type="button" id="ovClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h2>All slides</h2><p class="hint">Click a slide to jump to it. Keys: ← → move · + − zoom · 0 reset · T light/dark · F full screen · O this list · Esc close.</p><div id="ovList"></div></div></div>
+<div class="lightbox" id="lightbox" hidden><img id="lbImg" alt=""><p id="lbHint">Click or press Esc to close</p></div>
 
 <script>
 (() => {
@@ -834,7 +912,12 @@ Your one job: plan study time.
   slides.forEach((s, k) => { if(k > 0) s.insertAdjacentHTML('beforeend', `<div class="foot"><span><img src="img/brand/hermes-icon.svg" alt=""><b>Hermes Agent 101</b> · ${s.dataset.part}</span><span>${k + 1} / ${slides.length}</span></div>`); });
 
   // scale to fit, times the zoom level; when zoomed in, the stage scrolls
+  const html = document.documentElement, isFluid = () => html.classList.contains('fluid');
   function fit(keepCenter){
+    // too small to read as a 1600x900 slide (phones, portrait tablets): switch to the reading layout
+    const fluid = Math.min(innerWidth / 1600, innerHeight / 900) < 0.7;
+    html.classList.toggle('fluid', fluid);
+    if(fluid){ z = 1; sizer.style.width = sizer.style.height = ''; deck.style.transform = ''; vp.classList.remove('zoomed'); $('zoomReset').textContent = '100%'; return; }
     const r = vp.getBoundingClientRect(), base = Math.min(r.width / 1600, r.height / 900), k = base * z;
     const cx = keepCenter ? (vp.scrollLeft + r.width / 2) / Math.max(1, sizer.offsetWidth) : .5, cy = keepCenter ? (vp.scrollTop + r.height / 2) / Math.max(1, sizer.offsetHeight) : .5;
     sizer.style.width = 1600 * k + 'px'; sizer.style.height = 900 * k + 'px'; deck.style.transform = `scale(${k})`;
@@ -843,7 +926,7 @@ Your one job: plan study time.
     $('zoomReset').textContent = Math.round(z * 100) + '%';
   }
   const ZOOMS = [0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3];
-  function zoomTo(nz){ z = Math.max(ZOOMS[0], Math.min(ZOOMS[ZOOMS.length - 1], nz)); fit(true); }
+  function zoomTo(nz){ if(isFluid()) return; z = Math.max(ZOOMS[0], Math.min(ZOOMS[ZOOMS.length - 1], nz)); fit(true); }
   const zoomStep = dir => { const idx = ZOOMS.findIndex(v => v >= z - 1e-6); zoomTo(ZOOMS[Math.max(0, Math.min(ZOOMS.length - 1, (ZOOMS[idx] === z ? idx : (dir > 0 ? idx - 1 : idx)) + dir))]); };
 
   function show(k, push){
@@ -855,9 +938,13 @@ Your one job: plan study time.
     $('nextEdge').disabled = $('nextBtn').disabled = i === slides.length - 1;
     document.title = `${slides[i].dataset.title} · Hermes Agent 101 Slides`;
     if(push !== false) history.replaceState(null, '', '#' + (i + 1));
-    if(z > 1){ vp.scrollLeft = 0; vp.scrollTop = 0; }
+    if(z > 1 || isFluid()){ vp.scrollLeft = 0; vp.scrollTop = 0; }
+    loadAround(i);
   }
   const next = () => show(i + 1), prev = () => show(i - 1);
+  const loadImgs = el => el?.querySelectorAll('img[data-src]').forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+  function loadAround(k){ [k, k + 1, k - 1, k + 2].forEach(n => loadImgs(slides[n])); }
+  addEventListener('beforeprint', () => loadImgs(document));
 
   // theme
   const root = document.documentElement;
@@ -883,7 +970,7 @@ Your one job: plan study time.
   $('zoomIn').addEventListener('click', () => zoomStep(1)); $('zoomOut').addEventListener('click', () => zoomStep(-1)); $('zoomReset').addEventListener('click', () => zoomTo(1));
   $('themeBtn').addEventListener('click', toggleTheme); $('ovBtn').addEventListener('click', openOverview);
   $('fsBtn').addEventListener('click', toggleFs);
-  deck.addEventListener('click', e => { const img = e.target.closest('figure.shot img'); if(!img) return; $('lbImg').src = img.src; $('lbImg').alt = img.alt; $('lightbox').hidden = false; });
+  deck.addEventListener('click', e => { const img = e.target.closest('figure.shot img'); if(!img) return; $('lbImg').src = img.src; $('lbImg').alt = img.alt; $('lbHint').textContent = isFluid() ? 'Drag to look around · tap to close' : 'Click or press Esc to close'; $('lightbox').hidden = false; $('lightbox').scrollTo(0, 0); });
   $('lightbox').addEventListener('click', () => { $('lightbox').hidden = true; });
 
   addEventListener('keydown', e => {
@@ -891,8 +978,8 @@ Your one job: plan study time.
     if(!$('lightbox').hidden){ if(['Escape',' ','Enter'].includes(e.key)){ $('lightbox').hidden = true; e.preventDefault(); } return; }
     if(!$('overview').hidden){ if(e.key === 'Escape' || e.key === 'o' || e.key === 'O'){ closeOverview(); e.preventDefault(); } return; }
     if(e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
-    if(['ArrowRight','PageDown',' '].includes(e.key) || (e.key === 'ArrowDown' && z <= 1)){ e.preventDefault(); next(); }
-    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key) || (e.key === 'ArrowUp' && z <= 1)){ e.preventDefault(); prev(); }
+    if(['ArrowRight','PageDown',' '].includes(e.key) || (e.key === 'ArrowDown' && z <= 1 && !isFluid())){ e.preventDefault(); next(); }
+    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key) || (e.key === 'ArrowUp' && z <= 1 && !isFluid())){ e.preventDefault(); prev(); }
     else if(e.key === 'Home') show(0); else if(e.key === 'End') show(slides.length - 1);
     else if(e.key === '+' || e.key === '=') zoomStep(1); else if(e.key === '-' || e.key === '_') zoomStep(-1); else if(e.key === '0') zoomTo(1);
     else if(e.key === 't' || e.key === 'T') toggleTheme(); else if(e.key === 'o' || e.key === 'O') openOverview();
@@ -900,9 +987,18 @@ Your one job: plan study time.
   });
   let touchX = null, touchY = null;
   vp.addEventListener('touchstart', e => { if(e.touches.length !== 1 || z > 1){ touchX = null; return; } touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, {passive:true});
-  vp.addEventListener('touchend', e => { if(touchX == null) return; const dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY; if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)(); touchX = null; });
+  vp.addEventListener('touchend', e => { if(touchX == null) return; const dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY; if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)(); else if(Math.abs(dx) < 10 && Math.abs(dy) < 10) showBar(3000); touchX = null; });
   const bar = $('toolbar'); let hideT = null;
-  const showBar = ms => { bar.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(() => { if(!bar.matches(':hover, :focus-within')) bar.classList.remove('show'); }, ms || 1800); };
+  // stays only while hovered or keyboard-focused; a mouse click does not pin it open
+  const keepBar = () => { try{ return bar.matches(':hover') || bar.matches(':has(:focus-visible)'); }catch(e){ return bar.matches(':hover'); } };
+  const showBar = ms => { bar.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(function hide(){ if(keepBar()) hideT = setTimeout(hide, 800); else bar.classList.remove('show'); }, ms || 1800); };
+  bar.addEventListener('touchstart', () => showBar(3000), {passive:true});
+  bar.addEventListener('focusin', () => showBar(2500));
+  // side arrows: faint until the mouse moves, full on hover, flash on click
+  const edges = [$('prevEdge'), $('nextEdge')]; let edgeT = null;
+  addEventListener('mousemove', () => { edges.forEach(e => e.classList.add('awake')); clearTimeout(edgeT); edgeT = setTimeout(() => edges.forEach(e => e.classList.remove('awake')), 1400); }, {passive:true});
+  edges.forEach(e => e.addEventListener('click', () => { e.classList.add('flash'); setTimeout(() => e.classList.remove('flash'), 350); }));
+  $('count').addEventListener('click', () => openOverview());
   $('hotzone').addEventListener('mouseenter', () => showBar());
   addEventListener('mousemove', e => { if(e.clientY > innerHeight - 70) showBar(); });
   bar.addEventListener('mouseleave', () => showBar(900));

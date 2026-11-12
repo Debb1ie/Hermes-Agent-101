@@ -171,8 +171,7 @@ ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-r
 .count{font:600 15px var(--mono);color:var(--ink-2);min-width:74px;text-align:center;cursor:pointer;border-radius:8px;padding:6px 4px}
 .count:hover{background:var(--chrome-btn)}
 .zl{font:600 14px var(--mono);color:var(--ink-2);min-width:54px;text-align:center}
-.edge{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:.07;transition:opacity .6s ease}
-.edge.awake{opacity:.45;transition:opacity .2s ease}
+.edge{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:0;transition:opacity .6s ease}
 .edge.flash{opacity:1;border-color:#0000F2;transition:none}
 .edge:hover,.edge:focus-visible{opacity:1;border-color:#0000F2;transition:opacity .15s ease}
 .edge svg{width:26px;height:26px}
@@ -994,9 +993,8 @@ Your one job: plan study time.
   const showBar = ms => { bar.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(function hide(){ if(keepBar()) hideT = setTimeout(hide, 800); else bar.classList.remove('show'); }, ms || 1800); };
   bar.addEventListener('touchstart', () => showBar(3000), {passive:true});
   bar.addEventListener('focusin', () => showBar(2500));
-  // side arrows: faint until the mouse moves, full on hover, flash on click
-  const edges = [$('prevEdge'), $('nextEdge')]; let edgeT = null;
-  addEventListener('mousemove', () => { edges.forEach(e => e.classList.add('awake')); clearTimeout(edgeT); edgeT = setTimeout(() => edges.forEach(e => e.classList.remove('awake')), 1400); }, {passive:true});
+  // side arrows: invisible until hovered; a click flashes the arrow, then it fades out
+  const edges = [$('prevEdge'), $('nextEdge')];
   edges.forEach(e => e.addEventListener('click', () => { e.classList.add('flash'); setTimeout(() => e.classList.remove('flash'), 350); }));
   $('count').addEventListener('click', () => openOverview());
   $('hotzone').addEventListener('mouseenter', () => showBar());

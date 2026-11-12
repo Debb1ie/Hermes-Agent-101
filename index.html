@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes Agent 101 Slides</title>
+<link rel="icon" href="img/brand/hermes-icon.svg" type="image/svg+xml">
+<meta name="description" content="Hermes Agent 101 in 30 minutes: what Hermes is, how to set it up in Hermes Desktop, how to make your own safe agent, and how the whole Hermes Agent 101 system works. Real screenshots throughout.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hermes Agent 101">
+<meta property="og:title" content="Hermes Agent 101: slides">
+<meta property="og:description" content="Set up your own AI agent with Hermes, make it safe, and put it to work. A 30-minute talk with real Hermes screenshots.">
+<meta property="og:url" content="https://debb1ie.github.io/Hermes-Agent-101/">
+<meta property="og:image" content="https://debb1ie.github.io/Hermes-Agent-101/img/brand/og-slides.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0000F2">
+<link rel="image_src" href="img/brand/og-slides.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  // apply the saved theme before the page paints
+  try{ var t = localStorage.getItem('hermes101-slides-theme'); if(t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }catch(e){}
+</script>
+<style>
+/* Nous Research palette: electric blue, white, near-black */
+:root{
+  --bg:#05050B; --surface:#0E0E19; --surface-2:#161626; --panel:#0B0B1D; --ink:#F5F6FF; --ink-2:#C9CBDD; --muted:#8C8FA6; --rule:#24253B;
+  --blue:#0000F2; --blue-ink:#8F95FF; --on-blue:#FFFFFF; --grid:rgba(255,255,255,.028); --glow:rgba(0,0,242,.28);
+  --shot-shadow:0 22px 48px -26px rgba(0,0,0,.95); --chrome:#09091A; --chrome-btn:#141428; --code:#121224;
+  --display:"Inter Tight","Segoe UI",system-ui,sans-serif; --sans:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",Consolas,monospace;
+  --tool-h:56px; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#FFFFFF; --surface:#F6F7FC; --surface-2:#EDEFF8; --panel:#EEF0FF; --ink:#05051A; --ink-2:#2B2D45; --muted:#5B5E78; --rule:#DEE0EE;
+    --blue-ink:#0000D6; --grid:rgba(0,0,60,.035); --glow:rgba(0,0,242,.09);
+    --shot-shadow:0 18px 40px -24px rgba(10,10,60,.45); --chrome:#F3F4FA; --chrome-btn:#FFFFFF; --code:#F1F2F9; color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#FFFFFF; --surface:#F6F7FC; --surface-2:#EDEFF8; --panel:#EEF0FF; --ink:#05051A; --ink-2:#2B2D45; --muted:#5B5E78; --rule:#DEE0EE;
+  --blue-ink:#0000D6; --grid:rgba(0,0,60,.035); --glow:rgba(0,0,242,.09);
+  --shot-shadow:0 18px 40px -24px rgba(10,10,60,.45); --chrome:#F3F4FA; --chrome-btn:#FFFFFF; --code:#F1F2F9; color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+[hidden]{display:none!important}
+a{color:var(--blue-ink)}
+code{font-family:var(--mono);font-size:.84em;background:var(--code);border:1px solid var(--rule);border-radius:6px;padding:1px 7px}
+button{font-family:var(--sans)}
+
+/* stage: every slide is 1600 x 900, scaled to fit, then zoomed */
+.viewport{position:fixed;inset:0;display:flex;overflow:hidden}
+.viewport.zoomed{overflow:auto}
+.sizer{margin:auto;position:relative;flex:none}
+.deck{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+.slide{position:absolute;inset:0;padding:58px 80px 74px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1),visibility 0s .45s;overflow:hidden;
+  background:radial-gradient(1000px 640px at 100% 0%,var(--glow),transparent 62%),var(--bg)}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease .05s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.slide::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:64px 64px}
+.slide > *{position:relative;z-index:1}
+
+/* header */
+.kicker{font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-ink);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.025em;line-height:1.02}
+h1{font-size:118px;font-weight:800}
+h2{font-size:54px;font-weight:800;margin:0 0 26px}
+h3{font-size:24px;font-weight:700;margin:0 0 6px}
+p,li{font-size:23px;line-height:1.42;margin:0}
+.muted{color:var(--muted)}
+.chip{display:inline-block;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;border-radius:6px;padding:3px 9px;line-height:1.5;border:1px solid var(--rule);color:var(--ink-2);background:var(--surface)}
+.chip.live{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* the one layout: points on the left, pictures on the right */
+.body{display:grid;grid-template-columns:470px minmax(0,1fr);gap:44px;flex:1;min-height:0}
+.body.flip{grid-template-columns:minmax(0,1fr) 470px}
+.side{display:flex;flex-direction:column;gap:22px;min-height:0}
+ul.points{list-style:none;margin:0;padding:0;display:grid;gap:20px}
+ul.points li{position:relative;padding-left:30px;color:var(--ink-2);font-size:22px;line-height:1.42}
+ul.points li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:11px;background:var(--blue);border-radius:2px}
+ul.points li b{color:var(--ink);font-weight:600}
+.try{margin-top:auto;background:#0000F2;color:#fff;border-radius:12px;padding:15px 20px}
+.try b{display:block;font:600 14px var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.82;margin-bottom:4px}
+.try span{font:500 20px/1.45 var(--mono)}
+.try code{background:rgba(255,255,255,.16);border-color:transparent;color:#fff;font-size:1em;padding:0 5px}
+.media{background:var(--panel);border:1px solid var(--rule);border-radius:22px;padding:24px;display:flex;gap:22px;align-items:center;justify-content:center;min-height:0;min-width:0;height:100%}
+.media.col{flex-direction:column}
+.media.col figure.shot{flex:0 1 auto}
+.media{justify-content:safe center}
+.media.col{align-items:center}
+figure.shot{margin:0;flex:1 1 0;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+figure.shot img{display:block;width:auto;height:auto;max-width:100%;max-height:var(--h,520px);object-fit:contain;border-radius:10px;border:1px solid var(--rule);box-shadow:var(--shot-shadow);cursor:zoom-in;background:#0E0E10}
+figure.shot img.white{background:#fff}
+figure.shot figcaption{font-size:16px;color:var(--muted);text-align:center;line-height:1.35;max-width:100%}
+figure.shot figcaption .k{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--blue);color:#fff;font:700 13px var(--sans);margin-right:7px;vertical-align:1px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;min-width:0}
+.card .t{display:block;font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:6px;color:var(--ink);letter-spacing:-.01em}
+.card p{font-size:19px;color:var(--ink-2);line-height:1.42}
+.card .n{display:block;font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-ink);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.mono{font-family:var(--mono);font-size:19px;line-height:1.6;color:var(--ink);background:var(--code);border:1px solid var(--rule);border-radius:12px;padding:16px 20px;white-space:pre;width:100%}
+.mono .c{color:var(--muted)}
+table.t{border-collapse:collapse;width:100%;font-size:19px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+table.t th,table.t td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+table.t th{font-family:var(--display);color:var(--ink);background:var(--surface-2);font-size:18px}
+table.t tr:last-child td{border-bottom:0}
+table.t td b{color:var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
+.strip li{list-style:none}
+.wide{display:flex;flex-direction:column;flex:1;min-height:0}
+
+/* loop diagram */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%}
+.loop div{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:22px 18px;text-align:left}
+.loop div b{display:block;font:600 13px var(--mono);letter-spacing:.12em;color:var(--blue-ink);margin-bottom:8px}
+.loop div span{display:block;font:700 26px var(--display);margin-bottom:6px}
+.loop div p{font-size:17px;color:var(--muted);line-height:1.4}
+.loop div.hi{background:#0000F2;border-color:#0000F2;color:#fff}
+.loop div.hi b,.loop div.hi p{color:rgba(255,255,255,.85)}
+.arch{display:flex;align-items:stretch;gap:12px;width:100%}
+.arch .box{flex:1;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:5px}
+.arch .box b{font-family:var(--display);font-size:23px}
+.arch .box small{font-size:16px;color:var(--muted);line-height:1.4}
+.arch .box.hi{background:#0000F2;border-color:#0000F2;color:#fff}
+.arch .box.hi small,.arch .box.hi .tag{color:rgba(255,255,255,.85)}
+.arch .to{align-self:center;font-size:26px;color:var(--blue-ink)}
+.arch .tag{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-ink)}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:n}
+ol.steps li{counter-increment:n;display:flex;gap:14px;align-items:flex-start;color:var(--ink-2);font-size:23px}
+ol.steps li b{color:var(--ink)}
+ol.steps li::before{content:counter(n);flex:none;width:34px;height:34px;border-radius:8px;background:#0000F2;color:#fff;font:700 17px/34px var(--sans);text-align:center}
+
+/* title + end: the blue of hermes-agent.nousresearch.com */
+.slide.blue{background:#0000F2;color:#fff;justify-content:center}
+.slide.blue::after{background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)}
+.slide.blue .kicker{color:rgba(255,255,255,.85)}
+.slide.blue .lead{font-size:30px;line-height:1.4;color:rgba(255,255,255,.9);max-width:1080px}
+.logo{width:132px;height:132px;display:block;margin-bottom:34px;border-radius:30px;box-shadow:0 24px 60px -24px rgba(0,0,0,.6)}
+.who{margin-top:46px;font-size:24px;color:rgba(255,255,255,.88)}
+.who b{color:#fff}
+.credit{position:absolute;left:80px;right:80px;bottom:40px;font-size:15px;color:rgba(255,255,255,.7)}
+.qr{background:#fff;border-radius:14px;padding:10px;width:196px;height:196px}
+.qr svg{width:100%;height:100%;display:block}
+.qrs{display:flex;gap:30px}
+.qrs figure{margin:0;display:grid;gap:8px;justify-items:center;font-size:18px;color:rgba(255,255,255,.88);text-align:center}
+.cmdline{font:500 24px var(--mono);background:rgba(255,255,255,.12);border-radius:12px;padding:14px 20px;margin:0 0 30px;color:#fff;width:max-content}
+.foot{position:absolute;left:80px;right:80px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);z-index:2}
+.foot span{display:flex;align-items:center;gap:10px}
+.foot img{width:22px;height:22px;border-radius:6px}
+.foot b{color:var(--ink-2);font-weight:600}
+.slide.blue .foot,.slide.blue .foot b{color:rgba(255,255,255,.75)}
+
+/* small pictures that explain the idea on text-only slides */
+.vis{height:104px;border-radius:12px;background:var(--panel);border:1px solid var(--rule);margin:0 0 14px;display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 14px;overflow:hidden}
+.tg{display:grid;gap:7px;width:100%;max-width:220px}
+.tg div{display:flex;justify-content:space-between;align-items:center;font:500 13px var(--mono);color:var(--ink-2)}
+.tg i{width:34px;height:18px;border-radius:999px;background:var(--rule);position:relative;display:block}
+.tg i::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.tg i.on{background:#0000F2}.tg i.on::after{left:18px}
+.doc{width:96px;height:78px;border-radius:8px;background:var(--surface);border:1px solid var(--rule);padding:8px 9px;display:flex;flex-direction:column;gap:6px;font:600 10px var(--mono);color:var(--blue-ink);flex:none}
+.doc b{display:block;height:5px;border-radius:3px;background:var(--rule)}
+.pill{font:600 11px var(--mono);padding:4px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--rule);color:var(--ink-2);white-space:nowrap}
+.pill.on{background:#0000F2;border-color:#0000F2;color:#fff}
+.stack{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.vis svg.big{width:64px;height:64px;color:var(--blue-ink)}
+.bots{display:flex;align-items:flex-end;gap:6px}
+.bots figure{margin:0;display:grid;justify-items:center;gap:3px;font:600 10px var(--mono);color:var(--muted)}
+.icon{width:46px;height:46px;border-radius:12px;background:#0000F2;color:#fff;display:grid;place-items:center;margin-bottom:12px}
+.icon svg{width:24px;height:24px}
+.agent{display:flex;gap:14px;align-items:flex-start}
+.agent .bot{flex:none;margin-top:2px}
+html.fluid .vis{height:92px}
+
+/* the cat: an original line-art cat that sometimes walks past or peeks up */
+:root{--cat:#0B0B10;--cat-line:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--cat:#F4F2EE;--cat-line:drop-shadow(0 3px 6px rgba(0,0,0,.55))}}
+:root[data-theme="dark"]{--cat:#F4F2EE;--cat-line:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
+.cat{position:fixed;left:0;bottom:-3px;transition:bottom .25s ease;width:72px;height:45px;z-index:22;cursor:pointer;color:var(--cat);display:none;-webkit-tap-highlight-color:transparent}
+.cat.out{display:block}
+.cat svg{width:100%;height:100%;display:block;overflow:visible;filter:var(--cat-line)}
+.cat.left svg{transform:scaleX(-1)}
+.cat .leg{transform-box:fill-box;transform-origin:50% 0}
+.cat.walking .leg.a{animation:catleg .42s ease-in-out infinite alternate}
+.cat.walking .leg.b{animation:catleg .42s ease-in-out infinite alternate-reverse}
+.cat .tail{transform-box:fill-box;transform-origin:85% 100%;animation:cattail 1.6s ease-in-out infinite alternate}
+.cat .blink{transform-box:fill-box;transform-origin:center;animation:catblink 4s infinite}
+@keyframes catleg{from{transform:rotate(-13deg)}to{transform:rotate(13deg)}}
+@keyframes cattail{from{transform:rotate(-10deg)}to{transform:rotate(14deg)}}
+@keyframes catblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.meow{position:absolute;right:-30px;top:-30px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:12px;padding:4px 10px;font:600 13px var(--sans);white-space:nowrap;box-shadow:0 8px 20px -10px rgba(0,0,0,.5)}
+.cat.left .meow{right:auto;left:-6px}
+html.fluid .cat{width:56px;height:35px}
+html.barup .cat{bottom:calc(var(--tool-h) - 3px)}
+@media print{.cat{display:none!important}}
+
+.yt{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000 center/cover no-repeat;box-shadow:var(--shot-shadow)}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.yt{cursor:pointer}
+.ytsound{position:absolute;z-index:2;right:12px;top:12px;font:600 13px var(--sans);color:#fff;background:rgba(0,0,0,.62);padding:6px 11px;border-radius:999px;display:none}
+.yt.muted .ytsound{display:block}
+.ytnote{position:absolute;left:10px;bottom:10px;font:600 12px var(--sans);color:#fff;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:6px}
+.yt.playing .ytnote{display:none}
+table.cmp td:nth-child(3){color:var(--ink)}
+table.cmp th:nth-child(3){background:#0000F2;color:#fff}
+@media print{.yt iframe{display:none}}
+
+.qrline{display:flex;gap:18px;align-items:center}
+.qr.sm{width:150px;height:150px;padding:8px;flex:none;box-shadow:var(--shot-shadow);border:1px solid var(--rule)}
+.qrline p{font-size:18px;color:var(--ink-2);line-height:1.4}
+.qrline p b{display:block;color:var(--ink);font-weight:600}
+.qrline p span{font:500 15px var(--mono);color:var(--blue-ink)}
+html.fluid .qr.sm{width:120px;height:120px;padding:6px}
+html.fluid .qrline p{font-size:15px}
+
+.vis.rv{height:86px;margin-bottom:12px}
+.field{display:flex;flex-direction:column;gap:3px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:7px 11px}
+.field span{font:600 10px var(--mono);color:var(--muted);letter-spacing:.06em}
+.field b{font:500 14px var(--mono);color:var(--ink)}
+.cfg{display:flex;flex-direction:column;font:500 12px/1.3 var(--mono);color:var(--ink-2);background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:5px 14px}
+.cfg .k{color:var(--blue-ink)}.cfg em{font-style:normal;color:var(--ink);font-weight:600}
+.bubble{max-width:62%;background:var(--surface);border:1px solid var(--rule);border-radius:12px 12px 12px 3px;padding:8px 11px;font-size:13px;line-height:1.4;color:var(--ink-2)}
+.bubble u{color:var(--blue-ink);text-underline-offset:2px}
+.pill.bad{text-decoration:line-through;text-decoration-color:#E0473F;text-decoration-thickness:2px;color:var(--muted)}
+
+/* today's map: a route */
+.timebar{display:flex;gap:4px;margin:2px 0 34px;height:30px}
+.timebar span{display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--surface-2);border:1px solid var(--rule);font:600 12px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;letter-spacing:.04em}
+.timebar .tbhi{background:#0000F2;border-color:#0000F2;color:#fff}
+.timebar .tb0{opacity:.7}
+ol.route{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative}
+ol.route::before{content:"";position:absolute;left:5%;right:5%;top:37px;height:4px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--blue-ink) 0 14px,transparent 14px 24px);opacity:.55}
+ol.route li{position:relative;display:flex;flex-direction:column;align-items:flex-start}
+ol.route .stop{width:78px;height:78px;border-radius:50%;background:var(--bg);border:3px solid var(--blue-ink);display:grid;place-items:center;color:var(--blue-ink);margin-bottom:18px;position:relative;z-index:1}
+ol.route .stop svg{width:32px;height:32px}
+ol.route li.hi .stop{width:96px;height:96px;margin-top:-9px;margin-bottom:9px;background:#0000F2;border-color:#0000F2;color:#fff;box-shadow:0 0 0 10px color-mix(in srgb,#0000F2 18%,transparent)}
+ol.route li.hi .stop svg{width:40px;height:40px}
+ol.route li.end .stop{border-style:dashed}
+ol.route .mins{font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-ink);margin-bottom:6px}
+ol.route .t{font:700 26px/1.1 var(--display);letter-spacing:-.015em;color:var(--ink);margin-bottom:8px}
+ol.route li.hi .t{font-size:30px}
+ol.route p{font-size:18px;line-height:1.42;color:var(--ink-2)}
+.keys{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:auto;padding-top:24px;border-top:1px dashed var(--rule);font-size:17px;color:var(--muted);align-items:center}
+.keys span{display:inline-flex;align-items:center;gap:6px}
+kbd{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 8px;border-radius:8px;border:1px solid var(--rule);border-bottom-width:3px;background:var(--surface);color:var(--ink);font:600 16px var(--mono)}
+.keys .kclick{font-style:italic}
+
+/* chatbot vs agent: one shot vs a loop */
+.oneshot{display:flex;align-items:center;gap:12px;width:100%;max-width:620px;padding:12px 16px;border-radius:12px;border:1px dashed var(--rule);color:var(--muted);font-size:16px}
+.oneshot .osw{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.oneshot .bub{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:5px 10px;color:var(--ink-2)}
+.oneshot .arr{font-size:20px}
+.oneshot .note{margin-left:auto;font-size:14px;font-style:italic}
+.ring{position:relative;width:600px;height:430px;flex:none}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ring .track{fill:none;stroke:var(--rule);stroke-width:2;stroke-dasharray:4 7}
+.ring .arc{fill:none;stroke:var(--blue-ink);stroke-width:3;stroke-linecap:round}
+.ring .exit{fill:none;stroke:var(--blue-ink);stroke-width:3;stroke-linecap:round;stroke-dasharray:6 6}
+.ring .ah{fill:var(--blue-ink)}
+.ring .dot{fill:#0000F2;filter:drop-shadow(0 0 6px #4D5BFF)}
+.ring .node{position:absolute;transform:translate(-50%,-50%);background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:10px 14px;font-size:15px;line-height:1.35;color:var(--ink-2);text-align:center;min-width:150px;box-shadow:var(--shot-shadow)}
+.ring .node b{display:block;font:700 19px var(--display);color:var(--ink);margin-bottom:2px}
+.ring .node code{font-size:13px}
+.ring .node.hi{background:#0000F2;border-color:#0000F2;color:rgba(255,255,255,.88)}
+.ring .node.hi b{color:#fff}.ring .node.hi code{background:rgba(255,255,255,.16);border-color:transparent;color:#fff}
+.n-think{left:300px;top:60px}.n-act{left:450px;top:210px}.n-look{left:300px;top:360px}.n-done{left:150px;top:210px;min-width:120px!important}
+.n-ans{left:86px;top:404px;border-style:dashed!important}
+.ring .goal{position:absolute;left:300px;top:210px;transform:translate(-50%,-50%);text-align:center;font-size:18px;color:var(--ink);max-width:180px;line-height:1.3}
+.ring .goal b{display:block;font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-ink);margin-bottom:4px}
+.fluidonly{display:none!important}
+@media (prefers-reduced-motion:reduce){.ring .dot{display:none}}
+html.fluid .ring,html.fluid .oneshot .note{display:none}
+html.fluid .fluidonly{display:grid!important}
+html.fluid .oneshot{flex-wrap:wrap;font-size:13px;gap:6px 8px}
+html.fluid .timebar{height:auto;flex-wrap:wrap;gap:4px}
+html.fluid .timebar span{flex:none!important;padding:4px 8px;font-size:10px}
+html.fluid ol.route{grid-template-columns:1fr;gap:18px;padding-left:4px}
+html.fluid ol.route::before{left:30px;right:auto;top:10px;bottom:10px;width:3px;height:auto;background:repeating-linear-gradient(180deg,var(--blue-ink) 0 10px,transparent 10px 18px)}
+html.fluid ol.route li{display:grid;grid-template-columns:56px 1fr;column-gap:14px;align-items:start}
+html.fluid ol.route .stop,html.fluid ol.route li.hi .stop{width:52px;height:52px;margin:0;grid-row:span 3;box-shadow:none}
+html.fluid ol.route .stop svg,html.fluid ol.route li.hi .stop svg{width:24px;height:24px}
+html.fluid ol.route .t,html.fluid ol.route li.hi .t{font-size:19px;margin-bottom:4px}
+html.fluid ol.route .mins{font-size:10px;margin-bottom:2px}
+html.fluid ol.route p{font-size:14px}
+html.fluid .keys{font-size:13px;gap:8px 14px}
+html.fluid kbd{min-width:26px;height:26px;font-size:12px}
+
+.mapwrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:10px}
+.mapwrap .timebar{margin-bottom:64px}
+ol.route::before{top:47px}
+ol.route .stop{width:96px;height:96px}
+ol.route .stop svg{width:38px;height:38px}
+ol.route li.hi .stop{width:116px;height:116px;margin-top:-10px;margin-bottom:8px}
+ol.route li.hi .stop svg{width:46px;height:46px}
+ol.route .t{font-size:30px}
+ol.route li.hi .t{font-size:34px}
+ol.route p{font-size:19px}
+ol.route .here{position:absolute;top:-40px;left:48px;transform:translateX(-50%);font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#0000F2;padding:4px 10px;border-radius:999px;white-space:nowrap}
+ol.route .here::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border:6px solid transparent;border-bottom:0;border-top-color:#0000F2}
+.ring .goal{max-width:140px;font-size:16px}
+.oneshot{white-space:nowrap}
+.oneshot .bub{white-space:nowrap}
+html.fluid .mapwrap .timebar{margin-bottom:16px}
+html.fluid ol.route .here{position:static;transform:none;grid-column:2;justify-self:start;margin-bottom:4px;font-size:10px}
+html.fluid ol.route .here::after{display:none}
+html.fluid .oneshot,html.fluid .oneshot .bub{white-space:normal}
+
+/* smooth entrances: each slide's parts float in, top to bottom */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.slide.on > :not(.foot):not(.bg){animation:rise .65s cubic-bezier(.2,.7,.2,1) both}
+.slide.on > :nth-child(1){animation-delay:.08s}.slide.on > :nth-child(2){animation-delay:.16s}.slide.on > :nth-child(3){animation-delay:.26s}.slide.on > :nth-child(4){animation-delay:.36s}.slide.on > :nth-child(5){animation-delay:.46s}
+.slide.on ul.points li,.slide.on ol.steps li,.slide.on .grid2 > *,.slide.on .grid3 > *,.slide.on .grid4 > *,.slide.on ol.route > li,.slide.on .media > figure,.slide.on .strip li{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.slide.on ul.points li:nth-child(1),.slide.on ol.steps li:nth-child(1),.slide.on :is(.grid2,.grid3,.grid4) > :nth-child(1),.slide.on ol.route > li:nth-child(1),.slide.on .media > figure:nth-child(1),.slide.on .strip li:nth-child(1){animation-delay:.3s}
+.slide.on ul.points li:nth-child(2),.slide.on ol.steps li:nth-child(2),.slide.on :is(.grid2,.grid3,.grid4) > :nth-child(2),.slide.on ol.route > li:nth-child(2),.slide.on .media > figure:nth-child(2),.slide.on .strip li:nth-child(2){animation-delay:.4s}
+.slide.on ul.points li:nth-child(3),.slide.on ol.steps li:nth-child(3),.slide.on :is(.grid2,.grid3,.grid4) > :nth-child(3),.slide.on ol.route > li:nth-child(3),.slide.on .media > figure:nth-child(3),.slide.on .strip li:nth-child(3){animation-delay:.5s}
+.slide.on ol.steps li:nth-child(4),.slide.on :is(.grid2,.grid3,.grid4) > :nth-child(4),.slide.on ol.route > li:nth-child(4){animation-delay:.58s}
+.slide.on ol.steps li:nth-child(5),.slide.on :is(.grid3,.grid4) > :nth-child(5),.slide.on ol.route > li:nth-child(5){animation-delay:.66s}
+.slide.on :is(.grid3,.grid4) > :nth-child(6){animation-delay:.74s}
+.lightbox:not([hidden]),.overlay:not([hidden]){animation:fadein .25s ease both}
+.lightbox:not([hidden]) img{animation:rise .35s cubic-bezier(.2,.7,.2,1) both}
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.on{transition:none!important;transform:none!important}
+  .slide.on *,.slide.on > *,.lightbox,.lightbox img,.overlay{animation:none!important}
+}
+@media print{.slide{transition:none!important;transform:none!important}.slide *{animation:none!important}}
+
+/* meme breaks */
+.slide.meme{align-items:center;text-align:center}
+.slide.meme .kicker{justify-content:center}
+.slide.meme h2{font-size:50px;max-width:1250px;margin-bottom:22px}
+.memebox{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
+.memebox video,.memebox img{max-height:100%;max-width:100%;height:540px;width:auto;border-radius:18px;box-shadow:var(--shot-shadow);background:#000;object-fit:contain}
+.memesub{margin-top:18px;font-size:22px;color:var(--ink-2)}
+html.fluid .slide.meme h2{font-size:clamp(24px,6.5vw,34px)}
+html.fluid .memebox video,html.fluid .memebox img{height:auto;width:100%;max-height:60vh}
+html.fluid .memesub{font-size:15px}
+
+/* chrome: toolbar, edge arrows, overview, lightbox */
+.bar{position:fixed;left:0;top:0;height:4px;background:#0000F2;transition:width .3s ease;z-index:20}
+.toolbar{position:fixed;left:0;right:0;bottom:0;height:var(--tool-h);display:flex;align-items:center;justify-content:center;gap:6px;background:color-mix(in srgb,var(--chrome) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--rule);z-index:25;padding:0 10px;transform:translateY(100%);opacity:0;transition:transform .25s ease,opacity .25s ease}
+.toolbar.show,.toolbar:hover,.toolbar:has(:focus-visible){transform:none;opacity:1}
+.hotzone{position:fixed;left:0;right:0;bottom:0;height:28px;z-index:24}
+@media (hover:none){.hotzone{display:none}}
+@media (prefers-reduced-motion:reduce){.toolbar,.edge{transition:none}}
+.toolbar .grp{display:flex;align-items:center;gap:4px;padding:0 8px;border-right:1px solid var(--rule)}
+.toolbar .grp:last-child{border-right:0}
+.tb{min-width:40px;height:38px;border-radius:10px;border:1px solid var(--rule);background:var(--chrome-btn);color:var(--ink);font:600 15px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;cursor:pointer}
+.tb:hover{border-color:#0000F2}
+.tb:focus-visible,.edge:focus-visible{outline:3px solid #0000F2;outline-offset:2px}
+.tb svg{width:18px;height:18px}
+#catBtn[aria-pressed="false"]{opacity:.5}
+#catBtn[aria-pressed="false"] svg{stroke-dasharray:3 2}
+.count{font:600 15px var(--mono);color:var(--ink-2);min-width:74px;text-align:center;cursor:pointer;border-radius:8px;padding:6px 4px}
+.count:hover{background:var(--chrome-btn)}
+.zl{font:600 14px var(--mono);color:var(--ink-2);min-width:54px;text-align:center}
+.edge{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--chrome-btn) 85%,transparent);color:var(--ink);display:grid;place-items:center;cursor:pointer;z-index:24;opacity:0;transition:opacity .6s ease}
+.edge.flash{opacity:1;border-color:#0000F2;transition:none}
+.edge:hover,.edge:focus-visible{opacity:1;border-color:#0000F2;transition:opacity .15s ease}
+.edge svg{width:26px;height:26px}
+.edge.prev{left:14px}.edge.next{right:14px}
+.edge:disabled{opacity:0!important;pointer-events:none}
+.overlay{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--bg) 95%,transparent);overflow:auto;padding:40px 24px}
+.ov{max-width:1100px;margin:0 auto}
+.ov h2{font-size:34px;margin:0 0 6px}
+.ov .hint{color:var(--muted);margin:0 0 22px;font-size:16px}
+.ov h3{font-size:14px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-ink);margin:22px 0 10px}
+.ov .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.ov button{text-align:left;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;color:var(--ink);font:500 16px var(--sans);cursor:pointer;display:flex;gap:10px}
+.ov button:hover,.ov button.cur{border-color:#0000F2}
+.ov button span{font-family:var(--mono);color:var(--muted);min-width:1.8em}
+.ov .close{position:fixed;top:16px;right:20px}
+.lightbox{position:fixed;inset:0;z-index:60;background:rgba(3,3,10,.94);display:grid;place-items:center;cursor:zoom-out;padding:24px}
+.lightbox img{max-width:100%;max-height:100%;border-radius:12px;background:#fff}
+.lightbox p{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:#BBB;font-size:14px;margin:0}
+@media (max-width:760px){
+  .toolbar{justify-content:space-between;gap:2px;padding:0 4px}
+  .toolbar .grp{padding:0 3px;gap:2px}
+  .toolbar .opt{display:none}
+  .tb{min-width:36px;padding:0 8px}
+  .edge{width:44px;height:44px}
+}
+@media screen{
+html.fluid .viewport{display:block;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+html.fluid .sizer{width:auto!important;height:auto!important;margin:0}
+html.fluid .deck{position:static;width:auto;height:auto;transform:none!important}
+html.fluid .slide{position:relative;inset:auto;display:none;min-height:100vh;min-height:100dvh;padding:30px 18px 84px;opacity:1;visibility:visible;transition:none;overflow:visible}
+html.fluid .slide.on{display:flex}
+html.fluid h1,html.fluid .slide.blue h1{font-size:clamp(40px,11vw,68px)!important;margin-bottom:14px!important}
+html.fluid h2{font-size:clamp(26px,6.8vw,38px);margin-bottom:16px}
+html.fluid .kicker{font-size:11px;letter-spacing:.1em;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+html.fluid .chip{font-size:10px;padding:2px 7px}
+html.fluid p,html.fluid li{font-size:16px}
+html.fluid .muted[style]{font-size:15px!important}
+html.fluid ul.points{gap:12px}
+html.fluid ul.points li{font-size:16.5px;padding-left:22px}
+html.fluid ul.points li::before{top:8px;width:9px;height:9px}
+html.fluid .body,html.fluid .body.flip{display:flex;flex-direction:column;gap:18px}
+html.fluid .side{gap:14px}
+html.fluid .try{margin-top:4px!important;padding:12px 14px;border-radius:10px}
+html.fluid .try b{font-size:11px}
+html.fluid .try span{font-size:14px;overflow-wrap:anywhere}
+html.fluid .media,html.fluid .media.col{flex-direction:column;height:auto;padding:12px;gap:16px;border-radius:16px}
+html.fluid figure.shot{flex:none;width:100%}
+html.fluid figure.shot img{max-height:72vh}
+html.fluid figure.shot figcaption{font-size:13px}
+html.fluid .grid2,html.fluid .grid3,html.fluid .grid4,html.fluid .strip{grid-template-columns:1fr;gap:12px}
+html.fluid .strip{margin-top:16px}
+html.fluid .card{padding:14px 16px}
+html.fluid .card .t{font-size:19px}
+html.fluid .card p{font-size:15px}
+html.fluid .loop{grid-template-columns:1fr 1fr;gap:10px}
+html.fluid .loop div{padding:14px}
+html.fluid .loop div span{font-size:20px}
+html.fluid .loop div p{font-size:14px}
+html.fluid .arch{flex-direction:column;gap:8px}
+html.fluid .arch .to{transform:rotate(90deg)}
+html.fluid .arch .box b{font-size:19px}
+html.fluid .mono{font-size:12.5px;overflow-x:auto;padding:12px 14px}
+html.fluid table.t{font-size:14px}
+html.fluid table.t th,html.fluid table.t td{padding:8px 10px}
+html.fluid ol.steps li{font-size:16px}
+html.fluid ol.steps li::before{width:28px;height:28px;line-height:28px;font-size:14px}
+html.fluid .slide.blue{justify-content:flex-start;padding-top:44px}
+html.fluid .logo{width:84px;height:84px;border-radius:20px;margin-bottom:22px}
+html.fluid .slide.blue .lead{font-size:18px}
+html.fluid .who{font-size:16px!important;margin-top:24px!important}
+html.fluid .credit{position:static;margin-top:28px;font-size:12px}
+html.fluid .cmdline{font-size:12px;width:auto;white-space:normal;overflow-wrap:anywhere;padding:10px 12px;margin-bottom:20px}
+html.fluid .qrs{flex-wrap:wrap;gap:14px}
+html.fluid .qr{width:128px;height:128px;padding:7px}
+html.fluid .qrs figure{font-size:13px}
+html.fluid .foot{position:static;margin-top:26px;font-size:12px}
+html.fluid .wide{display:block}
+html.fluid .edge,html.fluid .hotzone,html.fluid .toolbar .zoomgrp{display:none}
+@media (min-width:600px){
+  html.fluid .grid3,html.fluid .grid4{grid-template-columns:1fr 1fr}
+  html.fluid .media:not(.col){flex-direction:row;align-items:flex-start}
+  html.fluid .media:not(.col) figure.shot{flex:1 1 0}
+}
+@media (min-width:700px){html.fluid .strip{grid-template-columns:repeat(3,1fr)}}
+/* phones: a tapped screenshot opens at full size so small text can be read by panning */
+html.fluid .lightbox{display:block;overflow:auto;padding:14px 14px 48px;-webkit-overflow-scrolling:touch}
+html.fluid .lightbox[hidden]{display:none!important}
+html.fluid .lightbox img{max-width:none;max-height:none;width:auto;min-width:100%}
+html.fluid .lightbox p{background:rgba(3,3,10,.85);padding:10px 0;bottom:0}
+}
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{overflow:visible;height:auto}
+  .viewport{position:static;display:block}
+  .sizer{width:auto!important;height:auto!important}
+  .deck{position:static;transform:none!important;width:1600px;height:auto}
+  .slide{position:relative;opacity:1;visibility:visible;height:900px;break-after:page}
+  .bar,.toolbar,.hotzone,.edge,.overlay,.lightbox{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="viewport" id="viewport"><div class="sizer" id="sizer"><div class="deck" id="deck">
+
+<section class="slide blue" data-min="0.5" data-part="Start" data-title="Hermes Agent 101">
+  <img class="logo" src="img/brand/hermes-icon.svg" alt="Hermes Agent logo by Nous Research">
+  <h1>Hermes Agent 101</h1>
+  <p class="lead" style="margin-top:22px">Set up your own AI agent, make it safe, and put it to work. Every screenshot comes from Hermes itself.</p>
+  <p class="who"><b>Precious Grace Deborah Manucom</b> · Speaker</p>
+  <p class="credit">Hermes Agent and its logo are by Nous Research. This talk is independent and not affiliated with Nous Research.</p>
+</section>
+
+<section class="slide" data-min="0.5" data-part="Start" data-title="Coding without memory">
+  <p class="kicker">Before we start</p>
+  <h2>Coding with an AI that forgets everything</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Every chat starts from zero.</b> You explain your project again. And again.</li>
+        <li><b>No skills saved.</b> It repeats the mistake you fixed yesterday.</li>
+        <li><b>Hermes remembers.</b> Memory keeps what it learned about you; skills keep what worked.</li>
+      </ul>
+      <div class="try"><b>Me</b><span>explaining my project to the AI for the 5th time today</span></div>
+    </div>
+    <div class="media"><div class="yt" data-yt="SK9YpwF7ImM" style="background-image:url(https://i.ytimg.com/vi/SK9YpwF7ImM/hqdefault.jpg)"><span class="ytnote">Video: “Sweaty gamer meme” on YouTube</span></div></div>
+  </div>
+</section>
+
+<section class="slide" data-min="0.5" data-part="Start" data-title="Today’s map">
+  <p class="kicker">Today’s map · 30 minutes</p>
+  <h2>Four stops to your own working agent</h2>
+  <div class="mapwrap">
+  <div class="timebar" aria-label="How the 30 minutes are split">
+    <span style="flex:1.5" class="tb0">Intro</span><span style="flex:4">Meet Hermes</span><span style="flex:5">Set it up</span><span style="flex:12" class="tbhi">Make your own agent</span><span style="flex:5.5">Our Hermes</span><span style="flex:2">Wrap-up</span>
+  </div>
+  <ol class="route">
+    <li class="first"><span class="here">You are here</span><span class="stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 5-5 2.2 2.2-5z"/></svg></span><b class="mins">Part 1 · 4 min</b><span class="t">Meet Hermes</span><p>What makes an agent different, and what Hermes adds.</p></li>
+    <li><span class="stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></span><b class="mins">Part 2 · 5 min</b><span class="t">Set it up</span><p>Install, connect a model, check it, say hi.</p></li>
+    <li class="hi"><span class="stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/></svg></span><b class="mins">Part 3 · 12 min</b><span class="t">Make your own agent</span><p>Profiles, group chats, SOUL.md, tools, safety, memory, jobs, Telegram.</p></li>
+    <li><span class="stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span><b class="mins">Part 4 · 6 min</b><span class="t">Our Hermes</span><p>The agents behind this course, proof they run, a live demo.</p></li>
+    <li class="end"><span class="stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></span><b class="mins">Finish</b><span class="t">Your agent, working</span><p>And six rules to take home.</p></li>
+  </ol>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="Chatbot vs. agent">
+  <p class="kicker">Part 1 · Meet Hermes</p>
+  <h2>A chatbot answers. An agent acts.</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Same model, different loop.</b> What makes it an agent is the loop around the model.</li>
+        <li><b>Every loop costs tokens.</b> A 5-step task can cost more than a long essay.</li>
+        <li><b>Mistakes become actions.</b> A wrong answer is text; a wrong tool call changes things.</li>
+      </ul>
+    </div>
+    <div class="media col">
+      <div class="oneshot"><span class="osw">Chatbot</span><span class="bub">“Free AI courses?”</span><span class="arr">→</span><span class="bub">An answer from memory</span><span class="note">one shot, no tools</span></div>
+      <div class="ring" role="img" aria-label="The agent loop: think, act, look, done? If not, go round again; if yes, answer">
+        <svg viewBox="0 0 600 430" aria-hidden="true">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker></defs>
+          <circle cx="300" cy="210" r="150" class="track"/>
+          <path d="M370 77 A150 150 0 0 1 433 140" class="arc" marker-end="url(#ah)"/>
+          <path d="M433 280 A150 150 0 0 1 370 343" class="arc" marker-end="url(#ah)"/>
+          <path d="M230 343 A150 150 0 0 1 167 280" class="arc" marker-end="url(#ah)"/>
+          <path d="M167 140 A150 150 0 0 1 230 77" class="arc" marker-end="url(#ah)"/>
+          <path d="M150 262 C130 320 110 350 92 372" class="exit" marker-end="url(#ah)"/>
+          <circle r="7" class="dot"><animateMotion dur="5s" repeatCount="indefinite" path="M300 60 A150 150 0 1 1 299.9 60"/></circle>
+        </svg>
+        <div class="goal"><b>Goal</b>Find 3 free AI courses</div>
+        <div class="node n-think"><b>1 · Think</b>“I need current info.”</div>
+        <div class="node n-act hi"><b>2 · Act</b><code>web_search(…)</code></div>
+        <div class="node n-look"><b>3 · Look</b>5 results, 1 is old</div>
+        <div class="node n-done"><b>Done?</b>No: go again</div>
+        <div class="node n-ans"><b>Yes: Answer</b>3 courses, with links</div>
+      </div>
+      <div class="loop fluidonly">
+        <div><b>STEP 1</b><span>Think</span><p>What do I need to finish the goal?</p></div>
+        <div class="hi"><b>STEP 2</b><span>Act</span><p>Call a tool: search, read, run, send.</p></div>
+        <div><b>STEP 3</b><span>Look</span><p>Read the result. Good enough?</p></div>
+        <div><b>STEP 4</b><span>Answer</span><p>Or go back to step 1.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="Meet Hermes">
+  <p class="kicker">Part 1 · Meet Hermes</p>
+  <h2>Hermes Agent, by Nous Research</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Open source (MIT).</b> You can read exactly what it does with your data.</li>
+        <li><b>Model-agnostic.</b> Swap the brain without rebuilding the agent.</li>
+        <li><b>Local-first.</b> Chats, memory, and skills are plain files in <code>~/.hermes</code>.</li>
+      </ul>
+      <div class="qrline"><div class="qr sm" data-qr="https://hermes-agent.nousresearch.com/"></div><p><b>Scan to open the official site</b><span>hermes-agent.nousresearch.com</span></p></div>
+      <div class="try"><b>Try it</b><span>hermes-agent.nousresearch.com</span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img style="--h:500px" data-src="img/hermes-official-site.jpg" alt="The official Hermes Agent website"><figcaption>hermes-agent.nousresearch.com · © Nous Research</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="What Hermes can do">
+  <p class="kicker">Part 1 · Meet Hermes</p>
+  <h2>Six things that make it more than a chatbot</h2>
+  <div class="grid3">
+    <div class="card"><div class="vis" aria-hidden="true"><div class="tg"><div>web<i class="on"></i></div><div>terminal<i></i></div><div>files<i></i></div></div></div><span class="n">Tools</span><span class="t">Acts with switches</span><p>20+ toolsets, and each one can be on in the terminal but off on Telegram.</p></div>
+    <div class="card"><div class="vis" aria-hidden="true"><div class="doc">MEMORY.md<b style="width:88%"></b><b style="width:64%"></b><b style="width:76%"></b></div><div class="doc">USER.md<b style="width:70%"></b><b style="width:85%"></b><b style="width:50%"></b></div></div><span class="n">Memory</span><span class="t">Remembers you</span><p>Two small notes files. Small on purpose, so only what matters is kept.</p></div>
+    <div class="card"><div class="vis" aria-hidden="true"><div class="doc">SKILL.md<b style="width:80%"></b><b style="width:92%"></b><b style="width:60%"></b></div><div class="stack"><span class="pill">study-plan</span><span class="pill on">loaded when needed</span></div></div><span class="n">Skills</span><span class="t">Learns how-tos</span><p>Saves a working method as a file and loads it only when it’s needed.</p></div>
+    <div class="card"><div class="vis" aria-hidden="true"><svg class="big" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><circle cx="32" cy="32" r="26"/><path d="M32 32V17M32 32L19 39.5"/><circle cx="32" cy="32" r="2.5" fill="currentColor"/></svg><div class="stack"><span class="pill on">08:00</span><span class="pill">0 8 * * *</span></div></div><span class="n">Schedule</span><span class="t">Works on its own</span><p>Cron jobs wake it up at set times, with nobody typing.</p></div>
+    <div class="card"><div class="vis" aria-hidden="true"><svg class="big" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"><path d="M8 12h34a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H22l-9 8v-8H8a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z"/><path d="M50 26h6a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4h-3v7l-8-7H34a4 4 0 0 1-4-4v-2"/></svg><div class="stack"><span class="pill on">Telegram</span><span class="pill">Discord</span><span class="pill">Slack</span></div></div><span class="n">Messaging</span><span class="t">Lives in your apps</span><p>One gateway connects Telegram, Discord, Slack, WhatsApp and more.</p></div>
+    <div class="card"><div class="vis" aria-hidden="true"><div class="bots"><figure><svg class="bot" width="46" height="46" viewBox="0 0 44 42" aria-hidden="true"><path d="M12 33c-5 0-8-3-8-7s3-7 7-7c1-5 5-8 10-8 6 0 10 4 11 9 4 0 7 3 7 6.5S36 33 32 33z" fill="#D9539A"/><circle cx="18" cy="24" r="2.6" fill="#15151F"/><circle cx="27" cy="24" r="2.6" fill="#15151F"/><circle cx="18.8" cy="23.2" r=".9" fill="#fff"/><circle cx="27.8" cy="23.2" r=".9" fill="#fff"/></svg>Atlas</figure><figure><svg class="bot" width="46" height="46" viewBox="0 0 44 42" aria-hidden="true"><path d="M22 4l15 8.5v17L22 38 7 29.5v-17z" fill="#6CCB5F"/><circle cx="17.5" cy="21" r="2.6" fill="#15151F"/><circle cx="26.5" cy="21" r="2.6" fill="#15151F"/><circle cx="18.3" cy="20.2" r=".9" fill="#fff"/><circle cx="27.3" cy="20.2" r=".9" fill="#fff"/></svg>Forge</figure><figure><svg class="bot" width="46" height="46" viewBox="0 0 44 42" aria-hidden="true"><circle cx="22" cy="21" r="16" fill="#6E4BD8"/><circle cx="17.5" cy="19" r="2.6" fill="#15151F"/><circle cx="26.5" cy="19" r="2.6" fill="#15151F"/><circle cx="18.3" cy="18.2" r=".9" fill="#fff"/><circle cx="27.3" cy="18.2" r=".9" fill="#fff"/></svg>Iris</figure></div></div><span class="n">Profiles</span><span class="t">Many agents, one install</span><p>Each profile is a separate agent with its own keys and memory.</p></div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="1 · Meet Hermes" data-title="Why not just a Telegram bot?">
+  <p class="kicker">Part 1 · Meet Hermes · A question students ask</p>
+  <h2>“I can already make a Telegram bot. Why Hermes?”</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>BotFather gives you an empty account,</b> not a brain. Every reply is code you still have to write.</li>
+        <li><b>Hermes is the agent behind the bot,</b> and the same agent also answers in Discord, Slack, the terminal, and apps.</li>
+        <li><b>Honest answer:</b> for a fixed menu bot, a plain bot is simpler. For a helper that thinks, remembers, and acts, use Hermes.</li>
+      </ul>
+      <div class="try"><b>In one line</b><span>The Telegram bot is the phone line. Hermes is who answers.</span></div>
+    </div>
+    <div class="media">
+      <table class="t cmp">
+        <tr><th></th><th>A plain Telegram bot</th><th>Hermes on Telegram</th></tr>
+        <tr><td><b>Brain</b></td><td>You code every reply, or wire up an AI yourself</td><td>Any AI model, picked in Settings</td></tr>
+        <tr><td><b>Memory</b></td><td>Forgets, unless you build a database</td><td>Remembers you between chats</td></tr>
+        <tr><td><b>Actions</b></td><td>Only what you code</td><td>Web search, vision, files, code: you choose</td></tr>
+        <tr><td><b>On its own</b></td><td>Only replies when messaged</td><td>Scheduled jobs, delivered to your chat</td></tr>
+        <tr><td><b>Safety</b></td><td>You build it</td><td>Pairing, allowlists, approvals, step limits</td></tr>
+        <tr><td><b>Learning</b></td><td>Stays the same</td><td>Saves skills that worked</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide meme" data-min="0.25" data-part="2 · Set it up" data-title="Meme: first time">
+  <p class="kicker"><span class="chip live">MEME BREAK</span>Part 2 · Set it up</p>
+  <h2>Me hearing “API key, provider, model, gateway” for the first time</h2>
+  <div class="memebox"><video data-src="img/memes/confused-math.mp4" muted loop playsinline preload="none" aria-label="A confused person surrounded by floating math equations"></video></div>
+  <p class="memesub">Relax: in the app it’s four screens.</p>
+</section>
+
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="What you need">
+  <p class="kicker">Part 2 · Set it up</p>
+  <h2>What you need before you start</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>The app has limits.</b> Apple Silicon Macs and Windows 11 only. Everyone else: one terminal line.</li>
+        <li><b>It brings its own Python.</b> About 4 GB, and your system Python doesn’t matter.</li>
+        <li><b>A model can be free.</b> Nous Portal’s free tier needs no API key at all.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>About This Mac › Chip: “Apple M…” means the app works</span></div>
+    </div>
+    <div class="media">
+      <table class="t">
+        <tr><th>What</th><th>Details</th></tr>
+        <tr><td><b>Computer</b></td><td>App: Mac (M1 or newer) or Windows 11 22H2+. Others: terminal install.</td></tr>
+        <tr><td><b>Disk</b></td><td>About 4 GB free</td></tr>
+        <tr><td><b>Model</b></td><td>Nous Portal, an OpenRouter key, or a local model</td></tr>
+        <tr><td><b>Permission</b></td><td>Your own computer, or ask the owner</td></tr>
+        <tr><td><b>Optional</b></td><td>Telegram, to chat from your phone</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="Install the app">
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span></p>
+  <h2>Install once, in two screens</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Pick “Install locally”.</b> “Connect” is for a Hermes already running on a server.</li>
+        <li><b>Slow once, fast forever.</b> The 9-step setup builds a private runtime; later launches skip it.</li>
+        <li><b>App and terminal share one folder.</b> You can switch between them any time.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>No app? <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:300px" data-src="img/slides/desk-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally"><figcaption><span class="k">1</span>First launch</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:460px" data-src="img/slides/desk-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer"><figcaption><span class="k">2</span>One-time setup</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="Connect a model">
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span></p>
+  <h2>Connect a model: the agent’s brain</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>The key is a password.</b> It lives in <code>~/.hermes/.env</code>, never in a chat.</li>
+        <li><b>A key fits one provider.</b> An OpenAI key fails on OpenRouter.</li>
+        <li><b>Free models are rate-limited.</b> Fine for learning; a 429 error means wait, not broken.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>Later: Settings › Model, or <code>hermes model</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:340px" data-src="img/slides/desk-provider.jpg" alt="Choose a provider: Nous Portal, run models locally, I have an API key"><figcaption><span class="k">1</span>Choose a provider</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:500px" data-src="img/slides/desk-api-key.jpg" alt="OpenRouter selected, Paste API key, Connect"><figcaption><span class="k">2</span>Paste a key, Connect</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="Check that it works">
+  <p class="kicker">Part 2 · Set it up<span class="chip">TERMINAL</span></p>
+  <h2>Check that it works</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Doctor first, questions second.</b> It checks files, keys, and folders in seconds.</li>
+        <li><b>Warnings aren’t errors.</b> They point to optional extras you can skip.</li>
+        <li><b>“command not found”?</b> Usually just a terminal opened before the install.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes doctor</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img style="--h:120px" data-src="img/terminal/version.png" alt="Terminal: hermes --version prints the version"><figcaption><span class="k">1</span><code>hermes --version</code></figcaption></figure>
+      <figure class="shot"><img style="--h:340px" data-src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks"><figcaption><span class="k">2</span><code>hermes doctor</code></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="2 · Set it up" data-title="Your first chat">
+  <p class="kicker">Part 2 · Set it up<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>Say hi, then say exactly what you want</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>/new</code> also saves memory.</b> End each task with it.</li>
+        <li><b><code>-z</code> skips approvals.</b> Use one-shot mode only with safe tools.</li>
+        <li><b>Ask for a format.</b> “One line each, with a link” beats “tell me about…”.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes</code> to chat · <code>/retry</code> · <code>/model</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:360px" data-src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box"><figcaption><span class="k">1</span>The app</figcaption></figure>
+      <figure class="shot"><img style="--h:110px" data-src="img/terminal/first-chat.png" alt="Terminal: one question and a two-sentence answer"><figcaption><span class="k">2</span>The terminal</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide meme" data-min="0.25" data-part="3 · Your own agent" data-title="Meme: the master plan">
+  <p class="kicker"><span class="chip live">MEME BREAK</span>Part 3 · Make your own agent</p>
+  <h2>Me explaining my agent’s master plan</h2>
+  <div class="memebox"><video data-src="img/memes/whiteboard-plan.mp4" muted loop playsinline preload="none" aria-label="A man frantically drawing a complicated plan on a whiteboard"></video></div>
+  <p class="memesub">Profile → SOUL.md → tools → safety → memory → jobs → Telegram. Let’s go one by one.</p>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Where things live">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
+  <h2>Your whole agent is one folder</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Backup = copy one folder.</b> Everything is in <code>~/.hermes</code>.</li>
+        <li><b><code>.env</code> is hidden.</b> Its name starts with a dot, and it’s the one file never to share.</li>
+        <li><b>Profiles are full copies.</b> Each has its own folder, memory, and keys.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>ls ~/.hermes</code></span></div>
+    </div>
+    <div class="media col">
+      <div class="mono">~/.hermes/profiles/h101-researcher/
+  config.yaml   <span class="c"># model, tools, safety</span>
+  .env          <span class="c"># secrets: keys, tokens</span>
+  SOUL.md       <span class="c"># who it is</span>
+  memories/     <span class="c"># what it remembers</span>
+  skills/       <span class="c"># saved how-tos</span>
+  cron/         <span class="c"># scheduled jobs</span></div>
+      <figure class="shot"><img style="--h:150px" data-src="img/terminal/profile-folder.png" alt="Terminal: the files inside one agent folder"><figcaption>The real folder of our research agent</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Profiles">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
+  <h2>One profile = one agent = one job</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Isolated by design.</b> Your study buddy can’t read your coder’s memory.</li>
+        <li><b>One gateway, many agents.</b> Each profile gets its own address.</li>
+        <li><b>Add <code>-p name</code> to any command</b> to aim it at one agent.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>App: Bots tab › create a new agent</span></div>
+    </div>
+    <div class="media col">
+      <div class="mono">hermes profile create study-buddy
+hermes -p study-buddy          <span class="c"># chat with it</span>
+hermes -p study-buddy model    <span class="c"># its own model</span></div>
+      <figure class="shot"><img style="--h:240px" data-src="img/terminal/profile-show.png" alt="Terminal: hermes profile show for the research agent"><figcaption><code>hermes profile show</code>: one agent at a glance</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Your agents in the app">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
+  <h2>Your agents, side by side</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Every profile becomes a bot</b> with its own face and its own Bot Chat.</li>
+        <li><b>A bot keeps its own SOUL.md, tools, and memory,</b> even inside a group.</li>
+        <li><b>Groups take 2 to 6 bots.</b> Pick the ones whose jobs fit the task.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span>Bots tab › + › New group chat</span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:440px" data-src="img/slides/desk-bots.jpg" alt="Hermes Desktop Bots tab listing Atlas, Forge, Iris and Hermes"><figcaption><span class="k">1</span>The Bots tab</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-new-group.jpg" alt="New group chat dialog with Atlas, Forge and Iris selected and the name Study Squad"><figcaption><span class="k">2</span>New group chat: pick bots, name it</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Agents in a group chat">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip live">LIVE</span></p>
+  <h2>A study group of agents</h2>
+  <div class="wide">
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-group-chat.jpg" alt="Study Squad group chat: the student asks everyone; Atlas shares a free resource, Forge gives a practice exercise, both hand off"><figcaption><span class="k">1</span>One question to <code>@everyone</code>: each bot does its own part</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:420px" data-src="img/slides/desk-group-handoff.jpg" alt="Forge adds LeetCode links and a starter template; Iris replies to Forge by name"><figcaption><span class="k">2</span>They read each other and reply by name</figcaption></figure>
+    </div>
+    <ul class="points strip">
+      <li><b><code>@everyone</code> reaches all; <code>@name</code> reaches one.</b> Direct work to the right bot.</li>
+      <li><b>Bots hand off on their own:</b> “@iris your turn”.</li>
+      <li><b>Every reply costs tokens.</b> Three bots means about three times the usage.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="SOUL.md">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">TERMINAL</span></p>
+  <h2>SOUL.md: who your agent is</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Read at the start of every chat.</b> Edit it, type <code>/new</code>, see the change.</li>
+        <li><b>Short beats long.</b> Ten clear lines work better than a page.</li>
+        <li><b>A rule is a request.</b> A tricky web page can talk the agent out of it.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>~/.hermes/profiles/&lt;name&gt;/SOUL.md</code></span></div>
+    </div>
+    <div class="media col">
+      <div class="mono"># Study Buddy
+You help a first-year IT student.
+Your one job: plan study time.
+## Never
+- Do my graded work for me</div>
+      <figure class="shot"><img style="--h:230px" data-src="img/terminal/soul.png" alt="Terminal: the SOUL.md of our research agent"><figcaption>A real one: our research agent</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Tools">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>Every tool is a door</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Tools are set per platform.</b> Telegram can have fewer than your terminal.</li>
+        <li><b>The risky four:</b> terminal, files, browser, and code execution.</li>
+        <li><b>Changes need a new chat.</b> Running chats keep their old tools.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes tools</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:520px" data-src="img/slides/desk-tools.jpg" alt="Hermes Desktop, Capabilities, Tools: toolsets with switches"><figcaption><span class="k">1</span>App: Capabilities › Tools</figcaption></figure>
+      <figure class="shot"><img style="--h:300px" data-src="img/terminal/tools.png" alt="Terminal: hermes tools list, only web and vision enabled"><figcaption><span class="k">2</span>Our research agent: only web and vision</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1.5" data-part="3 · Your own agent" data-title="Make it safe">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
+  <h2>A rule is a request. A setting is a lock.</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Approval Mode</b> makes risky commands wait for your yes.</li>
+        <li><b><code>deny</code> beats approve.</b> A denied command can’t run even if clicked.</li>
+        <li><b><code>max_turns</code> is your cost cap.</b> It ends loops before they burn credits.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes config set agent.max_turns 20</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:250px" data-src="img/slides/desk-approvals.jpg" alt="Hermes Desktop, Settings, Safety, Approvals"><figcaption>App: Settings › Safety › Approvals</figcaption></figure>
+      <table class="t">
+        <tr><td><code>approvals.mode: manual</code></td><td>Risky commands wait for you</td></tr>
+        <tr><td><code>approvals.deny: ["rm -rf *"]</code></td><td>Never runs, even if approved</td></tr>
+        <tr><td><code>agent.max_turns: 20</code></td><td>Stops runaway loops</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Memory and skills">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span></p>
+  <h2>It remembers you, and learns how-tos</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Memory is tiny on purpose:</b> about 2,200 + 1,375 characters.</li>
+        <li><b>Memory saves on <code>/new</code>,</b> not in the middle of a chat.</li>
+        <li><b>A skill is instructions it will follow.</b> Read one before you install it.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes skills search study</code></span></div>
+    </div>
+    <div class="media col">
+      <figure class="shot"><img class="white" style="--h:200px" data-src="img/slides/desk-memory.jpg" alt="Hermes Desktop, Settings, Memory and Context"><figcaption><span class="k">1</span>Memory: on/off and size</figcaption></figure>
+      <figure class="shot"><img class="white" style="--h:290px" data-src="img/slides/desk-skills.jpg" alt="Hermes Desktop, Capabilities, Skills and the Skills Hub"><figcaption><span class="k">2</span>Skills, and the Skills Hub</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Scheduled jobs">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>It works while you sleep</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Jobs run inside Hermes.</b> Laptop asleep = job skipped.</li>
+        <li><b>Deliver to Telegram</b> so the result reaches your phone.</li>
+        <li><b><code>0 8 * * 1-5</code></b> means weekdays at 8:00.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes cron list</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:440px" data-src="img/slides/desk-new-cron.jpg" alt="Hermes Desktop: New cron job from the Morning briefing blueprint"><figcaption><span class="k">1</span>App: a blueprint, a time, a place</figcaption></figure>
+      <figure class="shot"><img style="--h:440px" data-src="img/terminal/cron.png" alt="Terminal: hermes cron list for Iris"><figcaption><span class="k">2</span>Our Iris’s real jobs and last runs</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide meme" data-min="0.25" data-part="3 · Your own agent" data-title="Meme: 8 AM">
+  <p class="kicker"><span class="chip live">MEME BREAK</span>Part 3 · Make your own agent</p>
+  <h2>Me at 8 AM, because my agent already sent the morning briefing</h2>
+  <div class="memebox"><img data-src="img/memes/cool-dog.jpg" alt="A calm white dog in a black hoodie and cap, wearing earphones"></div>
+  <p class="memesub">Scheduled jobs: it works while you sleep.</p>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Telegram">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip live">REAL TELEGRAM</span></p>
+  <h2>Your agent, on your phone</h2>
+  <div class="wide">
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:400px" data-src="img/slides/desk-telegram.jpg" alt="Hermes Desktop, Messaging, Telegram: Create with QR and allowed user IDs"><figcaption><span class="k">1</span>Set up: Create with QR</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" data-src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives a pairing code"><figcaption><span class="k">2</span>A stranger gets a code</figcaption></figure>
+      <figure class="shot"><img style="--h:400px" data-src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers with a study tip"><figcaption><span class="k">3</span>Approved: Iris answers</figcaption></figure>
+    </div>
+    <ul class="points strip">
+      <li><b>Create with QR</b> makes the bot and finds your user ID for you.</li>
+      <li><b>Codes last one hour.</b> Nobody gets answers until you approve them.</li>
+      <li><b>Hermes stays on your computer.</b> Telegram only carries the messages.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="3 · Your own agent" data-title="Connect apps">
+  <p class="kicker">Part 3 · Make your own agent<span class="chip">HERMES DESKTOP</span><span class="chip">TERMINAL</span></p>
+  <h2>Any app can talk to your agent</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>Same format as OpenAI.</b> Apps built for OpenAI work by changing one URL.</li>
+        <li><b>One profile, one endpoint:</b> <code>/p/&lt;name&gt;/v1</code>.</li>
+        <li><b>Keep it on 127.0.0.1.</b> Open it to the internet only through one guarded door.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>curl …/p/h101-researcher/v1/chat/completions</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img class="white" style="--h:300px" data-src="img/slides/desk-api-server.jpg" alt="Hermes Desktop, Messaging, API server"><figcaption><span class="k">1</span>App: Messaging › API server</figcaption></figure>
+      <figure class="shot"><img style="--h:500px" data-src="img/terminal/api-call-atlas.png" alt="Terminal: a curl request to the research agent and its JSON answer"><figcaption><span class="k">2</span>A real call and its answer</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1" data-part="4 · Our Hermes" data-title="The course agents">
+  <p class="kicker">Part 4 · Our Hermes</p>
+  <h2>Real Hermes agents power this course</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b>One job each.</b> Small agents are easier to secure and explain.</li>
+        <li><b>No terminal, no files.</b> A tricked agent can at worst search the web.</li>
+        <li><b>All on one gateway</b>, each at its own address.</li>
+      </ul>
+    </div>
+    <div class="media">
+      <div class="grid2">
+        <div class="card agent"><svg class="bot" width="52" height="52" viewBox="0 0 44 42" aria-hidden="true"><path d="M12 33c-5 0-8-3-8-7s3-7 7-7c1-5 5-8 10-8 6 0 10 4 11 9 4 0 7 3 7 6.5S36 33 32 33z" fill="#D9539A"/><circle cx="18" cy="24" r="2.6" fill="#15151F"/><circle cx="27" cy="24" r="2.6" fill="#15151F"/><circle cx="18.8" cy="23.2" r=".9" fill="#fff"/><circle cx="27.8" cy="23.2" r=".9" fill="#fff"/></svg><div><span class="n">Researcher</span><span class="t">Atlas</span><p>Answers with sources. Tools: web, vision.</p></div></div>
+        <div class="card agent"><svg class="bot" width="52" height="52" viewBox="0 0 44 42" aria-hidden="true"><path d="M22 4l15 8.5v17L22 38 7 29.5v-17z" fill="#6CCB5F"/><circle cx="17.5" cy="21" r="2.6" fill="#15151F"/><circle cx="26.5" cy="21" r="2.6" fill="#15151F"/><circle cx="18.3" cy="20.2" r=".9" fill="#fff"/><circle cx="27.3" cy="20.2" r=".9" fill="#fff"/></svg><div><span class="n">Coder</span><span class="t">Forge</span><p>Writes and explains code, but can’t run it. Tools: web, vision.</p></div></div>
+        <div class="card agent"><svg class="bot" width="52" height="52" viewBox="0 0 44 42" aria-hidden="true"><circle cx="22" cy="21" r="16" fill="#6E4BD8"/><circle cx="17.5" cy="19" r="2.6" fill="#15151F"/><circle cx="26.5" cy="19" r="2.6" fill="#15151F"/><circle cx="18.3" cy="18.2" r=".9" fill="#fff"/><circle cx="27.3" cy="18.2" r=".9" fill="#fff"/></svg><div><span class="n">Assistant</span><span class="t">Iris</span><p>Plans, drafts, daily jobs, Telegram. Tools: web, vision.</p></div></div>
+        <div class="card agent"><svg class="bot" width="52" height="52" viewBox="0 0 44 42" aria-hidden="true"><rect x="6" y="6" width="32" height="30" rx="9" fill="#8C8FA6"/><circle cx="17.5" cy="20" r="2.6" fill="#15151F"/><circle cx="26.5" cy="20" r="2.6" fill="#15151F"/><circle cx="18.3" cy="19.2" r=".9" fill="#fff"/><circle cx="27.3" cy="19.2" r=".9" fill="#fff"/></svg><div><span class="n">Tester</span><span class="t">SOUL.md tester</span><p>Acts out the SOUL.md a student writes. No tools at all.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="0.75" data-part="4 · Our Hermes" data-title="Ask a real agent">
+  <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
+  <h2>Ask a real agent</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>-z</code> shows only the answer.</b> The web searches still happened.</li>
+        <li><b>Check every link.</b> Models can invent URLs that look real.</li>
+        <li><b>Same agent everywhere.</b> Terminal, Telegram, and apps reach the same Atlas.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes -p h101-researcher -z "…"</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img style="--h:360px" data-src="img/terminal/atlas-answer.png" alt="Terminal: the research agent answers with two courses and links"><figcaption>Our research agent searched, then answered with links</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="0.75" data-part="4 · Our Hermes" data-title="How it fits together">
+  <p class="kicker">Part 4 · Our Hermes</p>
+  <h2>One website, one door to Hermes</h2>
+  <div class="wide">
+    <div class="media col">
+      <div class="arch">
+        <div class="box"><span class="tag">Student</span><b>Browser</b><small>Never sees a key.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Vercel</span><b>Website</b><small>Holds the keys, streams answers.</small></div>
+        <span class="to">→</span>
+        <div class="box hi"><span class="tag">Tunnel</span><b>Edge</b><small>The only door in. Lets only the course agents through.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Our Mac</span><b>Hermes</b><small>One gateway: agents, Telegram, daily jobs.</small></div>
+        <span class="to">→</span>
+        <div class="box"><span class="tag">Model</span><b>AI model</b><small>NVIDIA Nemotron (free) via OpenRouter</small></div>
+      </div>
+    </div>
+    <ul class="points strip">
+      <li><b>Keys never reach the browser.</b> The website calls Hermes for you.</li>
+      <li><b>Allowlist, not blocklist.</b> The edge refuses everything it doesn’t know.</li>
+      <li><b>Stop means stop.</b> Closing the page cancels the Hermes run.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-min="0.75" data-part="4 · Our Hermes" data-title="Proof it runs">
+  <p class="kicker">Part 4 · Our Hermes<span class="chip">TERMINAL</span><span class="chip live">LIVE</span></p>
+  <h2>Not a mock-up: Hermes’s own reports</h2>
+  <div class="body">
+    <div class="side">
+      <ul class="points">
+        <li><b><code>insights</code> counts everything:</b> sessions, tokens, tool calls, platforms.</li>
+        <li><b>“cron” sessions</b> are jobs that ran with nobody typing.</li>
+        <li><b><code>web_search</code> calls</b> prove tools were used, not just text.</li>
+      </ul>
+      <div class="try"><b>Try it</b><span><code>hermes -p h101-assistant insights --days 7</code></span></div>
+    </div>
+    <div class="media">
+      <figure class="shot"><img style="--h:520px" data-src="img/slides/proof-insights-atlas.png" alt="hermes insights for the research agent"><figcaption><span class="k">1</span>Atlas: web searches</figcaption></figure>
+      <figure class="shot"><img style="--h:520px" data-src="img/slides/proof-insights-iris.png" alt="hermes insights for Iris: cron sessions and web searches"><figcaption><span class="k">2</span>Iris: scheduled runs</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-min="1.5" data-part="4 · Our Hermes" data-title="Live demo">
+  <p class="kicker">Part 4 · Our Hermes · Live demo</p>
+  <h2>Let’s run it</h2>
+  <div class="body">
+    <div class="side">
+      <ol class="steps">
+        <li><span><b>Desktop</b>: Capabilities › Tools, turn one off</span></li>
+        <li><span><b>Desktop</b>: Settings › Safety, Approval Mode</span></li>
+        <li><span><b>Desktop</b>: Bots › Study Squad, ask <code>@everyone</code></span></li>
+        <li><span><b>Terminal</b>: ask the research agent a question</span></li>
+        <li><span><b>Telegram</b>: say hi to Iris</span></li>
+      </ol>
+    </div>
+    <div class="media col">
+      <div class="card" style="width:100%"><span class="n">If the Wi-Fi fails</span><span class="t">Every step has a slide</span><p>Use the grid button to jump back to the real screen.</p></div>
+      <div class="card" style="width:100%"><span class="n">Why it feels slow</span><span class="t">8 to 15 seconds is normal</span><p>Free models think and search before they answer. Start the question first, then talk.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide meme" data-min="0.25" data-part="4 · Our Hermes" data-title="Meme: it worked">
+  <p class="kicker"><span class="chip live">MEME BREAK</span>Part 4 · Our Hermes</p>
+  <h2>When the live demo actually works</h2>
+  <div class="memebox"><video data-src="img/memes/slow-clap.mp4" muted loop playsinline preload="none" aria-label="A man in a tuxedo slow clapping alone in an empty theater"></video></div>
+  <p class="memesub">Thank you, free model. Thank you, Wi-Fi.</p>
+</section>
+
+<section class="slide" data-min="0.75" data-part="Wrap-up" data-title="Rules for using agents">
+  <p class="kicker">Wrap-up</p>
+  <h2>Six rules to take home</h2>
+  <div class="grid3">
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="field"><span>OPENROUTER_API_KEY</span><b>sk-or-&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</b></div><span class="pill on">stays in .env</span></div><span class="n">01</span><span class="t">Keys are passwords</span><p>Never share an API key, a bot token, or <code>.env</code>.</p></div>
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="tg"><div>web search<i class="on"></i></div><div>terminal<i></i></div><div>files<i></i></div></div></div><span class="n">02</span><span class="t">Fewest tools</span><p>Only what the job needs. Every tool is a door.</p></div>
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="cfg"><span class="k">approvals:</span><span>&nbsp;&nbsp;mode: <em>manual</em></span><span class="k">agent:</span><span>&nbsp;&nbsp;max_turns: <em>20</em></span></div></div><span class="n">03</span><span class="t">Settings, not wishes</span><p>Approvals, step limits, allowlists.</p></div>
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="bubble">Python was released in 1991. <u>source</u></div><span class="pill on">open the link</span></div><span class="n">04</span><span class="t">Check the answer</span><p>Open the sources. Agents can be wrong and sound sure.</p></div>
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="stack"><span class="pill bad">call me at 0917 555 0123</span><span class="pill on">call me at [REDACTED]</span></div></div><span class="n">05</span><span class="t">Protect people</span><p>No one else’s phone, address, or private messages.</p></div>
+    <div class="card"><div class="vis rv" aria-hidden="true"><div class="stack"><span class="pill bad">write my essay for me</span><span class="pill on">explain it so I can write it</span></div></div><span class="n">06</span><span class="t">Learn, don’t copy</span><p>Use agents to understand, not to hand in work as yours.</p></div>
+  </div>
+  <div class="try" style="margin-top:28px;max-width:900px"><b>Remember</b><span>An agent works for you, and you are responsible for what it does.</span></div>
+</section>
+
+<section class="slide blue" data-min="1" data-part="Wrap-up" data-title="Try it yourself">
+  <p class="kicker">Try it yourself</p>
+  <h1 style="font-size:84px;margin-bottom:26px">Thank you</h1>
+  <div class="cmdline">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</div>
+  <div class="qrs">
+    <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/"></div>These slides</figure>
+    <figure><div class="qr" data-qr="https://debb1ie.github.io/Hermes-Agent-101/manual.html"></div>Student manual</figure>
+    <figure><div class="qr" data-qr="https://hermes-agent.nousresearch.com/"></div>Hermes official site</figure>
+  </div>
+  <p class="who" style="margin-top:34px">Questions? · <b>Precious Grace Deborah Manucom</b></p>
+</section>
+
+</div></div></div>
+
+<div class="cat" id="cat" role="img" aria-label="A cat sneaking past" title="Pet the cat">
+  <svg viewBox="0 0 160 100" aria-hidden="true">
+    <path class="tail" d="M42 50 C28 44 19 28 23 8 C24 3 29 2 30 7 C29 25 36 38 48 45 Z" fill="currentColor"/>
+    <g class="leg b"><path d="M43 58 L55 58 L52 95 L47 95 Z" fill="currentColor" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><ellipse cx="51.7" cy="96" rx="4.6" ry="2.5" fill="currentColor"/></g>
+    <g class="leg a"><path d="M55 60 L65 60 L63 95 L58 95 Z" fill="currentColor" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><ellipse cx="62.7" cy="96" rx="4.6" ry="2.5" fill="currentColor"/></g>
+    <g class="leg a"><path d="M103 58 L112 58 L110 95 L106 95 Z" fill="currentColor" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><ellipse cx="110.2" cy="96" rx="4.6" ry="2.5" fill="currentColor"/></g>
+    <g class="leg b"><path d="M113 56 L121 56 L119 95 L115 95 Z" fill="currentColor" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><ellipse cx="119.2" cy="96" rx="4.6" ry="2.5" fill="currentColor"/></g>
+    <path d="M36 54 C36 42 48 38 66 39 C86 40 100 39 110 34 C113 33 116 31 120 30 L129 38 C127 41 125 43 123 46 C121 54 118 60 114 66 C100 72 70 72 56 70 C44 69 36 64 36 54 Z" fill="currentColor"/>
+    <ellipse cx="51" cy="58" rx="15" ry="13" fill="currentColor"/>
+    <ellipse cx="113" cy="55" rx="9" ry="12" fill="currentColor"/>
+    <g class="head" transform="translate(-4 6) translate(132 24) scale(1.2) translate(-132 -24)">
+      <path d="M121.5 17 L123.5 4 L130.5 11 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M129 11 L137 3.5 L139.5 15 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="131.5" cy="23" r="12.5" fill="currentColor"/>
+      <path d="M136 14 C140 16 142.5 19 144.5 22 L148 25.5 C146.6 26.6 145.4 27.2 145.2 28.2 C145 30.2 143 32.6 139.5 33.6 C135.5 34.6 131.5 33.5 129 30 Z" fill="currentColor"/>
+      <path class="nose" d="M148 25.5 L145.6 24.2 C145 25.2 145 26.4 145.6 27.2 Z" fill="currentColor"/>
+    </g>
+  </svg>
+</div>
+<button class="edge prev" id="prevEdge" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+<button class="edge next" id="nextEdge" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+
+<div class="hotzone" id="hotzone" aria-hidden="true"></div>
+<div class="toolbar" role="toolbar" aria-label="Slide controls" id="toolbar">
+  <div class="grp">
+    <button class="tb" type="button" id="prevBtn" aria-label="Previous slide" title="Previous (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <span class="count" id="count" aria-live="polite" title="All slides (O)">1 / 1</span>
+    <button class="tb" type="button" id="nextBtn" aria-label="Next slide" title="Next (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+  <div class="grp zoomgrp">
+    <button class="tb" type="button" id="zoomOut" aria-label="Zoom out" title="Zoom out (−)">−</button>
+    <button class="tb zl" type="button" id="zoomReset" aria-label="Reset zoom" title="Reset zoom (0)">100%</button>
+    <button class="tb" type="button" id="zoomIn" aria-label="Zoom in" title="Zoom in (+)">+</button>
+  </div>
+  <div class="grp">
+    <button class="tb" type="button" id="themeBtn" aria-label="Switch light or dark mode" title="Light / dark (T)"></button>
+    <button class="tb" type="button" id="ovBtn" aria-label="All slides" title="All slides (O)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></svg></button>
+    <button class="tb" type="button" id="catBtn" aria-pressed="true" aria-label="Sneaking cat on or off" title="Cat (C)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11V4l4.5 3.5h7L20 4v7"/><path d="M4 11a8 8 0 0 0 16 0"/><path d="M9 12h.01M15 12h.01"/></svg></button>
+    <button class="tb opt" type="button" id="fsBtn" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+</div>
+<div class="overlay" id="overview" hidden role="dialog" aria-modal="true" aria-label="All slides"><div class="ov"><button class="tb close" type="button" id="ovClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h2>All slides</h2><p class="hint">Click a slide to jump to it. Keys: ← → move · + − zoom · 0 reset · T light/dark · C cat · F full screen · O this list · Esc close.</p><div id="ovList"></div></div></div>
+<div class="lightbox" id="lightbox" hidden><img id="lbImg" alt=""><p id="lbHint">Click or press Esc to close</p></div>
+
+<script>
+(() => {
+  const QR = (() => {
+    const ECC = [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28];
+    const BLOCKS = [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49];
+    const rawModules = v => { let r = (16 * v + 128) * v + 64; if(v >= 2){ const n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if(v >= 7) r -= 36; } return r; };
+    const dataCodewords = v => Math.floor(rawModules(v) / 8) - ECC[v] * BLOCKS[v];
+    const mul = (x, y) => { let z = 0; for(let i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 255; };
+    function divisor(deg){ const r = new Array(deg).fill(0); r[deg - 1] = 1; let root = 1; for(let i = 0; i < deg; i++){ for(let j = 0; j < r.length; j++){ r[j] = mul(r[j], root); if(j + 1 < r.length) r[j] ^= r[j + 1]; } root = mul(root, 2); } return r; }
+    function remainder(data, div){ const r = new Array(div.length).fill(0); for(const b of data){ const f = b ^ r.shift(); r.push(0); div.forEach((c, i) => { r[i] ^= mul(c, f); }); } return r; }
+    const alignPos = (v, size) => { if(v === 1) return []; const n = Math.floor(v / 7) + 2, step = v === 32 ? 26 : Math.ceil((v * 4 + 4) / (n * 2 - 2)) * 2, r = [6]; for(let p = size - 7; r.length < n; p -= step) r.splice(1, 0, p); return r; };
+    const MASKS = [(x,y) => (x + y) % 2 === 0, (x,y) => y % 2 === 0, (x,y) => x % 3 === 0, (x,y) => (x + y) % 3 === 0, (x,y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x,y) => x * y % 2 + x * y % 3 === 0, (x,y) => (x * y % 2 + x * y % 3) % 2 === 0, (x,y) => ((x + y) % 2 + x * y % 3) % 2 === 0];
+    function encode(text, forceMask){
+      const bytes = Array.from(new TextEncoder().encode(text));
+      let v = 1; while(v <= 40 && 4 + (v < 10 ? 8 : 16) + bytes.length * 8 > dataCodewords(v) * 8) v++;
+      if(v > 40) throw new Error('Text too long for a QR code');
+      const cap = dataCodewords(v) * 8, bits = [];
+      const put = (val, len) => { for(let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+      put(4, 4); put(bytes.length, v < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+      put(0, Math.min(4, cap - bits.length)); put(0, (8 - bits.length % 8) % 8);
+      for(let pad = 0xEC; bits.length < cap; pad ^= 0xEC ^ 0x11) put(pad, 8);
+      const data = []; for(let i = 0; i < bits.length; i += 8) data.push(bits.slice(i, i + 8).reduce((a, b) => (a << 1) | b, 0));
+      const nb = BLOCKS[v], el = ECC[v], raw = Math.floor(rawModules(v) / 8), nShort = nb - raw % nb, shortLen = Math.floor(raw / nb), div = divisor(el), blocks = [];
+      for(let i = 0, k = 0; i < nb; i++){ const d = data.slice(k, k + shortLen - el + (i < nShort ? 0 : 1)); k += d.length; const e = remainder(d, div); if(i < nShort) d.push(0); blocks.push(d.concat(e)); }
+      const words = []; for(let i = 0; i < blocks[0].length; i++) blocks.forEach((b, j) => { if(i !== shortLen - el || j >= nShort) words.push(b[i]); });
+      const size = v * 4 + 17, M = [...Array(size)].map(() => new Array(size).fill(false)), F = [...Array(size)].map(() => new Array(size).fill(false));
+      const setF = (x, y, dark) => { M[y][x] = dark; F[y][x] = true; };
+      for(let i = 0; i < size; i++){ setF(6, i, i % 2 === 0); setF(i, 6, i % 2 === 0); }
+      [[3,3],[size - 4,3],[3,size - 4]].forEach(([cx, cy]) => { for(let dy = -4; dy <= 4; dy++) for(let dx = -4; dx <= 4; dx++){ const x = cx + dx, y = cy + dy, d = Math.max(Math.abs(dx), Math.abs(dy)); if(x >= 0 && x < size && y >= 0 && y < size) setF(x, y, d !== 2 && d !== 4); } });
+      const al = alignPos(v, size);
+      al.forEach((ax, i) => al.forEach((ay, j) => { if((i === 0 && j === 0) || (i === 0 && j === al.length - 1) || (i === al.length - 1 && j === 0)) return; for(let dy = -2; dy <= 2; dy++) for(let dx = -2; dx <= 2; dx++) setF(ax + dx, ay + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1); }));
+      const drawFormat = mask => {
+        const d = (0 << 3) | mask; let r = d; for(let i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+        const b = ((d << 10) | r) ^ 0x5412, bit = i => ((b >>> i) & 1) === 1;
+        for(let i = 0; i <= 5; i++) setF(8, i, bit(i));
+        setF(8, 7, bit(6)); setF(8, 8, bit(7)); setF(7, 8, bit(8));
+        for(let i = 9; i < 15; i++) setF(14 - i, 8, bit(i));
+        for(let i = 0; i < 8; i++) setF(size - 1 - i, 8, bit(i));
+        for(let i = 8; i < 15; i++) setF(8, size - 15 + i, bit(i));
+        setF(8, size - 8, true);
+      };
+      drawFormat(0);
+      if(v >= 7){ let r = v; for(let i = 0; i < 12; i++) r = (r << 1) ^ ((r >>> 11) * 0x1F25); const b = (v << 12) | r; for(let i = 0; i < 18; i++){ const dark = ((b >>> i) & 1) === 1, a = size - 11 + i % 3, c = Math.floor(i / 3); setF(a, c, dark); setF(c, a, dark); } }
+      let bi = 0;
+      for(let right = size - 1; right >= 1; right -= 2){
+        if(right === 6) right = 5;
+        for(let vert = 0; vert < size; vert++) for(let j = 0; j < 2; j++){
+          const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - vert : vert;
+          if(!F[y][x] && bi < words.length * 8){ M[y][x] = ((words[bi >>> 3] >>> (7 - (bi & 7))) & 1) === 1; bi++; }
+        }
+      }
+      const apply = m => { for(let y = 0; y < size; y++) for(let x = 0; x < size; x++) if(!F[y][x] && MASKS[m](x, y)) M[y][x] = !M[y][x]; };
+      const score = () => {
+        let p = 0, dark = 0;
+        const line = get => { let run = 1; for(let i = 1; i < size; i++){ if(get(i) === get(i - 1)) run++; else { if(run >= 5) p += run - 2; run = 1; } } if(run >= 5) p += run - 2; };
+        const finder = get => { for(let i = 0; i + 11 <= size; i++){ const s = []; for(let k = 0; k < 11; k++) s.push(get(i + k) ? 1 : 0); const t = s.join(''); if(t === '10111010000' || t === '00001011101') p += 40; } };
+        for(let k = 0; k < size; k++){ line(i => M[k][i]); line(i => M[i][k]); finder(i => M[k][i]); finder(i => M[i][k]); }
+        for(let y = 0; y < size - 1; y++) for(let x = 0; x < size - 1; x++){ const c = M[y][x]; if(c === M[y][x + 1] && c === M[y + 1][x] && c === M[y + 1][x + 1]) p += 3; }
+        M.forEach(row => row.forEach(c => { if(c) dark++; }));
+        return p + Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+      };
+      let best = forceMask ?? 0;
+      if(forceMask == null){ let low = Infinity; for(let m = 0; m < 8; m++){ apply(m); drawFormat(m); const sc = score(); if(sc < low){ low = sc; best = m; } apply(m); } }
+      apply(best); drawFormat(best);
+      return {size, version:v, mask:best, modules:M};
+    }
+    return {encode};
+  })();
+
+  document.querySelectorAll('[data-qr]').forEach(el => {
+    const {size, modules} = QR.encode(el.dataset.qr), q = 4, n = size + q * 2; let d = '';
+    modules.forEach((row, y) => row.forEach((c, x) => { if(c) d += `M${x + q} ${y + q}h1v1h-1z`; }));
+    el.innerHTML = `<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="QR code for ${el.dataset.qr}"><rect width="${n}" height="${n}" fill="#fff"/><path d="${d}" fill="#0B0B0C"/></svg>`;
+  });
+
+
+  const $ = id => document.getElementById(id);
+  const slides = [...document.querySelectorAll('.slide')], deck = $('deck'), sizer = $('sizer'), vp = $('viewport');
+  let i = 0, z = 1;
+  slides.forEach((s, k) => { if(k > 0) s.insertAdjacentHTML('beforeend', `<div class="foot"><span><img src="img/brand/hermes-icon.svg" alt=""><b>Hermes Agent 101</b> · ${s.dataset.part}</span><span>${k + 1} / ${slides.length}</span></div>`); });
+
+  // scale to fit, times the zoom level; when zoomed in, the stage scrolls
+  const html = document.documentElement, isFluid = () => html.classList.contains('fluid');
+  function fit(keepCenter){
+    // too small to read as a 1600x900 slide (phones, portrait tablets): switch to the reading layout
+    const fluid = Math.min(innerWidth / 1600, innerHeight / 900) < 0.7;
+    html.classList.toggle('fluid', fluid);
+    if(fluid){ z = 1; sizer.style.width = sizer.style.height = ''; deck.style.transform = ''; vp.classList.remove('zoomed'); $('zoomReset').textContent = '100%'; return; }
+    const r = vp.getBoundingClientRect(), base = Math.min(r.width / 1600, r.height / 900), k = base * z;
+    const cx = keepCenter ? (vp.scrollLeft + r.width / 2) / Math.max(1, sizer.offsetWidth) : .5, cy = keepCenter ? (vp.scrollTop + r.height / 2) / Math.max(1, sizer.offsetHeight) : .5;
+    sizer.style.width = 1600 * k + 'px'; sizer.style.height = 900 * k + 'px'; deck.style.transform = `scale(${k})`;
+    vp.classList.toggle('zoomed', z > 1);
+    if(z > 1){ vp.scrollLeft = cx * sizer.offsetWidth - r.width / 2; vp.scrollTop = cy * sizer.offsetHeight - r.height / 2; }
+    $('zoomReset').textContent = Math.round(z * 100) + '%';
+  }
+  const ZOOMS = [0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3];
+  function zoomTo(nz){ if(isFluid()) return; z = Math.max(ZOOMS[0], Math.min(ZOOMS[ZOOMS.length - 1], nz)); fit(true); }
+  const zoomStep = dir => { const idx = ZOOMS.findIndex(v => v >= z - 1e-6); zoomTo(ZOOMS[Math.max(0, Math.min(ZOOMS.length - 1, (ZOOMS[idx] === z ? idx : (dir > 0 ? idx - 1 : idx)) + dir))]); };
+
+  function show(k, push){
+    i = Math.max(0, Math.min(slides.length - 1, k));
+    slides.forEach((s, n) => { s.classList.toggle('on', n === i); s.setAttribute('aria-hidden', n === i ? 'false' : 'true'); });
+    $('bar').style.width = `${(i + 1) / slides.length * 100}%`;
+    $('count').textContent = `${i + 1} / ${slides.length}`;
+    $('prevEdge').disabled = $('prevBtn').disabled = i === 0;
+    $('nextEdge').disabled = $('nextBtn').disabled = i === slides.length - 1;
+    document.title = `${slides[i].dataset.title} · Hermes Agent 101 Slides`;
+    if(push !== false) history.replaceState(null, '', '#' + (i + 1));
+    if(z > 1 || isFluid()){ vp.scrollLeft = 0; vp.scrollTop = 0; }
+    loadAround(i);
+    syncMeme();
+    slides.forEach((sl, n) => sl.querySelectorAll('video').forEach(v => { if(n === i){ v.muted = true; v.play?.().catch(() => {}); } else v.pause?.(); }));
+  }
+  const next = () => show(i + 1), prev = () => show(i - 1);
+  // meme video: plays when its slide is on screen (muted if the browser blocks sound), pauses when you leave
+  let ytApi = null, ytPlayer = null;
+  const loadYT = () => ytApi || (ytApi = new Promise(res => { window.onYouTubeIframeAPIReady = res; const t = document.createElement('script'); t.src = 'https://www.youtube.com/iframe_api'; t.onerror = () => res(null); document.head.appendChild(t); setTimeout(res, 8000); }));
+  const memeOn = () => !!slides[i].querySelector('[data-yt]');
+  function startMeme(){ if(!ytPlayer || !memeOn()) return; try{ ytPlayer.mute(); ytPlayer.seekTo(0, true); ytPlayer.playVideo(); paintSound(); }catch(e){} }
+  function paintSound(){ const box = document.querySelector('[data-yt]'); try{ box?.classList.toggle('muted', !!ytPlayer?.isMuted?.()); }catch(e){} }
+  async function syncMeme(){
+    if(!memeOn()){ try{ ytPlayer?.pauseVideo(); }catch(e){} return; }
+    const box = slides[i].querySelector('[data-yt]');
+    if(ytPlayer){ startMeme(); return; }
+    await loadYT(); if(!window.YT?.Player || ytPlayer || !memeOn()) return;
+    const el = document.createElement('div'); box.appendChild(el);
+    ytPlayer = new YT.Player(el, { videoId: box.dataset.yt, host: 'https://www.youtube-nocookie.com',
+      playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1, loop: 1, playlist: box.dataset.yt, cc_load_policy: 0, iv_load_policy: 3, hl: 'en', controls: 0, disablekb: 1, fs: 0, mute: 1 },
+      events: { onReady: startMeme, onStateChange: e => { box.classList.toggle('playing', e.data === 1); paintSound(); } } });
+    box.addEventListener('click', e => { e.stopPropagation(); if(!ytPlayer?.isMuted) return; if(ytPlayer.isMuted()){ ytPlayer.unMute(); ytPlayer.setVolume?.(100); } else ytPlayer.mute(); setTimeout(paintSound, 150); });
+  }
+  window.hermesMeme = () => { try{ return { player: !!ytPlayer, state: ytPlayer?.getPlayerState?.(), muted: ytPlayer?.isMuted?.() }; }catch(e){ return { player: !!ytPlayer }; } };
+
+  const loadImgs = el => el?.querySelectorAll('img[data-src],video[data-src]').forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+  function loadAround(k){ [k, k + 1, k - 1, k + 2].forEach(n => loadImgs(slides[n])); }
+  addEventListener('beforeprint', () => loadImgs(document));
+
+  // theme
+  const root = document.documentElement;
+  const isLight = () => (root.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')) === 'light';
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>', MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+  const paintTheme = () => { $('themeBtn').innerHTML = isLight() ? MOON : SUN; $('themeBtn').setAttribute('aria-label', isLight() ? 'Switch to dark mode' : 'Switch to light mode'); };
+  function toggleTheme(){ root.dataset.theme = isLight() ? 'dark' : 'light'; try{ localStorage.setItem('hermes101-slides-theme', root.dataset.theme); }catch(e){} paintTheme(); }
+  paintTheme(); matchMedia('(prefers-color-scheme: light)').addEventListener?.('change', paintTheme);
+
+  // overview, lightbox, fullscreen
+  function openOverview(){
+    const groups = []; slides.forEach((s, k) => { const g = s.dataset.part; if(!groups.length || groups[groups.length - 1].g !== g) groups.push({g, items:[]}); groups[groups.length - 1].items.push([k, s.dataset.title]); });
+    $('ovList').innerHTML = groups.map(({g, items}) => `<h3>${g}</h3><div class="grid">${items.map(([k, t]) => `<button type="button" data-go="${k}" class="${k === i ? 'cur' : ''}"><span>${k + 1}</span>${t}</button>`).join('')}</div>`).join('');
+    $('overview').hidden = false; $('ovList').querySelector('.cur')?.focus();
+  }
+  const closeOverview = () => { $('overview').hidden = true; };
+  $('ovList').addEventListener('click', e => { const b = e.target.closest('[data-go]'); if(b){ show(Number(b.dataset.go)); closeOverview(); } });
+  $('ovClose').addEventListener('click', closeOverview);
+  const toggleFs = () => { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); };
+
+  $('prevBtn').addEventListener('click', prev); $('nextBtn').addEventListener('click', next);
+  $('prevEdge').addEventListener('click', prev); $('nextEdge').addEventListener('click', next);
+  $('zoomIn').addEventListener('click', () => zoomStep(1)); $('zoomOut').addEventListener('click', () => zoomStep(-1)); $('zoomReset').addEventListener('click', () => zoomTo(1));
+  $('themeBtn').addEventListener('click', toggleTheme); $('ovBtn').addEventListener('click', openOverview);
+  $('fsBtn').addEventListener('click', toggleFs);
+  deck.addEventListener('click', e => { const img = e.target.closest('figure.shot img'); if(!img) return; $('lbImg').src = img.src; $('lbImg').alt = img.alt; $('lbHint').textContent = isFluid() ? 'Drag to look around · tap to close' : 'Click or press Esc to close'; $('lightbox').hidden = false; $('lightbox').scrollTo(0, 0); });
+  $('lightbox').addEventListener('click', () => { $('lightbox').hidden = true; });
+
+  addEventListener('keydown', e => {
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    if(!$('lightbox').hidden){ if(['Escape',' ','Enter'].includes(e.key)){ $('lightbox').hidden = true; e.preventDefault(); } return; }
+    if(!$('overview').hidden){ if(e.key === 'Escape' || e.key === 'o' || e.key === 'O'){ closeOverview(); e.preventDefault(); } return; }
+    if(e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if(['ArrowRight','PageDown',' '].includes(e.key) || (e.key === 'ArrowDown' && z <= 1 && !isFluid())){ e.preventDefault(); next(); }
+    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key) || (e.key === 'ArrowUp' && z <= 1 && !isFluid())){ e.preventDefault(); prev(); }
+    else if(e.key === 'Home') show(0); else if(e.key === 'End') show(slides.length - 1);
+    else if(e.key === '+' || e.key === '=') zoomStep(1); else if(e.key === '-' || e.key === '_') zoomStep(-1); else if(e.key === '0') zoomTo(1);
+    else if(e.key === 't' || e.key === 'T') toggleTheme(); else if(e.key === 'o' || e.key === 'O') openOverview();
+    else if(e.key === 'f' || e.key === 'F') toggleFs();
+  });
+  let touchX = null, touchY = null;
+  vp.addEventListener('touchstart', e => { if(e.touches.length !== 1 || z > 1){ touchX = null; return; } touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, {passive:true});
+  vp.addEventListener('touchend', e => { if(touchX == null) return; const dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY; if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)(); else if(Math.abs(dx) < 10 && Math.abs(dy) < 10) showBar(3000); touchX = null; });
+  const bar = $('toolbar'); let hideT = null;
+  // stays only while hovered or keyboard-focused; a mouse click does not pin it open
+  const keepBar = () => { try{ return bar.matches(':hover') || bar.matches(':has(:focus-visible)'); }catch(e){ return bar.matches(':hover'); } };
+  const showBar = ms => { bar.classList.add('show'); html.classList.add('barup'); clearTimeout(hideT); hideT = setTimeout(function hide(){ if(keepBar()) hideT = setTimeout(hide, 800); else { bar.classList.remove('show'); html.classList.remove('barup'); } }, ms || 1800); };
+  bar.addEventListener('touchstart', () => showBar(3000), {passive:true});
+  bar.addEventListener('focusin', () => showBar(2500));
+  // side arrows: invisible until hovered; a click flashes the arrow, then it fades out
+  const edges = [$('prevEdge'), $('nextEdge')];
+  edges.forEach(e => e.addEventListener('click', () => { e.classList.add('flash'); setTimeout(() => e.classList.remove('flash'), 350); }));
+  $('count').addEventListener('click', () => openOverview());
+  $('hotzone').addEventListener('mouseenter', () => showBar());
+  addEventListener('mousemove', e => { if(e.clientY > innerHeight - 70) showBar(); });
+  bar.addEventListener('mouseleave', () => showBar(900));
+  showBar(3500);
+
+  // the cat: walks past or peeks up every minute or so; click it for a meow; C or the cat button turns it off
+  const cat = $('cat'), catBtn = $('catBtn'), reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let catOn = !reduced, catT = null, catAnim = null;
+  try{ const v = localStorage.getItem('hermes101-slides-cat'); if(v === 'on') catOn = true; if(v === 'off') catOn = false; }catch(e){}
+  const busy = () => !$('overview').hidden || !$('lightbox').hidden || document.hidden;
+  function catDone(){ cat.className = 'cat'; cat.querySelector('.meow')?.remove(); catAnim = null; schedule(); }
+  function walk(dir){
+    const w = cat.offsetWidth || 72, from = dir > 0 ? -w - 10 : innerWidth + 10, to = dir > 0 ? innerWidth + 10 : -w - 10;
+    cat.className = 'cat out walking' + (dir < 0 ? ' left' : '');
+    catAnim = cat.animate([{transform:`translateX(${from}px)`}, {transform:`translateX(${to}px)`}], {duration:Math.max(7000, innerWidth * 8), easing:'linear'});
+    catAnim.onfinish = catDone;
+  }
+  function peek(){
+    const w = cat.offsetWidth || 150, x = Math.round(innerWidth * (0.15 + Math.random() * 0.6)), h = cat.offsetHeight || 45;
+    cat.className = 'cat out' + (Math.random() < .5 ? ' left' : '');
+    catAnim = cat.animate([{transform:`translate(${x}px,${h}px)`}, {transform:`translate(${x}px,${Math.round(h * .45)}px)`, offset:.18}, {transform:`translate(${x}px,${Math.round(h * .45)}px)`, offset:.82}, {transform:`translate(${x}px,${h}px)`}], {duration:4200, easing:'ease-in-out'});
+    catAnim.onfinish = catDone;
+  }
+  function sneak(kind){ if(!catOn || catAnim) return; if(busy()){ schedule(8000); return; } const r = Math.random(); (kind || (r < .45 ? 'right' : r < .7 ? 'left' : 'peek')) === 'peek' ? peek() : walk((kind || (r < .45 ? 'right' : 'left')) === 'left' ? -1 : 1); }
+  function schedule(ms){ clearTimeout(catT); if(catOn) catT = setTimeout(() => sneak(), ms || 35000 + Math.random() * 35000); }
+  function paintCat(){ catBtn.setAttribute('aria-pressed', String(catOn)); catBtn.title = catOn ? 'Cat is on (C)' : 'Cat is off (C)'; }
+  function toggleCat(){ catOn = !catOn; try{ localStorage.setItem('hermes101-slides-cat', catOn ? 'on' : 'off'); }catch(e){} paintCat(); if(catOn) sneak(); else { catAnim?.cancel(); clearTimeout(catT); cat.className = 'cat'; catAnim = null; } }
+  cat.addEventListener('click', e => { e.stopPropagation(); if(!catAnim) return; if(!cat.querySelector('.meow')) cat.insertAdjacentHTML('beforeend', '<span class="meow">meow!</span>'); catAnim.playbackRate = 2.5; });
+  catBtn.addEventListener('click', toggleCat);
+  addEventListener('keydown', e => { if((e.key === 'c' || e.key === 'C') && !e.metaKey && !e.ctrlKey && !e.altKey && $('overview').hidden && $('lightbox').hidden) toggleCat(); });
+  window.hermesCat = { walk: () => { catAnim?.cancel(); catAnim = null; walk(1); }, peek: () => { catAnim?.cancel(); catAnim = null; peek(); } };
+  paintCat(); schedule(12000);
+  addEventListener('resize', () => fit());
+  addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if(n && n - 1 !== i) show(n - 1, false); });
+  fit(); show((parseInt(location.hash.slice(1), 10) || 1) - 1, false);
+})();
+</script>
+</body>
+</html>

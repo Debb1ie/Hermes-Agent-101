@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes Agent Manual</title>
+<link rel="icon" href="img/brand/hermes-icon.svg" type="image/svg+xml">
+<meta name="description" content="Student manual for Hermes Agent: what you need, how to install it, how to use an agent, how to make your own, keep it safe, and fix common problems.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hermes Agent 101">
+<meta property="og:title" content="Hermes Agent 101: student manual">
+<meta property="og:description" content="Requirements, install, using and making agents, safety, troubleshooting, and every command, step by step.">
+<meta property="og:url" content="https://debb1ie.github.io/Hermes-Agent-101/manual.html">
+<meta property="og:image" content="https://debb1ie.github.io/Hermes-Agent-101/img/brand/og-slides.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0000F2">
+<link rel="image_src" href="img/brand/og-slides.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080A; --surface:#121215; --surface-2:#1A1A1F; --ink:#F2F2F3; --ink-2:#CFD0D6; --muted:#9A9DA6; --rule:#2A2B31;
+  --gold:#F5C451; --gold-ink:#F5C451; --violet:#8B7BFF; --violet-ink:#A99DFF; --red:#E06B67; --green:#5BC48A;
+  --code-bg:#16161A; --shot-bg:#fff; --on-gold:#0B0B0C;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --sans:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#FBFAF7; --surface:#FFFFFF; --surface-2:#F3F1EC; --ink:#17171A; --ink-2:#34353B; --muted:#62646C; --rule:#E2DFD8;
+    --gold-ink:#8A5F00; --violet-ink:#5A48D6; --code-bg:#F4F2EE; --red:#B3322E; --green:#1E7A47; color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#FBFAF7; --surface:#FFFFFF; --surface-2:#F3F1EC; --ink:#17171A; --ink-2:#34353B; --muted:#62646C; --rule:#E2DFD8;
+  --gold-ink:#8A5F00; --violet-ink:#5A48D6; --code-bg:#F4F2EE; --red:#B3322E; --green:#1E7A47; color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--violet-ink);text-underline-offset:3px}
+a:hover{color:var(--gold-ink)}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.015em;line-height:1.15;margin:0}
+h2{font-size:2rem;font-weight:800;margin:0 0 6px}
+h3{font-size:1.32rem;font-weight:700;margin:36px 0 10px}
+h4{font-size:1.05rem;font-weight:700;margin:22px 0 6px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:1.3em}
+li{margin:4px 0}
+strong,b{font-weight:600}
+code{font-family:var(--mono);font-size:.84em;background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:1px 6px;overflow-wrap:anywhere}
+kbd{font-family:var(--mono);font-size:.8em;border:1px solid var(--rule);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--surface)}
+.muted{color:var(--muted)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--gold);color:var(--on-gold);padding:8px 12px;border-radius:8px;z-index:10}
+.skip:focus{left:8px}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1240px;margin:0 auto;gap:56px;padding:0 24px}
+nav.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:28px 4px 40px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-bottom:22px}
+.mark{width:38px;height:38px;border-radius:10px;flex:none;display:block}
+.brand b{font-family:var(--display);font-size:1.02rem;display:block;line-height:1.1}
+.brand small{color:var(--muted);font-size:.78rem}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+.toc li{margin:0}
+.toc a{display:flex;gap:10px;padding:5px 10px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-size:.92rem;line-height:1.35}
+.toc a .n{font-family:var(--mono);font-size:.76rem;color:var(--muted);min-width:1.4em;padding-top:2px}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.on{background:var(--surface-2);color:var(--ink);box-shadow:inset 3px 0 0 var(--gold)}
+.toc .tools{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.btn{font:600 .84rem var(--sans);display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--gold);color:var(--ink)}
+.btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+main{min-width:0;padding:28px 0 80px}
+.mobile-toc{display:none}
+
+/* hero */
+.hero{padding:34px 0 30px;border-bottom:1px solid var(--rule);margin-bottom:10px}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 12px}
+.hero h1{font-size:clamp(2.3rem,5vw,3.5rem);font-weight:800;margin-bottom:12px}
+.hero .lead{font-size:1.2rem;color:var(--ink-2);max-width:62ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.88rem;margin-top:16px}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:26px}
+.quick a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.quick a:hover{border-color:var(--gold)}
+.quick b{display:block;font-family:var(--display);font-size:1.02rem}
+.quick span{color:var(--muted);font-size:.86rem}
+
+/* sections */
+section.part{padding:46px 0 10px;border-bottom:1px solid var(--rule)}
+section.part:last-of-type{border-bottom:0}
+.part-n{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 6px}
+.intro{font-size:1.08rem;color:var(--ink-2);max-width:68ch;margin-bottom:18px}
+.prose{max-width:72ch}
+
+/* callouts */
+.note{border:1px solid var(--rule);border-left:4px solid var(--violet);background:var(--surface);border-radius:10px;padding:12px 16px;margin:16px 0;max-width:72ch}
+.note.warn{border-left-color:var(--red)}
+.note.tip{border-left-color:var(--green)}
+.note.lab{border-left-color:var(--gold)}
+.note p:last-child,.note ul:last-child{margin-bottom:0}
+.note .t{font-weight:600;display:block;margin-bottom:2px}
+
+/* tables */
+.tbl{overflow-x:auto;margin:14px 0 18px;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--display);font-weight:700;font-size:.9rem;background:var(--surface-2)}
+td:first-child{white-space:nowrap}
+td.w{white-space:normal}
+td code{overflow-wrap:normal}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:1px 8px;border:1px solid var(--rule);white-space:nowrap}
+.pill.low{color:var(--green);border-color:color-mix(in srgb,var(--green) 45%,var(--rule))}
+.pill.mid{color:var(--gold-ink);border-color:color-mix(in srgb,var(--gold) 45%,var(--rule))}
+.pill.high{color:var(--red);border-color:color-mix(in srgb,var(--red) 45%,var(--rule))}
+.pill.desk{color:var(--violet-ink);border-color:color-mix(in srgb,var(--violet) 50%,var(--rule))}
+
+/* code */
+.code{position:relative;margin:12px 0 18px;max-width:100%}
+.code .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--rule);border-bottom:0;border-radius:10px 10px 0 0;padding:6px 8px 6px 14px;font-size:.8rem;color:var(--muted);font-family:var(--mono)}
+pre{margin:0;background:var(--code-bg);border:1px solid var(--rule);border-radius:0 0 10px 10px;padding:14px 16px;overflow-x:auto;font:400 .86rem/1.6 var(--mono);color:var(--ink)}
+pre .c{color:var(--muted)}
+.copy{font:600 .76rem var(--sans);border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:7px;padding:3px 10px;cursor:pointer}
+.copy:hover{border-color:var(--gold)}
+
+/* steps */
+ol.steps{list-style:none;padding:0;counter-reset:s;max-width:72ch}
+ol.steps>li{counter-increment:s;position:relative;padding:2px 0 10px 44px;margin:0 0 6px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--on-gold);font:700 .85rem/28px var(--sans);text-align:center}
+
+/* figures */
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:14px 0 20px;align-items:start}
+.shots.one{grid-template-columns:minmax(0,1fr);max-width:900px}
+figure{margin:0}
+figure a{display:block;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--shot-bg)}
+figure.term a{background:#0B0B0C}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:.88rem;color:var(--muted);margin-top:8px;line-height:1.45}
+figcaption .d{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--on-gold);font-weight:700;font-size:.72rem;margin-right:6px;vertical-align:1px}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 9px;margin-right:8px;vertical-align:3px;background:color-mix(in srgb,var(--violet) 16%,var(--surface));color:var(--violet-ink);border:1px solid color-mix(in srgb,var(--violet) 40%,var(--rule))}
+.tag.term{background:var(--surface-2);color:var(--muted);border-color:var(--rule)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0 20px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.card b{display:block;font-family:var(--display);margin-bottom:2px}
+.card span{color:var(--muted);font-size:.9rem;line-height:1.5;display:block}
+.loop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0 20px}
+.loop span{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.92rem}
+.loop i{font-style:normal;color:var(--muted)}
+
+/* checklist */
+.checks{list-style:none;padding:0;max-width:72ch}
+.checks li{margin:0}
+.checks label{display:flex;gap:12px;align-items:flex-start;padding:9px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);margin-bottom:8px;cursor:pointer}
+.checks input{margin-top:5px;accent-color:var(--gold);width:17px;height:17px;flex:none}
+.checks input:checked + span{color:var(--muted);text-decoration:line-through}
+dl.gloss{display:grid;grid-template-columns:minmax(130px,190px) 1fr;gap:0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--surface);max-width:900px}
+dl.gloss dt,dl.gloss dd{margin:0;padding:10px 14px;border-bottom:1px solid var(--rule)}
+dl.gloss dt{font-weight:600;background:var(--surface-2)}
+dl.gloss dt:last-of-type,dl.gloss dd:last-of-type{border-bottom:0}
+footer{color:var(--muted);font-size:.86rem;padding:30px 0 10px}
+.top{position:fixed;right:18px;bottom:18px;opacity:0;pointer-events:none;transition:opacity .2s}
+.top.show{opacity:1;pointer-events:auto}
+
+@media (max-width:980px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0;padding:0 16px}
+  nav.toc{display:none}
+  .mobile-toc{display:block;position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);margin:0 -16px;padding:10px 16px}
+  .mobile-toc summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .mobile-toc summary::after{content:"▾";color:var(--muted)}
+  .mobile-toc ol{list-style:none;padding:8px 0 4px;margin:0;max-height:60vh;overflow:auto}
+  .mobile-toc a{display:block;padding:6px 4px;color:var(--ink-2);text-decoration:none}
+  html{scroll-padding-top:64px}
+}
+@media (max-width:700px){
+  body{font-size:16px}
+  .shots{grid-template-columns:minmax(0,1fr)}
+  dl.gloss{grid-template-columns:1fr}
+  dl.gloss dt{border-bottom:0;padding-bottom:2px}
+  td:first-child{white-space:normal}
+  h2{font-size:1.7rem}
+}
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface-2:#f4f4f4;--ink:#000;--ink-2:#222;--muted:#555;--rule:#ccc;--code-bg:#f6f6f6;--gold-ink:#7a5400;--violet-ink:#3d2fb0;color-scheme:light}
+  nav.toc,.mobile-toc,.copy,.top,.no-print{display:none!important}
+  .wrap{display:block;max-width:none;padding:0}
+  section.part{break-before:page;border:0}
+  figure,.code,.note,.tbl,table{break-inside:avoid}
+  a{color:inherit}
+  pre{white-space:pre-wrap}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the manual</a>
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <a class="brand" href="./"><img class="mark" src="img/brand/hermes-icon.svg" alt=""><span><b>Hermes Agent 101</b><small>Student manual</small></span></a>
+  <ol id="toc">
+    <li><a href="#start"><span class="n">0</span>Read this first</a></li>
+    <li><a href="#what"><span class="n">1</span>What is Hermes Agent?</a></li>
+    <li><a href="#requirements"><span class="n">2</span>Requirements</a></li>
+    <li><a href="#install"><span class="n">3</span>Install Hermes</a></li>
+    <li><a href="#model"><span class="n">4</span>Connect a model</a></li>
+    <li><a href="#use"><span class="n">5</span>Use your agent</a></li>
+    <li><a href="#create"><span class="n">6</span>Make your own agent</a></li>
+    <li><a href="#soul"><span class="n">7</span>Write its SOUL.md</a></li>
+    <li><a href="#tools"><span class="n">8</span>Choose its tools</a></li>
+    <li><a href="#safety"><span class="n">9</span>Make it safe</a></li>
+    <li><a href="#memory"><span class="n">10</span>Memory and skills</a></li>
+    <li><a href="#jobs"><span class="n">11</span>Scheduled jobs</a></li>
+    <li><a href="#telegram"><span class="n">12</span>Put it on Telegram</a></li>
+    <li><a href="#apps"><span class="n">13</span>Connect apps</a></li>
+    <li><a href="#trouble"><span class="n">14</span>Troubleshooting</a></li>
+    <li><a href="#cheats"><span class="n">15</span>Command cheat sheet</a></li>
+    <li><a href="#glossary"><span class="n">16</span>Glossary</a></li>
+    <li><a href="#rules"><span class="n">17</span>Rules for using agents</a></li>
+  </ol>
+  <div class="tools">
+    <button class="btn" type="button" id="printBtn">Print or save as PDF</button>
+    <button class="btn" type="button" id="themeBtn" aria-label="Switch light or dark mode">Light / dark</button>
+  </div>
+</nav>
+
+<main id="content">
+<details class="mobile-toc"><summary>Contents</summary><ol id="mtoc"></ol></details>
+
+<header class="hero">
+  <p class="eyebrow">Hermes Agent 101 · Student manual</p>
+  <h1>Your AI agent, from zero to working</h1>
+  <p class="lead">Everything you need to set up a Hermes agent, use it well, make your own, and keep it safe. Follow it from top to bottom the first time. After that, use it as a reference.</p>
+  <div class="meta"><span>Written for: students, no coding needed</span><span>Tested with Hermes Agent v0.21 and Hermes Desktop</span><span>Updated November 2026</span></div>
+  <div class="quick no-print">
+    <a href="#requirements"><b>What do I need?</b><span>Computer, model, accounts</span></a>
+    <a href="#install"><b>Install it</b><span>The app, or the terminal</span></a>
+    <a href="#use"><b>Use it</b><span>First chat and good prompts</span></a>
+    <a href="#create"><b>Make my own agent</b><span>Profile, SOUL.md, tools</span></a>
+    <a href="#trouble"><b>Something broke</b><span>Problems and fixes</span></a>
+    <a href="#cheats"><b>Cheat sheet</b><span>Every command on one page</span></a>
+  </div>
+</header>
+
+<!-- 0 -->
+<section class="part" id="start">
+  <p class="part-n">Part 0</p>
+  <h2>Read this first</h2>
+  <div class="prose">
+    <p>This manual shows two ways to do almost everything:</p>
+    <ul>
+      <li><span class="tag">Hermes Desktop</span>the app. You click instead of type. <b>Start here if you’re new.</b></li>
+      <li><span class="tag term">Terminal</span>commands you type. Same result, and you see what happens under the hood.</li>
+    </ul>
+    <p>Pick one and stick with it. Both change the same settings, so you can switch later.</p>
+  </div>
+  <div class="note lab"><span class="t">In the lab</span><p>Follow along and read. Install Hermes on <b>your own computer</b> at home. If a computer isn’t yours (school, family, work), ask the owner first.</p></div>
+  <div class="note warn"><span class="t">Three rules before you start</span><ul>
+    <li><b>Never share an API key or bot token.</b> Not in a chat, a screenshot, a group message, or on GitHub. Treat it like a password.</li>
+    <li><b>Don’t type personal data</b> (yours or anyone else’s) into an agent you’re testing.</li>
+    <li><b>Check what an agent tells you.</b> It can be wrong and still sound sure.</li>
+  </ul></div>
+  <h4>Signs in this manual</h4>
+  <div class="cards">
+    <div class="card"><b>Tip</b><span>A shortcut or a good habit (green line).</span></div>
+    <div class="card"><b>Warning</b><span>Something that can cost money or leak data (red line).</span></div>
+    <div class="card"><b>In the lab</b><span>What to do during the workshop (gold line).</span></div>
+    <div class="card"><b>Copy</b><span>Every grey code box has a Copy button. Paste one line at a time.</span></div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section class="part" id="what">
+  <p class="part-n">Part 1</p>
+  <h2>What is Hermes Agent?</h2>
+  <p class="intro">Hermes Agent is a free, open-source AI agent made by Nous Research. It runs on your own computer, remembers what it learns, and can work for you on a schedule.</p>
+  <div class="prose">
+    <h3>Chatbot vs. agent</h3>
+    <p>A <b>chatbot</b> only talks. An <b>agent</b> can also <b>act</b>: search the web, read a file, run a job at 8 AM, send you a Telegram message. It does this with <b>tools</b>.</p>
+    <p>Every agent works in a loop. It repeats these steps until the job is done:</p>
+  </div>
+  <div class="loop" role="img" aria-label="Think, then act with a tool, then look at the result, repeat, then answer">
+    <span>1 Think</span><i>→</i><span>2 Act (use a tool)</span><i>→</i><span>3 Look at the result</span><i>→</i><span>repeat</span><i>→</i><span>4 Answer</span>
+  </div>
+  <h3>The parts of a Hermes agent</h3>
+  <div class="cards">
+    <div class="card"><b>Model</b><span>The “brain”: an AI model from a provider like Nous Portal or OpenRouter.</span></div>
+    <div class="card"><b>SOUL.md</b><span>Who the agent is: its job, its rules, its tone.</span></div>
+    <div class="card"><b>Tools</b><span>What it can do: web search, files, terminal, and more.</span></div>
+    <div class="card"><b>Settings</b><span>The locks: approvals, step limits, who can talk to it.</span></div>
+    <div class="card"><b>Memory and skills</b><span>What it remembers about you, and how-tos it learned.</span></div>
+    <div class="card"><b>Gateway</b><span>The bridge to Telegram and other apps.</span></div>
+  </div>
+  <div class="note"><span class="t">Where does my data go?</span><p>Your chats, memory, and skills are saved on your computer in a folder called <code>~/.hermes</code>. Messages go only to the model provider you choose. Hermes itself doesn’t collect usage data.</p></div>
+  <figure class="no-print" style="max-width:900px"><a href="img/desktop/06-home.jpg" target="_blank" rel="noopener"><img src="img/desktop/06-home.jpg" alt="Hermes Desktop home screen with the chat box in the middle and the sidebar on the left" loading="lazy" width="1600" height="1017"></a><figcaption><span class="tag">Hermes Desktop</span>The home screen. Chat in the middle. On the left: Capabilities, Messaging, Scheduled jobs. Settings is the gear at the top right.</figcaption></figure>
+</section>
+
+<!-- 2 -->
+<section class="part" id="requirements">
+  <p class="part-n">Part 2</p>
+  <h2>Requirements</h2>
+  <p class="intro">Check these before you install. Most students only need a laptop, the internet, and one free account.</p>
+  <h3>Your computer</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Your computer</th><th>Hermes Desktop (the app)</th><th>Terminal install</th></tr></thead>
+    <tbody>
+      <tr><td>Mac with Apple Silicon (M1 or newer)</td><td class="w">✓ Download the app</td><td class="w">✓ Terminal</td></tr>
+      <tr><td>Mac with an Intel chip</td><td class="w">✗ The installer says “not supported on this Mac”</td><td class="w">Not officially supported. The terminal install may still work.</td></tr>
+      <tr><td>Windows 11 (version 22H2 or newer)</td><td class="w">✓ Download the app</td><td class="w">✓ PowerShell</td></tr>
+      <tr><td>Windows 10</td><td class="w">✗ The app needs Windows 11 22H2</td><td class="w">✓ PowerShell, or WSL2</td></tr>
+      <tr><td>Linux (Ubuntu and similar)</td><td class="w">✗ No app package yet</td><td class="w">✓ Terminal</td></tr>
+      <tr><td>Android phone</td><td class="w">✗</td><td class="w">Advanced: Termux, on 64-bit ARM phones only. Best effort.</td></tr>
+      <tr><td>Chromebook, iPhone, iPad</td><td class="w">✗</td><td class="w">✗ Not supported. Use Telegram to talk to an agent that runs elsewhere.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted" style="font-size:.9rem">Not sure what you have? Mac: Apple menu › About This Mac (“Chip: Apple M…” means Apple Silicon). Windows: Settings › System › About (look at “Version”).</p>
+  <h3>Everything else</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>What</th><th>Why you need it</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Free disk space</b></td><td class="w">Hermes, its Python, and its tools</td><td class="w">Plan for about <b>4 GB</b>. Our full install used about 4 GB.</td></tr>
+      <tr><td><b>Internet</b></td><td class="w">To install, and to reach a cloud model</td><td class="w">A local model can work offline after setup.</td></tr>
+      <tr><td><b>An AI model</b></td><td class="w">The agent’s brain</td><td class="w">Pick one in <a href="#model">Part 4</a>: Nous Portal, an API key (like OpenRouter), or a local model.</td></tr>
+      <tr><td><b>Admin rights</b></td><td class="w">To install apps</td><td class="w">On a school or shared computer, ask first.</td></tr>
+      <tr><td><b>Telegram</b> (optional)</td><td class="w">To chat with your agent from your phone</td><td class="w">Only for <a href="#telegram">Part 12</a>.</td></tr>
+      <tr><td><b>Skills</b></td><td class="w">None for the app</td><td class="w">For the terminal: you can copy, paste, and press Enter.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>What does it cost?</h3>
+  <div class="prose">
+    <p><b>Hermes is free</b> (open source, MIT license). You only pay the model provider, and you can start for free:</p>
+    <ul>
+      <li><b>Nous Portal</b> has a free tier that needs no API key.</li>
+      <li><b>OpenRouter</b> has some free models (with daily limits).</li>
+      <li>A <b>local model</b> is free but needs a strong computer.</li>
+    </ul>
+  </div>
+  <div class="note warn"><span class="t">Watch your spending</span><p>If you add money to a provider, set a spending limit on its website. An agent that loops can use credits fast. <a href="#safety">Part 9</a> shows the setting that stops loops.</p></div>
+  <h3>Before you start: checklist</h3>
+  <ul class="checks" data-list="req">
+    <li><label><input type="checkbox" data-k="pc"><span>My computer is on the list above (and I know which install I’ll use).</span></label></li>
+    <li><label><input type="checkbox" data-k="disk"><span>I have about 4 GB free.</span></label></li>
+    <li><label><input type="checkbox" data-k="perm"><span>It’s my computer, or the owner said yes.</span></label></li>
+    <li><label><input type="checkbox" data-k="model"><span>I know which model I’ll use (Nous Portal, an API key, or local).</span></label></li>
+    <li><label><input type="checkbox" data-k="safe"><span>I know where I’ll keep my key, and I won’t share it.</span></label></li>
+  </ul>
+</section>
+
+<!-- 3 -->
+<section class="part" id="install">
+  <p class="part-n">Part 3</p>
+  <h2>Install Hermes</h2>
+  <p class="intro">Choose <b>A</b> (the app) or <b>B</b> (the terminal). It takes about 5 to 15 minutes, once.</p>
+
+  <h3><span class="tag">Hermes Desktop</span>A. Install the app</h3>
+  <ol class="steps">
+    <li>Go to <a href="https://hermes-agent.nousresearch.com/desktop" target="_blank" rel="noopener">hermes-agent.nousresearch.com/desktop</a> and download the app for your computer.</li>
+    <li><b>Mac:</b> open the downloaded file and drag <b>Hermes.app</b> into <b>Applications</b>. Then open it from Applications.<br><b>Windows:</b> open the downloaded <code>.appinstaller</code> file and click <b>Install</b>.</li>
+    <li>On the first screen, choose <b>Install Hermes locally</b>. (“Connect to existing Hermes” is only if Hermes already runs on another computer.)</li>
+    <li>Wait for the one-time setup. It shows its progress step by step. Don’t close the app.</li>
+    <li>Connect a model (next part), then click <b>Begin</b>.</li>
+  </ol>
+  <div class="shots">
+    <figure><a href="img/desktop/01-first-run.jpg" target="_blank" rel="noopener"><img src="img/desktop/01-first-run.jpg" alt="Set up Hermes Desktop: Connect to existing Hermes, or Install Hermes locally" loading="lazy" width="852" height="415"></a><figcaption><span class="d">3</span>Choose <b>Install Hermes locally</b>.</figcaption></figure>
+    <figure><a href="img/desktop/02-installer.jpg" target="_blank" rel="noopener"><img src="img/desktop/02-installer.jpg" alt="Setting up Hermes Agent: a 9-step one-time installer with a progress bar" loading="lazy" width="860" height="709"></a><figcaption><span class="d">4</span>The one-time setup. Next time, the app opens straight away.</figcaption></figure>
+  </div>
+  <div class="note tip"><span class="t">Already installed Hermes in the terminal?</span><p>Run <code>hermes desktop</code>. It opens the app with the same settings, keys, and chats.</p></div>
+
+  <h3><span class="tag term">Terminal</span>B. Install with one command</h3>
+  <p class="prose">Open the terminal for your computer, paste the command, and press Enter.</p>
+  <div class="code"><div class="bar"><span>macOS, Linux, or WSL2 (Terminal)</span></div><pre>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</pre></div>
+  <div class="code"><div class="bar"><span>Windows (PowerShell)</span></div><pre>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</pre></div>
+  <p class="prose">When it finishes, <b>close the terminal and open a new one</b>. Then run the setup wizard and the health check:</p>
+  <div class="code"><div class="bar"><span>Run these one at a time</span></div><pre>hermes setup      <span class="c"># the setup wizard: model, keys, tools</span>
+hermes doctor     <span class="c"># checks that everything works</span>
+hermes --version  <span class="c"># shows the version you installed</span></pre></div>
+  <div class="shots">
+    <figure class="term"><a href="img/terminal/version.png" target="_blank" rel="noopener"><img src="img/terminal/version.png" alt="Terminal: hermes --version prints the Hermes Agent version" loading="lazy" width="1764" height="294"></a><figcaption><code>hermes --version</code>: Hermes is installed.</figcaption></figure>
+    <figure class="term"><a href="img/terminal/doctor.png" target="_blank" rel="noopener"><img src="img/terminal/doctor.png" alt="Terminal: hermes doctor shows green checks" loading="lazy" width="1764" height="798"></a><figcaption><code>hermes doctor</code>: green ✓ means OK. ⚠ items are optional.</figcaption></figure>
+  </div>
+  <div class="note"><span class="t">“hermes: command not found”?</span><p>Open a new terminal window. Still there? See <a href="#trouble">Troubleshooting</a>.</p></div>
+  <h3>You’re done when</h3>
+  <ul class="checks" data-list="install">
+    <li><label><input type="checkbox" data-k="in"><span>Hermes is installed (the app opens, or <code>hermes --version</code> works).</span></label></li>
+    <li><label><input type="checkbox" data-k="mo"><span>A model is connected (Part 4).</span></label></li>
+    <li><label><input type="checkbox" data-k="hi"><span>I said hi and got an answer (Part 5).</span></label></li>
+  </ul>
+</section>
+
+<!-- 4 -->
+<section class="part" id="model">
+  <p class="part-n">Part 4</p>
+  <h2>Connect a model</h2>
+  <p class="intro">Hermes needs an AI model to think. Choose one of these. You can change it any time.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Option</th><th>Good for</th><th>You need</th></tr></thead>
+    <tbody>
+      <tr><td><b>Nous Portal</b></td><td class="w">The easiest start. One login covers the model and web search.</td><td class="w">A free Nous Portal account</td></tr>
+      <tr><td><b>An API key</b> (OpenRouter, OpenAI, Gemini, and more)</td><td class="w">Choosing from many models. OpenRouter has some free ones.</td><td class="w">An account and a key from that provider</td></tr>
+      <tr><td><b>A local model</b> (like Ollama)</td><td class="w">Privacy and offline use. Nothing leaves your computer.</td><td class="w">A strong computer, and the model installed</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <ol class="steps">
+    <li>On the “Let’s get you setup” screen, click <b>Nous Portal</b> and sign in. Or click <b>I have an API key</b>.</li>
+    <li>For a key: pick the provider (for example <b>OpenRouter</b>), click <b>Get a key</b>, create a key on their website, paste it, then click <b>Connect</b>.</li>
+    <li>When it says <b>Connected</b>, click <b>Change</b> if you want another model, then <b>Begin</b>.</li>
+    <li>Later, change the model in <b>Settings › Model</b>.</li>
+  </ol>
+  <div class="shots">
+    <figure><a href="img/desktop/03-choose-provider.jpg" target="_blank" rel="noopener"><img src="img/desktop/03-choose-provider.jpg" alt="Choose a provider: Nous Portal (recommended), Run models locally, Other providers, I have an API key" loading="lazy" width="942" height="555"></a><figcaption><span class="d">1</span>Nous Portal, a local model, or <b>I have an API key</b>.</figcaption></figure>
+    <figure><a href="img/desktop/04-api-key.jpg" target="_blank" rel="noopener"><img src="img/desktop/04-api-key.jpg" alt="OpenRouter selected, an empty Paste API key box, and a Connect button" loading="lazy" width="944" height="959"></a><figcaption><span class="d">2</span>Pick a provider, <b>Get a key</b>, paste it, <b>Connect</b>.</figcaption></figure>
+    <figure><a href="img/desktop/05-connected.jpg" target="_blank" rel="noopener"><img src="img/desktop/05-connected.jpg" alt="OpenRouter connected, with Change and Begin buttons" loading="lazy" width="377" height="299"></a><figcaption><span class="d">3</span>Connected. <b>Change</b> the model or click <b>Begin</b>.</figcaption></figure>
+    <figure><a href="img/desktop/07-settings-model.jpg" target="_blank" rel="noopener"><img src="img/desktop/07-settings-model.jpg" alt="Settings, Model: provider and model drop-downs" loading="lazy" width="1600" height="1017"></a><figcaption><span class="d">4</span>Later: <b>Settings › Model</b>.</figcaption></figure>
+  </div>
+
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <div class="code"><div class="bar"><span>Pick or change the model</span></div><pre>hermes setup --portal   <span class="c"># sign in to Nous Portal</span>
+hermes model            <span class="c"># pick a provider and model from a menu</span></pre></div>
+  <h4>Using a local model (Ollama)</h4>
+  <p class="prose">Run <code>hermes model</code>, choose <b>Custom endpoint</b>, and enter:</p>
+  <div class="code"><div class="bar"><span>Answers for hermes model</span></div><pre>API base URL:  http://localhost:11434/v1
+API key:       ollama
+Model name:    <span class="c">(the model you pulled in Ollama)</span></pre></div>
+  <div class="note warn"><span class="t">Where is my key saved?</span><p>In <code>~/.hermes/.env</code> on your computer. Never paste a key into a chat with the agent, and never screenshot this file.</p></div>
+</section>
+
+<!-- 5 -->
+<section class="part" id="use">
+  <p class="part-n">Part 5</p>
+  <h2>Use your agent</h2>
+  <p class="intro">Talking to an agent is like giving a task to a helper who is fast, but new. Clear tasks get good results.</p>
+
+  <h3><span class="tag">Hermes Desktop</span>Your first chat</h3>
+  <ol class="steps">
+    <li>Type in the message box in the middle and press <kbd>Enter</kbd>. Try: <i>“Hi! What can you do for a student?”</i></li>
+    <li>Watch it work. When it uses a tool (like web search), you see that step in the chat.</li>
+    <li>If it asks for <b>approval</b> before running something, read what it wants to do. Click approve only if you understand it.</li>
+    <li>Start a fresh chat for a new task: <b>New session</b>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>N</kbd>.</li>
+  </ol>
+  <div class="note tip"><span class="t">Keyboard shortcut</span><p><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> opens the command palette: jump to any page or setting by typing its name.</p></div>
+
+  <h3><span class="tag term">Terminal</span>Chat in the terminal</h3>
+  <div class="code"><div class="bar"><span>Ways to talk to Hermes</span></div><pre>hermes                        <span class="c"># start a chat (Ctrl+C or /quit to leave)</span>
+hermes --continue             <span class="c"># pick up your last chat</span>
+hermes -p study-buddy         <span class="c"># chat with one of your agents (Part 6)</span>
+hermes -z "Explain recursion in two sentences"   <span class="c"># one question, one answer</span></pre></div>
+  <figure class="term" style="max-width:900px;margin-bottom:18px"><a href="img/terminal/first-chat.png" target="_blank" rel="noopener"><img src="img/terminal/first-chat.png" alt="Terminal: a one-line question to an agent and its two-sentence answer" loading="lazy" width="1764" height="256"></a><figcaption>A one-shot question with <code>-z</code>.</figcaption></figure>
+  <div class="note warn"><span class="t">Careful with <code>-z</code></span><p>One-shot mode skips approval prompts. Use it only with agents that have safe tools (no terminal or file tools).</p></div>
+
+  <h3>Commands you can type in a chat</h3>
+  <p class="prose">Start a message with <code>/</code> to give Hermes a command instead of a task. These work in the terminal, and most of them in the app too.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/help</code></td><td class="w">List the commands</td></tr>
+      <tr><td><code>/new</code></td><td class="w">Start a fresh chat. Do this when you finish a task: it’s also when memory is saved.</td></tr>
+      <tr><td><code>/retry</code></td><td class="w">Ask again for a new answer to your last message</td></tr>
+      <tr><td><code>/undo</code></td><td class="w">Take back your last message and try a better one</td></tr>
+      <tr><td><code>/model</code></td><td class="w">Switch the model for this chat</td></tr>
+      <tr><td><code>/tools</code></td><td class="w">See or change which tools are on</td></tr>
+      <tr><td><code>/approve</code> · <code>/deny</code></td><td class="w">Answer a request to run a risky command</td></tr>
+      <tr><td><code>/status</code></td><td class="w">Which model, how much of the chat’s memory is used</td></tr>
+      <tr><td><code>/compress</code></td><td class="w">Shrink a long chat so it fits again</td></tr>
+      <tr><td><code>/usage</code></td><td class="w">How many tokens you used, and your limits</td></tr>
+      <tr><td><code>/quit</code></td><td class="w">Leave the terminal chat</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>How to ask well</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Instead of</th><th>Try</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="w">“Help me study”</td><td class="w">“I have a Data Structures exam on Friday about trees and graphs. Make a 4-day plan, 1 hour a day.”</td><td class="w">Say the goal, the details, and the limits.</td></tr>
+      <tr><td class="w">“What’s new in AI?”</td><td class="w">“Find 3 AI news stories from this week. One line each, with the source link.”</td><td class="w">Ask for a format and for sources.</td></tr>
+      <tr><td class="w">“Fix my code”</td><td class="w">“This Python gives <code>IndexError</code> on line 12. Give me a hint first, not the answer.” (then paste the code)</td><td class="w">Share the error, and say how much help you want.</td></tr>
+      <tr><td class="w">Five tasks in one message</td><td class="w">One task, check it, then the next</td><td class="w">Small steps are easier to check.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>When the answer is wrong</h3>
+  <ul class="prose">
+    <li>Say exactly what’s wrong: <i>“The second link doesn’t mention this. Find a better source.”</i></li>
+    <li>Use <code>/retry</code> for a new answer, or <code>/undo</code> to rewrite your message.</li>
+    <li>Open the sources it gives you. Does the page really say that?</li>
+    <li>For facts that matter (grades, health, money), check with a person or an official source.</li>
+  </ul>
+</section>
+
+<!-- 6 -->
+<section class="part" id="create">
+  <p class="part-n">Part 6</p>
+  <h2>Make your own agent</h2>
+  <p class="intro">Each agent you make is a <b>profile</b>: its own job, settings, memory, and keys. One profile, one job. A study buddy and a news scout should be two profiles.</p>
+
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <ol class="steps">
+    <li>In the left sidebar, switch from <b>Sessions</b> to <b>Bots</b>. Every profile is a bot in this list.</li>
+    <li>Create a new agent. Give it a <b>Name</b>, a <b>Title</b>, and a short <b>Description</b> of its job.</li>
+    <li>Open <b>Advanced</b> to set its model, SOUL.md, skills, and toolsets. (Parts 7 and 8 explain these.)</li>
+    <li>Open its <b>Bot Chat</b> and say hi.</li>
+  </ol>
+  <div class="note tip"><span class="t">Editing settings for one agent</span><p>When you have two or more profiles, settings pages show an <b>Applies to</b> row at the top. Check it before you change anything, so you edit the right agent.</p></div>
+
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <div class="code"><div class="bar"><span>Make and use a profile called study-buddy</span></div><pre>hermes profile create study-buddy           <span class="c"># a new, empty agent</span>
+hermes profile create study-buddy --clone   <span class="c"># or copy your current settings and keys</span>
+hermes -p study-buddy model                 <span class="c"># give it its own model</span>
+hermes -p study-buddy                       <span class="c"># chat with it</span>
+hermes profile list                         <span class="c"># see all your agents</span></pre></div>
+  <p class="prose">Profile names use lowercase letters, numbers, and dashes. Put <code>-p &lt;name&gt;</code> after <code>hermes</code> in any command to make it about that agent.</p>
+  <figure class="term" style="max-width:900px"><a href="img/terminal/profile-list.png" target="_blank" rel="noopener"><img src="img/terminal/profile-list.png" alt="Terminal: hermes profile list shows each profile, its model, and whether it is running" loading="lazy" width="1764" height="488"></a><figcaption><code>hermes profile list</code>: every agent, its model, and whether its gateway is running.</figcaption></figure>
+
+  <h3>Where things live</h3>
+  <p class="prose">Everything Hermes knows is in one folder: <code>~/.hermes</code>. Each profile has its own copy in <code>~/.hermes/profiles/&lt;name&gt;/</code>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>File or folder</th><th>What’s inside</th></tr></thead>
+    <tbody>
+      <tr><td><code>config.yaml</code></td><td class="w">Settings: model, tools, safety rules, step limits</td></tr>
+      <tr><td><code>.env</code></td><td class="w"><b>Secrets</b>: API keys and bot tokens. Never share it.</td></tr>
+      <tr><td><code>SOUL.md</code></td><td class="w">Who the agent is: job, rules, tone</td></tr>
+      <tr><td><code>memories/</code></td><td class="w"><code>MEMORY.md</code> (its notes) and <code>USER.md</code> (what it knows about you)</td></tr>
+      <tr><td><code>skills/</code></td><td class="w">Saved how-tos (<code>SKILL.md</code> files)</td></tr>
+      <tr><td><code>cron/</code></td><td class="w">Scheduled jobs and their results</td></tr>
+      <tr><td><code>sessions/</code></td><td class="w">Past chats</td></tr>
+      <tr><td><code>logs/</code></td><td class="w">What happened. Look here when something breaks.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted" style="font-size:.9rem"><code>~</code> means your home folder. On Windows that’s <code>C:\Users\&lt;you&gt;</code>. Files that start with a dot, like <code>.env</code>, are hidden: on a Mac press <kbd>⌘</kbd> <kbd>Shift</kbd> <kbd>.</kbd> in Finder to see them.</p>
+</section>
+
+<!-- 7 -->
+<section class="part" id="soul">
+  <p class="part-n">Part 7</p>
+  <h2>Write its SOUL.md</h2>
+  <p class="intro">SOUL.md is a short text file that tells your agent who it is. Hermes reads it at the start of every chat.</p>
+  <div class="prose">
+    <p>A good SOUL.md answers five questions:</p>
+    <ol>
+      <li><b>Who is it, and who does it help?</b></li>
+      <li><b>What is its one job?</b></li>
+      <li><b>How does it work?</b> (its steps and habits)</li>
+      <li><b>What must it never do, and when must it ask first?</b></li>
+      <li><b>What tone does it use?</b></li>
+    </ol>
+  </div>
+  <div class="code"><div class="bar"><span>~/.hermes/profiles/study-buddy/SOUL.md</span></div><pre># Study Buddy
+
+You are **Study Buddy**. You help a first-year IT student.
+Your one job: Help me plan study time and understand hard topics.
+
+## How you work
+- Ask which subject and deadline first
+- Explain with one simple example
+- End with one practice question
+
+## Never
+- Do my graded work for me
+- Make up facts or sources
+
+## Ask the user first before
+- Changing my schedule
+
+## Tone
+Warm and friendly, but brief.
+
+## Always
+- If you don’t know something, say so. Don’t make it up.
+- If a request is outside your job, say so politely.</pre></div>
+  <h3>How to save it</h3>
+  <ul class="prose">
+    <li><span class="tag">Hermes Desktop</span>Open the agent’s <b>Advanced</b> settings in the Bots list and paste it into the SOUL field.</li>
+    <li><span class="tag term">Terminal</span>Save it as <code>~/.hermes/profiles/study-buddy/SOUL.md</code> in any text editor (for the main agent: <code>~/.hermes/SOUL.md</code>).</li>
+  </ul>
+  <h3>Test it</h3>
+  <div class="prose">
+    <p>Start a new chat and try to make it break its rules: <i>“Just write my essay for me.”</i> Does it refuse politely? Does it ask about your deadline first?</p>
+    <p>In the course, the Write a SOUL.md page builds one for you and tests it on a real Hermes agent.</p>
+  </div>
+  <div class="note warn"><span class="t">A rule in SOUL.md is a request, not a lock</span><p>A tricky message or web page can talk an agent out of its rules. For anything that really matters, use a <b>setting</b> (<a href="#safety">Part 9</a>).</p></div>
+  <figure class="term" style="max-width:900px"><a href="img/terminal/soul.png" target="_blank" rel="noopener"><img src="img/terminal/soul.png" alt="Terminal: the first lines of a real SOUL.md for the research agent Atlas" loading="lazy" width="1764" height="604"></a><figcaption>A real one: the SOUL.md of Atlas, the workshop’s research agent.</figcaption></figure>
+</section>
+
+<!-- 8 -->
+<section class="part" id="tools">
+  <p class="part-n">Part 8</p>
+  <h2>Choose its tools</h2>
+  <p class="intro">Tools let an agent act. Every tool is a door: give your agent <b>only the tools its job needs</b>. This is called least privilege.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Toolset</th><th>What it lets the agent do</th><th>Risk</th></tr></thead>
+    <tbody>
+      <tr><td><code>web</code></td><td class="w">Search the web and read pages</td><td><span class="pill low">Low</span></td></tr>
+      <tr><td><code>vision</code></td><td class="w">Look at pictures you send</td><td><span class="pill low">Low</span></td></tr>
+      <tr><td><code>todo</code></td><td class="w">Keep a task list for long jobs</td><td><span class="pill low">Low</span></td></tr>
+      <tr><td><code>clarify</code></td><td class="w">Ask you a question instead of guessing</td><td><span class="pill low">Low</span></td></tr>
+      <tr><td><code>memory</code></td><td class="w">Remember things about you between chats</td><td><span class="pill mid">Careful</span></td></tr>
+      <tr><td><code>session_search</code></td><td class="w">Search your old chats</td><td><span class="pill mid">Careful</span></td></tr>
+      <tr><td><code>skills</code></td><td class="w">Use and save how-tos</td><td><span class="pill mid">Careful</span></td></tr>
+      <tr><td><code>cronjob</code></td><td class="w">Create its own scheduled jobs</td><td><span class="pill mid">Careful</span></td></tr>
+      <tr><td><code>delegation</code></td><td class="w">Start helper agents</td><td><span class="pill mid">Careful</span></td></tr>
+      <tr><td><code>browser</code></td><td class="w">Click around real websites for you</td><td><span class="pill high">High</span></td></tr>
+      <tr><td><code>file</code></td><td class="w">Read and change files on your computer</td><td><span class="pill high">High</span></td></tr>
+      <tr><td><code>terminal</code></td><td class="w">Run commands on your computer</td><td><span class="pill high">High</span></td></tr>
+      <tr><td><code>code_execution</code></td><td class="w">Run Python code</td><td><span class="pill high">High</span></td></tr>
+    </tbody>
+  </table></div>
+  <h4>Good starting sets</h4>
+  <div class="cards">
+    <div class="card"><b>Researcher</b><span><code>web</code>, <code>vision</code></span></div>
+    <div class="card"><b>Study buddy</b><span><code>web</code>, <code>todo</code>, <code>clarify</code>, <code>memory</code></span></div>
+    <div class="card"><b>Event helper</b><span><code>web</code>, <code>todo</code>, <code>clarify</code>, <code>cronjob</code></span></div>
+    <div class="card"><b>Just chat</b><span>No tools at all</span></div>
+  </div>
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <p class="prose">Open <b>Capabilities › Tools</b>. Each toolset has a switch. Changes apply to <b>new</b> chats.</p>
+  <div class="shots one"><figure><a href="img/desktop/08-tools.jpg" target="_blank" rel="noopener"><img src="img/desktop/08-tools.jpg" alt="Capabilities, Tools: toolsets with on/off switches" loading="lazy" width="1600" height="1017"></a><figcaption>Leave on only what the job needs.</figcaption></figure></div>
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <div class="code"><div class="bar"><span>Commands</span></div><pre>hermes -p study-buddy tools                              <span class="c"># pick tools in a menu</span>
+hermes -p study-buddy tools enable web todo clarify memory
+hermes -p study-buddy tools disable terminal file code_execution browser
+hermes -p study-buddy tools list                         <span class="c"># check</span></pre></div>
+  <div class="code"><div class="bar"><span>Or in config.yaml</span></div><pre>platform_toolsets:
+  cli: [web, todo, clarify, memory]
+  telegram: [web, todo, clarify, memory]</pre></div>
+  <figure class="term" style="max-width:900px"><a href="img/terminal/tools.png" target="_blank" rel="noopener"><img src="img/terminal/tools.png" alt="Terminal: hermes tools list shows web and vision on and everything else off" loading="lazy" width="1764" height="682"></a><figcaption>Atlas only has <b>web</b> and <b>vision</b>. Everything risky is off.</figcaption></figure>
+</section>
+
+<!-- 9 -->
+<section class="part" id="safety">
+  <p class="part-n">Part 9</p>
+  <h2>Make it safe</h2>
+  <p class="intro">A rule in SOUL.md is a request. A setting is a lock. Hermes enforces settings even when the agent is tricked.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Risk</th><th>The lock</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td class="w">A web page tells your agent to run a bad command</td><td><code>approvals.mode: manual</code></td><td class="w">Risky commands wait until you approve them</td></tr>
+      <tr><td class="w">A command must never run</td><td><code>approvals.deny</code></td><td class="w">Blocked every time, even if someone approves</td></tr>
+      <tr><td class="w">The agent loops and uses up credits</td><td><code>agent.max_turns: 20</code></td><td class="w">A hard limit on steps per task</td></tr>
+      <tr><td class="w">A key shows up in a tool result</td><td><code>security.redact_secrets</code></td><td class="w">Keys become <code>[REDACTED]</code>. On by default: leave it on.</td></tr>
+      <tr><td class="w">A phone number reaches the AI</td><td><code>privacy.redact_pii: true</code></td><td class="w">Removes phone numbers and hides user IDs</td></tr>
+      <tr><td class="w">A stranger finds your Telegram bot</td><td><code>TELEGRAM_ALLOWED_USERS</code></td><td class="w">Only listed or paired people get answers</td></tr>
+      <tr><td class="w">Too many tools</td><td>Turn tools off</td><td class="w">A tool that’s off can’t be misused (Part 8)</td></tr>
+    </tbody>
+  </table></div>
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <ul class="prose">
+    <li><b>Settings › Safety › Approvals</b>: <b>Approval Mode</b> decides when Hermes stops and asks you. <b>Command Allowlist</b> lists commands that are always OK.</li>
+    <li><b>Messaging › Telegram</b>: <b>Allowed Telegram user IDs</b> is the allowlist. “Without this, anyone can DM your bot.”</li>
+  </ul>
+  <div class="shots">
+    <figure><a href="img/desktop/09-approvals.jpg" target="_blank" rel="noopener"><img src="img/desktop/09-approvals.jpg" alt="Settings, Safety, Approvals: Approval Mode, Approval Timeout, Command Allowlist" loading="lazy" width="1600" height="1017"></a><figcaption>Settings › Safety › Approvals.</figcaption></figure>
+    <figure><a href="img/desktop/14-telegram.jpg" target="_blank" rel="noopener"><img src="img/desktop/14-telegram.jpg" alt="Messaging, Telegram: bot token and Allowed Telegram user IDs" loading="lazy" width="1600" height="1017"></a><figcaption>Messaging › Telegram: the allowlist.</figcaption></figure>
+  </div>
+  <h3><span class="tag term">Terminal</span>Safe settings to copy</h3>
+  <div class="code"><div class="bar"><span>~/.hermes/profiles/study-buddy/config.yaml</span></div><pre>agent:
+  max_turns: 20             <span class="c"># step limit: every task stops</span>
+approvals:
+  mode: manual              <span class="c"># risky commands wait for you</span>
+  deny: ["rm -rf *"]        <span class="c"># never allowed, even if approved</span>
+privacy:
+  redact_pii: true          <span class="c"># hide phone numbers from the AI</span>
+security:
+  redact_secrets: true      <span class="c"># on by default: hide keys and passwords</span></pre></div>
+  <div class="code"><div class="bar"><span>~/.hermes/profiles/study-buddy/.env (add this line)</span></div><pre>TELEGRAM_ALLOWED_USERS=your-telegram-user-id   <span class="c"># only you can use the bot</span></pre></div>
+  <p class="prose">Or set one value at a time: <code>hermes -p study-buddy config set agent.max_turns 20</code></p>
+  <div class="note warn"><span class="t">Don’t turn the locks off</span><p><code>/yolo</code> and <code>--yolo</code> skip every approval. Don’t use them on an agent that has terminal, file, or browser tools.</p></div>
+  <div class="note"><span class="t">Emergency stop</span><p>In a terminal chat press <kbd>Ctrl</kbd>+<kbd>C</kbd>. To stop all scheduled jobs and new Telegram replies at once: <code>hermes pause</code> (undo with <code>hermes resume</code>).</p></div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="memory">
+  <p class="part-n">Part 10</p>
+  <h2>Memory and skills</h2>
+  <p class="intro">Hermes gets better the more you use it: it remembers you, and it saves how-tos.</p>
+  <h3>Memory: two small files</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>File</th><th>What it holds</th></tr></thead>
+    <tbody>
+      <tr><td><code>MEMORY.md</code></td><td class="w">The agent’s own notes: facts, habits, what worked (about 2,200 characters)</td></tr>
+      <tr><td><code>USER.md</code></td><td class="w">What it knows about you: preferences and style (about 1,375 characters)</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="prose">
+    <li>Tell it: <i>“Remember that I like short answers.”</i></li>
+    <li>Type <code>/new</code> when you finish a task. That’s when memory is saved and reloaded.</li>
+    <li>Read it any time: <code>cat ~/.hermes/memories/USER.md</code>. Delete anything you don’t want it to keep.</li>
+  </ul>
+  <h3>Skills: saved how-tos</h3>
+  <p class="prose">A skill is a <code>SKILL.md</code> file: when to use it, the steps, and how to check it worked. The agent loads it only when it’s needed.</p>
+  <div class="code"><div class="bar"><span>Find and add skills</span></div><pre>hermes skills search study      <span class="c"># find skills about a topic</span>
+hermes skills inspect &lt;name&gt;    <span class="c"># read it before you install</span>
+hermes skills install &lt;name&gt;    <span class="c"># add it</span>
+hermes skills list              <span class="c"># what you have</span></pre></div>
+  <div class="code"><div class="bar"><span>Write your own: ~/.hermes/skills/study-plan/SKILL.md</span></div><pre>---
+name: study-plan
+description: Turn a list of exams into a week-by-week study plan.
+version: 1.0.0
+---
+
+# Study plan
+
+## When to Use
+The user lists exams or deadlines and asks for a plan.
+
+## Procedure
+1. Ask for each subject, its date, and free hours per day.
+2. Put the hardest subject first, in short blocks.
+3. Leave the day before each exam for review.
+
+## Pitfalls
+- Don’t plan more hours than the user has.
+
+## Verification
+Every exam has study blocks before its date.</pre></div>
+  <div class="note warn"><span class="t">Read a skill before you install it</span><p>A skill is instructions your agent will follow. Install skills only from sources you trust, and read them first with <code>hermes skills inspect</code>.</p></div>
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <div class="shots">
+    <figure><a href="img/desktop/10-memory.jpg" target="_blank" rel="noopener"><img src="img/desktop/10-memory.jpg" alt="Settings, Memory and Context: Persistent Memory and User Profile switches" loading="lazy" width="1600" height="1017"></a><figcaption><b>Settings › Memory &amp; Context</b>: turn memory on, set its size.</figcaption></figure>
+    <figure><a href="img/desktop/11-skills.jpg" target="_blank" rel="noopener"><img src="img/desktop/11-skills.jpg" alt="Capabilities, Skills: installed skills with switches and the Skills Hub" loading="lazy" width="1600" height="1017"></a><figcaption><b>Capabilities › Skills</b>: your skills, and the Skills Hub.</figcaption></figure>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="jobs">
+  <p class="part-n">Part 11</p>
+  <h2>Scheduled jobs</h2>
+  <p class="intro">A scheduled job (a “cron job”) is an alarm clock for your agent. At the set time, Hermes gives it a task and sends the result where you want.</p>
+  <h3>Reading a schedule</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Schedule</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>0 8 * * *</code></td><td class="w">Every day at 8:00</td></tr>
+      <tr><td><code>30 7 * * 1-5</code></td><td class="w">Weekdays at 7:30</td></tr>
+      <tr><td><code>0 18 * * 0,6</code></td><td class="w">Weekends at 18:00</td></tr>
+      <tr><td><code>0 9 * * 1</code></td><td class="w">Mondays at 9:00</td></tr>
+    </tbody>
+  </table></div>
+  <p class="prose muted">The five parts are: minute, hour, day of month, month, day of week. A <code>*</code> means “every”.</p>
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <ol class="steps">
+    <li>Open <b>Scheduled jobs</b> in the sidebar.</li>
+    <li>Pick a blueprint, like <b>Morning briefing</b>, <b>Weekly review</b>, or <b>Daily learning drip</b>.</li>
+    <li>Set the time and where to deliver it (this computer, or a chat like Telegram), then schedule it.</li>
+  </ol>
+  <div class="shots">
+    <figure><a href="img/desktop/12-scheduled-jobs.jpg" target="_blank" rel="noopener"><img src="img/desktop/12-scheduled-jobs.jpg" alt="Scheduled jobs: blueprints like Morning briefing, Weekly review, Daily learning drip" loading="lazy" width="1600" height="1017"></a><figcaption>Ready-made blueprints.</figcaption></figure>
+    <figure><a href="img/desktop/13-new-cron.jpg" target="_blank" rel="noopener"><img src="img/desktop/13-new-cron.jpg" alt="New cron job from Morning briefing: time 08:00 and delivery target" loading="lazy" width="1600" height="1017"></a><figcaption>New job: what time, and where to deliver it.</figcaption></figure>
+  </div>
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <div class="code"><div class="bar"><span>A morning briefing every day at 8:00</span></div><pre>hermes -p study-buddy cron create "0 8 * * *" \
+  "Write a short morning briefing: one study tip and one thing to try today." \
+  --name "Morning Briefing" --deliver local
+
+hermes -p study-buddy cron list            <span class="c"># check it</span>
+hermes -p study-buddy cron run &lt;job_id&gt;    <span class="c"># try it now</span></pre></div>
+  <figure class="term" style="max-width:900px"><a href="img/terminal/cron.png" target="_blank" rel="noopener"><img src="img/terminal/cron.png" alt="Terminal: hermes cron list shows jobs with their schedules and next run" loading="lazy" width="1764" height="1030"></a><figcaption><code>hermes cron list</code>: each job, its schedule, and when it runs next.</figcaption></figure>
+  <div class="note"><span class="t">It only runs if Hermes is running</span><p>Your computer must be on and awake, with Hermes running, at that time. Use <code>--deliver telegram</code> to get the result on your phone (Part 12).</p></div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="telegram">
+  <p class="part-n">Part 12</p>
+  <h2>Put it on Telegram</h2>
+  <p class="intro">Chat with your agent from your phone. Hermes still runs on your computer. The <b>gateway</b> carries messages between Telegram and your agent.</p>
+  <div class="loop" role="img" aria-label="You, then Telegram, then the gateway, then your agent on Hermes">
+    <span>You</span><i>→</i><span>Telegram</span><i>→</i><span>Gateway</span><i>→</i><span>Your agent</span>
+  </div>
+  <h3><span class="tag">Hermes Desktop</span>In the app (easiest)</h3>
+  <ol class="steps">
+    <li>Open <b>Messaging › Telegram</b>.</li>
+    <li>Click <b>Create with QR</b> and scan the code with your phone (or open the link).</li>
+    <li>Confirm in Telegram. Hermes creates the bot, finds your user ID for the allowlist, and saves everything.</li>
+    <li>Check that your ID is in <b>Allowed Telegram user IDs</b>, then <b>Save changes</b>. Message your bot.</li>
+  </ol>
+  <div class="shots one"><figure><a href="img/desktop/14-telegram.jpg" target="_blank" rel="noopener"><img src="img/desktop/14-telegram.jpg" alt="Messaging, Telegram: Quick setup with Create with QR, bot token, allowed user IDs" loading="lazy" width="1600" height="1017"></a><figcaption><b>Create with QR</b>, or paste a bot token from @BotFather.</figcaption></figure></div>
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <ol class="steps">
+    <li>In Telegram, message <b>@BotFather</b>, send <code>/newbot</code>, choose a name, and copy the <b>token</b>.</li>
+    <li>Run <code>hermes gateway setup</code> and paste the token when it asks. It’s saved in <code>.env</code> as <code>TELEGRAM_BOT_TOKEN</code>.</li>
+    <li>Start the gateway: <code>hermes gateway install</code> keeps it running in the background. <code>hermes gateway run</code> runs it in this window.</li>
+    <li>Message your bot. It replies with an 8-character pairing code. Let yourself in: <code>hermes pairing approve telegram CODE</code></li>
+    <li>Check it: <code>hermes gateway status</code></li>
+  </ol>
+  <div class="shots">
+    <figure class="term"><a href="img/terminal/gateway.png" target="_blank" rel="noopener"><img src="img/terminal/gateway.png" alt="Terminal: hermes gateway status shows the gateway running" loading="lazy" width="1764" height="604"></a><figcaption><code>hermes gateway status</code>: it’s running.</figcaption></figure>
+    <figure class="term"><a href="img/terminal/pairing.png" target="_blank" rel="noopener"><img src="img/terminal/pairing.png" alt="Terminal: hermes pairing list with no pending requests" loading="lazy" width="1764" height="216"></a><figcaption><code>hermes pairing list</code>: who is waiting to be let in.</figcaption></figure>
+  </div>
+  <h3>What you’ll see in Telegram</h3>
+  <p class="prose">Strangers get a pairing code, not answers. After you approve them, they send their message again and the agent replies.</p>
+  <div class="shots">
+    <figure class="term"><a href="img/telegram/01-pairing.jpg" target="_blank" rel="noopener"><img src="img/telegram/01-pairing.jpg" alt="Telegram: after Start, the bot gives an 8-character pairing code and the approve command" loading="lazy" width="1078" height="588"></a><figcaption><span class="d">1</span>Press <b>Start</b>: the bot gives a pairing code that works for 1 hour.</figcaption></figure>
+    <figure class="term"><a href="img/telegram/02-chat.jpg" target="_blank" rel="noopener"><img src="img/telegram/02-chat.jpg" alt="Telegram: after approval, Iris answers a request for a study tip" loading="lazy" width="1078" height="1052"></a><figcaption><span class="d">2</span>Approved: send the message again, and the agent answers. Type <code>/sethome</code> if you want scheduled jobs delivered to this chat.</figcaption></figure>
+  </div>
+  <div class="note lab"><span class="t">In the lab</span><p>You don’t make a bot in class. Open the workshop’s bot from the Hermes on Telegram page, press Start, paste your pairing code there, and wait for a mentor to approve you.</p></div>
+  <div class="note warn"><span class="t">Your bot token is a key</span><p>Anyone with it controls your bot. If it leaks, open @BotFather and revoke it.</p></div>
+</section>
+
+<!-- 13 -->
+<section class="part" id="apps">
+  <p class="part-n">Part 13</p>
+  <h2>Connect apps</h2>
+  <p class="intro">Hermes can speak the same API as OpenAI, so other apps (like the workshop website) can use your agent. This part is optional.</p>
+  <h3><span class="tag">Hermes Desktop</span>In the app</h3>
+  <ul class="prose">
+    <li><b>Messaging › API server</b>: set a long, random key, enable it, and <b>Save changes</b>.</li>
+    <li><b>Settings › Gateways</b>: connect the app to a Hermes on another computer (remote, Hermes Cloud, or over SSH).</li>
+  </ul>
+  <div class="shots">
+    <figure><a href="img/desktop/15-api-server.jpg" target="_blank" rel="noopener"><img src="img/desktop/15-api-server.jpg" alt="Messaging, API server settings" loading="lazy" width="1600" height="1017"></a><figcaption>API server.</figcaption></figure>
+    <figure><a href="img/desktop/16-gateways.jpg" target="_blank" rel="noopener"><img src="img/desktop/16-gateways.jpg" alt="Settings, Gateways: local, Hermes Cloud, remote, SSH" loading="lazy" width="1600" height="1017"></a><figcaption>Gateways.</figcaption></figure>
+  </div>
+  <h3><span class="tag term">Terminal</span>In the terminal</h3>
+  <ol class="steps">
+    <li>Add <code>API_SERVER_KEY=…</code> (long and random) to the profile’s <code>.env</code>.</li>
+    <li>Start the gateway: <code>hermes -p study-buddy gateway start</code></li>
+    <li>Try it:</li>
+  </ol>
+  <div class="code"><div class="bar"><span>Ask your agent from any app</span></div><pre>curl http://127.0.0.1:8642/p/study-buddy/v1/chat/completions \
+  -H "Authorization: Bearer $API_SERVER_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"study-buddy","messages":[{"role":"user","content":"Hi!"}]}'</pre></div>
+  <p class="prose">The answer is in <code>choices[0].message.content</code>.</p>
+  <div class="note warn"><span class="t">Keep it on your computer</span><p>The API server only answers on your own computer (<code>127.0.0.1</code>). If you ever open it to the internet, protect it with the key and expose only what you need.</p></div>
+</section>
+
+<!-- 14 -->
+<section class="part" id="trouble">
+  <p class="part-n">Part 14</p>
+  <h2>Troubleshooting</h2>
+  <p class="intro">Start with these three commands. They fix or explain most problems.</p>
+  <div class="code"><div class="bar"><span>First aid</span></div><pre>hermes doctor     <span class="c"># checks your setup and says what's wrong</span>
+hermes status     <span class="c"># is everything running?</span>
+hermes logs       <span class="c"># what happened, and why</span></pre></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td class="w"><b>“hermes: command not found”</b></td><td class="w">Open a new terminal window. Still broken? Run <code>source ~/.zshrc</code> (Mac) or <code>source ~/.bashrc</code> (Linux), then check <code>ls ~/.local/bin/hermes</code>.</td></tr>
+      <tr><td class="w"><b>The Mac installer says “not supported on this Mac”</b></td><td class="w">Your Mac has an Intel chip. The app is for Apple Silicon only. Try the terminal install (Part 3B); it isn’t officially supported, so it may not work.</td></tr>
+      <tr><td class="w"><b>API key not working</b></td><td class="w">The key must match the provider (an OpenAI key won’t work on OpenRouter). Run <code>hermes model</code> and enter it again. Check for an old key in <code>~/.hermes/.env</code>.</td></tr>
+      <tr><td class="w"><b>“Model not found”</b></td><td class="w">Pick a model from the list: <b>Settings › Model</b> or <code>hermes model</code>.</td></tr>
+      <tr><td class="w"><b>Error 429, “rate limit”, or out of credits</b></td><td class="w">Wait a minute and retry. Free models have daily limits. Switch to another model with <code>/model</code>.</td></tr>
+      <tr><td class="w"><b>The app shows an error card</b></td><td class="w">It names what failed (model, connection, key, disk). Use its buttons: <b>Retry</b>, <b>Switch provider</b>, or <b>Open logs</b>.</td></tr>
+      <tr><td class="w"><b>The app stopped answering, but says Connected</b></td><td class="w">Open the gateway menu in the status bar at the bottom and click <b>Reconnect gateway</b>. Or quit and reopen the app.</td></tr>
+      <tr><td class="w"><b>“Context length exceeded”, or it forgot the start of the chat</b></td><td class="w">The chat got too long. Type <code>/compress</code>, or <code>/new</code> to start fresh.</td></tr>
+      <tr><td class="w"><b>“Command blocked” or it asks for approval</b></td><td class="w">That’s the safety lock working. Read the command. <code>/approve</code> only if you understand it, otherwise <code>/deny</code>.</td></tr>
+      <tr><td class="w"><b>Telegram bot doesn’t reply</b></td><td class="w">Run <code>hermes gateway status</code>; if it’s stopped, <code>hermes gateway start</code>. Are you paired or in the allowlist? Check <code>hermes pairing list</code>. Read <code>~/.hermes/logs/gateway.log</code>.</td></tr>
+      <tr><td class="w"><b>A scheduled job didn’t run</b></td><td class="w">Was the computer on and awake, with Hermes running? Check <code>hermes cron list</code>, then test with <code>hermes cron run &lt;job_id&gt;</code>.</td></tr>
+      <tr><td class="w"><b>Tool changes don’t show up</b></td><td class="w">Tool changes apply to new chats. Type <code>/new</code>.</td></tr>
+      <tr><td class="w"><b>Answers are slow</b></td><td class="w">Free and local models can be slow. Give one clear task at a time, or pick a faster model.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><span class="t">Still stuck?</span><p>In the lab, ask a mentor. At home, see the <a href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener">official Hermes docs</a>. When you ask for help, share the error text, never your <code>.env</code> or keys.</p></div>
+</section>
+
+<!-- 15 -->
+<section class="part" id="cheats">
+  <p class="part-n">Part 15</p>
+  <h2>Command cheat sheet</h2>
+  <p class="intro">Add <code>-p &lt;profile&gt;</code> after <code>hermes</code> to run any of these for one agent.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><th colspan="2">Set up</th></tr>
+      <tr><td><code>hermes setup</code></td><td class="w">The setup wizard</td></tr>
+      <tr><td><code>hermes model</code></td><td class="w">Pick the provider and model</td></tr>
+      <tr><td><code>hermes doctor</code></td><td class="w">Check that everything works</td></tr>
+      <tr><td><code>hermes update</code></td><td class="w">Update Hermes</td></tr>
+      <tr><td><code>hermes desktop</code></td><td class="w">Open the desktop app</td></tr>
+      <tr><th colspan="2">Chat</th></tr>
+      <tr><td><code>hermes</code></td><td class="w">Start a chat</td></tr>
+      <tr><td><code>hermes --continue</code></td><td class="w">Continue your last chat</td></tr>
+      <tr><td><code>hermes -z "…"</code></td><td class="w">One question, one answer (skips approvals)</td></tr>
+      <tr><td><code>hermes sessions list</code></td><td class="w">Your past chats</td></tr>
+      <tr><th colspan="2">Agents</th></tr>
+      <tr><td><code>hermes profile create &lt;name&gt;</code></td><td class="w">Make a new agent</td></tr>
+      <tr><td><code>hermes profile list</code></td><td class="w">See all your agents</td></tr>
+      <tr><td><code>hermes -p &lt;name&gt;</code></td><td class="w">Chat with one agent</td></tr>
+      <tr><th colspan="2">Tools and settings</th></tr>
+      <tr><td><code>hermes tools</code></td><td class="w">Turn tools on and off in a menu</td></tr>
+      <tr><td><code>hermes tools list</code></td><td class="w">Which tools are on</td></tr>
+      <tr><td><code>hermes config set &lt;key&gt; &lt;value&gt;</code></td><td class="w">Change one setting</td></tr>
+      <tr><td><code>hermes config get &lt;key&gt;</code></td><td class="w">Read one setting</td></tr>
+      <tr><th colspan="2">Memory and skills</th></tr>
+      <tr><td><code>hermes skills search &lt;topic&gt;</code></td><td class="w">Find skills</td></tr>
+      <tr><td><code>hermes skills install &lt;name&gt;</code></td><td class="w">Add a skill</td></tr>
+      <tr><td><code>hermes skills list</code></td><td class="w">Your skills</td></tr>
+      <tr><th colspan="2">Scheduled jobs</th></tr>
+      <tr><td><code>hermes cron create "&lt;when&gt;" "&lt;task&gt;"</code></td><td class="w">Add a job (add <code>--name</code>, <code>--deliver</code>)</td></tr>
+      <tr><td><code>hermes cron list</code></td><td class="w">Your jobs and their next run</td></tr>
+      <tr><td><code>hermes cron run &lt;job_id&gt;</code></td><td class="w">Run a job now</td></tr>
+      <tr><th colspan="2">Telegram and apps</th></tr>
+      <tr><td><code>hermes gateway setup</code></td><td class="w">Add a bot token</td></tr>
+      <tr><td><code>hermes gateway start</code> · <code>status</code></td><td class="w">Start it, or check it</td></tr>
+      <tr><td><code>hermes pairing approve telegram &lt;CODE&gt;</code></td><td class="w">Let someone talk to your bot</td></tr>
+      <tr><th colspan="2">Help and safety</th></tr>
+      <tr><td><code>hermes status</code> · <code>hermes logs</code></td><td class="w">What’s running, and what happened</td></tr>
+      <tr><td><code>hermes insights</code></td><td class="w">Your usage: chats, tools, tokens</td></tr>
+      <tr><td><code>hermes pause</code> · <code>hermes resume</code></td><td class="w">Emergency stop for jobs and bots, and undo</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 16 -->
+<section class="part" id="glossary">
+  <p class="part-n">Part 16</p>
+  <h2>Glossary</h2>
+  <dl class="gloss">
+    <dt>Agent</dt><dd>An AI that can act with tools, in a loop, until a job is done.</dd>
+    <dt>Model</dt><dd>The AI “brain” that reads and writes text. Made by a provider.</dd>
+    <dt>Provider</dt><dd>The company or program that runs the model: Nous Portal, OpenRouter, OpenAI, Ollama…</dd>
+    <dt>API key</dt><dd>A secret password that lets Hermes use a provider. Saved in <code>.env</code>.</dd>
+    <dt>Token</dt><dd>A small piece of text (about ¾ of a word). Providers count and charge by tokens.</dd>
+    <dt>Context window</dt><dd>How much text the model can keep in mind at once. Long chats can overflow it.</dd>
+    <dt>Tool / toolset</dt><dd>An action the agent can take (search, read a file). Toolsets are groups of tools.</dd>
+    <dt>Profile</dt><dd>One separate agent with its own settings, SOUL.md, memory, and keys.</dd>
+    <dt>SOUL.md</dt><dd>The file that says who the agent is: job, rules, tone.</dd>
+    <dt>config.yaml</dt><dd>The settings file: model, tools, safety.</dd>
+    <dt>Memory</dt><dd>What the agent remembers between chats (<code>MEMORY.md</code>, <code>USER.md</code>).</dd>
+    <dt>Skill</dt><dd>A saved how-to (<code>SKILL.md</code>) the agent loads when needed.</dd>
+    <dt>Cron job</dt><dd>A task that runs on a schedule.</dd>
+    <dt>Gateway</dt><dd>The bridge between Hermes and Telegram or other apps.</dd>
+    <dt>Pairing / allowlist</dt><dd>How you decide who may talk to your bot.</dd>
+    <dt>Approval</dt><dd>Hermes stops and asks you before a risky command runs.</dd>
+    <dt>Prompt injection</dt><dd>Hidden instructions in a web page or file that try to trick the agent.</dd>
+    <dt>Hallucination</dt><dd>When a model makes something up and says it as if it were true.</dd>
+    <dt>Least privilege</dt><dd>Give an agent only the tools and access its job needs.</dd>
+  </dl>
+</section>
+
+<!-- 17 -->
+<section class="part" id="rules">
+  <p class="part-n">Part 17</p>
+  <h2>Rules for using agents</h2>
+  <p class="intro">An agent works for you, and you are responsible for what it does.</p>
+  <div class="cards">
+    <div class="card"><b>Your keys are yours</b><span>Never share API keys, bot tokens, or <code>.env</code>. If one leaks, revoke it on the provider’s site right away.</span></div>
+    <div class="card"><b>Protect people’s data</b><span>Don’t give an agent other people’s phone numbers, addresses, or private messages.</span></div>
+    <div class="card"><b>Check before you trust</b><span>Open the sources. Agents can be wrong, and web pages can lie to them.</span></div>
+    <div class="card"><b>Do your own graded work</b><span>Use agents to learn and plan, not to hand in work as your own. Follow your school’s rules.</span></div>
+    <div class="card"><b>Fewest tools possible</b><span>Turn on terminal, file, and browser tools only when you need them, with approvals on.</span></div>
+    <div class="card"><b>Ask before you install</b><span>Only on your own computer, or with the owner’s permission.</span></div>
+    <div class="card"><b>Watch the cost</b><span>Set spending limits, use <code>max_turns</code>, and check <code>hermes insights</code>.</span></div>
+    <div class="card"><b>Know how to stop it</b><span><kbd>Ctrl</kbd>+<kbd>C</kbd>, <code>/deny</code>, or <code>hermes pause</code>.</span></div>
+  </div>
+  <h3>Keep learning</h3>
+  <ul class="prose">
+    <li>The Hermes Agent 101 course: 13 hands-on steps, with a real agent to test your SOUL.md</li>
+    <li><a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent official site</a> and <a href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener">docs</a></li>
+  </ul>
+  <footer>Hermes Agent 101 student manual. Hermes Agent and its logo are by Nous Research; this workshop is independent. Screenshots are from Hermes Desktop and Hermes Agent v0.21 on our workshop machine. Menus may look a little different in newer versions.</footer>
+</section>
+</main>
+</div>
+<a class="btn top no-print" href="#content" id="toTop">↑ Top</a>
+
+<script>
+(function(){
+  'use strict';
+  // theme toggle (remembered per browser, if storage works)
+  var root = document.documentElement, KEY = 'hermes101-manual-theme';
+  try{ var t = localStorage.getItem(KEY); if(t === 'light' || t === 'dark') root.dataset.theme = t; }catch(e){}
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    var next = cur === 'light' ? 'dark' : 'light'; root.dataset.theme = next;
+    try{ localStorage.setItem(KEY, next); }catch(e){}
+  });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  // mobile contents
+  var mt = document.getElementById('mtoc');
+  document.querySelectorAll('#toc a').forEach(function(a){ var li = document.createElement('li'); var b = a.cloneNode(true); li.appendChild(b); mt.appendChild(li); });
+  mt.addEventListener('click', function(e){ if(e.target.closest('a')) mt.parentElement.open = false; });
+
+  // copy buttons on every code box
+  document.querySelectorAll('.code').forEach(function(box){
+    var bar = box.querySelector('.bar'), pre = box.querySelector('pre');
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'copy'; btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy: ' + bar.textContent.trim());
+    btn.addEventListener('click', function(){
+      var text = pre.innerText.replace(/\n$/, '');
+      var done = function(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, function(){ fallback(text); done(); }); }
+      else { fallback(text); done(); }
+    });
+    bar.appendChild(btn);
+  });
+  function fallback(text){ var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove(); }
+
+  // checklists, remembered on this browser
+  var CK = 'hermes101-manual-checks', saved = {};
+  try{ saved = JSON.parse(localStorage.getItem(CK) || '{}') || {}; }catch(e){}
+  document.querySelectorAll('.checks').forEach(function(list){
+    list.querySelectorAll('input[data-k]').forEach(function(inp){
+      var id = list.dataset.list + '.' + inp.dataset.k; inp.checked = !!saved[id];
+      inp.addEventListener('change', function(){ saved[id] = inp.checked; try{ localStorage.setItem(CK, JSON.stringify(saved)); }catch(e){} });
+    });
+  });
+
+  // highlight the current part in the contents
+  var links = {}; document.querySelectorAll('#toc a').forEach(function(a){ links[a.getAttribute('href').slice(1)] = a; });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ Object.values(links).forEach(function(l){ l.classList.remove('on'); }); var l = links[en.target.id]; if(l) l.classList.add('on'); } });
+    }, {rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('section.part').forEach(function(s){ io.observe(s); });
+  }
+  var top = document.getElementById('toTop');
+  addEventListener('scroll', function(){ top.classList.toggle('show', scrollY > 900); }, {passive:true});
+})();
+</script>
+</body>
+</html>
